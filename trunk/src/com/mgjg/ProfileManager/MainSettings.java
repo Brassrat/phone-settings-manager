@@ -91,7 +91,7 @@ public class MainSettings extends ListActivity
     if (!hasShownStartup)
     {
       AlertDialog.Builder builder = new AlertDialog.Builder(this);
-      builder.setMessage("Please see my FAQ page TBD (Menu > F.A.Q.) for a full " +
+      builder.setMessage("Please see my FAQ page (Menu > F.A.Q.) for a full " +
           "explanation of how Profile Manager works if you need help or " +
           "have questions. Feel free to contact the developer by email " +
           "if you've found problems, have a feature request, or need help.\n\n" +
@@ -183,7 +183,7 @@ public class MainSettings extends ListActivity
       return true;
 
     case R.id.faq:
-      Uri uri = Uri.parse("http://code.google.com/p/app-soundmanager/wiki/FAQ");
+      Uri uri = Uri.parse("http://code.google.com/p/phone-settings-manager/wiki/FAQ");
       Intent faq = new Intent(Intent.ACTION_VIEW, uri);
       startActivity(faq);
       return true;
