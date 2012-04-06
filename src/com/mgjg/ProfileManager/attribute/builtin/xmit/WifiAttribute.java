@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.IntentFilter;
 import android.graphics.Color;
 import android.net.wifi.WifiManager;
-import android.provider.Settings;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.CheckBox;

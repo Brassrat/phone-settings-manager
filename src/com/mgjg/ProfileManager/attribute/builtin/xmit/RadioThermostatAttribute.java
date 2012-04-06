@@ -8,6 +8,7 @@ import android.widget.TableLayout;
 
 import com.mgjg.ProfileManager.attribute.AttributeBase;
 import com.mgjg.ProfileManager.attribute.ProfileAttribute;
+import com.mgjg.ProfileManager.registry.AttributeRegistry;
 import com.mgjg.ProfileManager.utils.AttributeTableLayout;
 
 public class RadioThermostatAttribute extends AttributeBase
@@ -70,8 +71,7 @@ public class RadioThermostatAttribute extends AttributeBase
   @Override
   public int getTypeId()
   {
-    // TODO Auto-generated method stub
-    return 0;
+    return AttributeRegistry.TYPE_XMIT + 2;
   }
 
   @Override

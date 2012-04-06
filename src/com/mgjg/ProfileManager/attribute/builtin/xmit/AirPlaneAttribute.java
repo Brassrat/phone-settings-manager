@@ -124,7 +124,7 @@ public class AirPlaneAttribute extends AttributeBase
   @Override
   public String getName(Context context)
   {
-    return "AirPlane";
+    return context.getString(R.string.airplane_title);
   }
 
   @Override
