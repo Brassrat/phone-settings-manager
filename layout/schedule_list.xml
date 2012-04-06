@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="vertical" >
+    <TextView  android:id="@+id/ScheduleForProfile"
+        android:text="@string/ScheduleForProfile"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:background="#ff888888"
+        android:gravity="center_horizontal"
+        android:textColor="#ff000000"
+        android:textSize="14.0sp" />
+    <ListView android:id="@+id/android:list"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true"
+    />
+    <Button
+        android:id="@+id/newSchedule"
+        android:layout_width="130dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="@string/newSchedule" />
+
+</LinearLayout>

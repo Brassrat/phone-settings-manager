@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_height="wrap_content" android:orientation="vertical"
+	android:layout_width="match_parent">
+
+	<TextView android:id="@+id/ScheduleForProfile" android:text="@string/NoProfile"
+		android:layout_width="fill_parent" android:layout_height="wrap_content"
+		android:gravity="center_horizontal" android:textSize="12.0sp"
+		android:textColor="#ff000000" android:background="#ff888888" />
+
+	<ScrollView android:layout_width="fill_parent"
+		android:layout_height="fill_parent">
+		<LinearLayout android:id="@+id/linearLayout1"
+			android:orientation="horizontal" android:layout_width="fill_parent"
+			android:padding="10dp" android:layout_height="wrap_content">
+			<LinearLayout android:id="@+id/linearLayout2"
+				android:orientation="vertical" android:layout_width="wrap_content"
+				android:layout_height="wrap_content">
+				<ToggleButton android:layout_width="wrap_content"
+					android:text="" android:layout_marginBottom="5dp"
+					android:id="@+id/day0toggle" android:textOff="@string/day0"
+					android:layout_height="wrap_content" android:textOn="@string/day0"></ToggleButton>
+				<ToggleButton android:layout_width="wrap_content"
+					android:text="" android:layout_marginBottom="5dp"
+					android:id="@+id/day1toggle" android:textOff="@string/day1"
+					android:layout_height="wrap_content" android:textOn="@string/day1"></ToggleButton>
+				<ToggleButton android:layout_width="wrap_content"
+					android:text="" android:layout_marginBottom="5dp"
+					android:id="@+id/day2toggle" android:textOff="@string/day2"
+					android:layout_height="wrap_content" android:textOn="@string/day2"></ToggleButton>
+				<ToggleButton android:layout_width="wrap_content"
+					android:text="" android:layout_marginBottom="5dp"
+					android:id="@+id/day3toggle" android:textOff="@string/day3"
+					android:layout_height="wrap_content" android:textOn="@string/day3"></ToggleButton>
+				<ToggleButton android:layout_width="wrap_content"
+					android:text="" android:layout_marginBottom="5dp"
+					android:id="@+id/day4toggle" android:textOff="@string/day4"
+					android:layout_height="wrap_content" android:textOn="@string/day4"></ToggleButton>
+				<ToggleButton android:layout_width="wrap_content"
+					android:text="" android:layout_marginBottom="5dp"
+					android:id="@+id/day5toggle" android:textOff="@string/day5"
+					android:layout_height="wrap_content" android:textOn="@string/day5"></ToggleButton>
+				<ToggleButton android:layout_width="wrap_content"
+					android:text="" android:id="@+id/day6toggle"
+					android:textOff="@string/day6" android:layout_height="wrap_content"
+					android:textOn="@string/day6"></ToggleButton>
+			</LinearLayout>
+			<LinearLayout android:id="@+id/linearLayout3"
+				android:orientation="vertical" android:layout_width="fill_parent"
+				android:layout_marginLeft="10dp" android:layout_height="wrap_content">
+				<TextView android:layout_height="match_parent" android:id="@+id/textView1"
+					android:layout_width="match_parent" android:text="@string/BLANKS"></TextView>
+				<TextView android:text="@string/startTimeLabel" android:id="@+id/textView2"
+					android:layout_width="fill_parent" android:layout_height="wrap_content"></TextView>
+				<TimePicker android:id="@+id/startTime"
+					android:layout_width="wrap_content" android:layout_marginTop="5dp"
+					android:layout_height="wrap_content"></TimePicker>
+				<TableLayout android:id="@+id/tableLayout1"
+					android:layout_width="fill_parent" android:layout_height="wrap_content">
+					<TableRow android:id="@+id/tableRow1"
+						android:layout_width="wrap_content" android:layout_height="wrap_content">
+					</TableRow>
+					<TableRow android:id="@+id/tableRow2"
+						android:layout_width="wrap_content" android:layout_height="wrap_content">
+						<TextView android:text="@string/activeLabel" android:id="@+id/textView3"
+							android:layout_width="wrap_content" android:layout_marginRight="10dip"
+							android:layout_height="wrap_content"></TextView>
+						<CheckBox android:id="@+id/activeCheckbox"
+						    android:layout_width="wrap_content"
+							android:layout_height="wrap_content"></CheckBox>
+					</TableRow>
+					<Button android:layout_width="fill_parent" android:text="@string/done"
+						android:layout_gravity="center_horizontal" android:id="@+id/doneButton"
+						android:layout_height="wrap_content"></Button>
+					<TextView android:layout_height="match_parent" android:id="@+id/textView4"
+					android:layout_width="match_parent" android:text="@string/BLANKS"></TextView>
+					<Button android:layout_width="fill_parent" android:text="@string/cancel"
+						android:layout_gravity="center_horizontal|bottom" android:id="@+id/cancelButton"
+						android:layout_height="wrap_content"></Button>
+				</TableLayout>
+			</LinearLayout>
+		</LinearLayout>
+
+	</ScrollView>
+
+</LinearLayout>

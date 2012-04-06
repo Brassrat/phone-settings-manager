@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+
+	android:orientation="vertical" android:layout_width="fill_parent"
+	android:layout_height="fill_parent" android:padding="10dip">
+	<LinearLayout android:orientation="vertical"
+		android:layout_width="fill_parent" android:layout_height="fill_parent">
+
+		<TextView android:id="@+id/ringer_vibrate_text" android:text="@string/ringer_vibrate"
+			android:textSize="20dip" android:layout_height="wrap_content"
+			android:layout_width="wrap_content" />
+
+		<RadioGroup android:layout_width="fill_parent"
+			android:layout_height="wrap_content" android:orientation="vertical">
+
+			<RadioButton android:id="@+id/ringer_vibrate_when_possible"
+				android:layout_width="wrap_content" android:layout_height="wrap_content"
+				android:text="@string/vibrate_when_possible" />
+
+			<RadioButton android:id="@+id/ringer_vibrate_when_silent"
+				android:layout_width="wrap_content" android:layout_height="wrap_content"
+				android:text="@string/vibrate_when_silent" />
+
+			<RadioButton android:id="@+id/ringer_vibrate_never"
+				android:layout_width="wrap_content" android:layout_height="wrap_content"
+				android:text="@string/vibrate_off" />
+
+		</RadioGroup>
+
+		<TextView android:id="@+id/notification_vibrate_text"
+			android:text="@string/notification_vibrate" android:textSize="20dip"
+			android:layout_height="wrap_content" android:layout_width="wrap_content"
+			android:layout_marginTop="5dip" />
+
+		<RadioGroup android:layout_width="fill_parent"
+			android:layout_height="wrap_content" android:orientation="vertical">
+
+			<RadioButton android:id="@+id/notif_vibrate_when_possible"
+				android:layout_width="wrap_content" android:layout_height="wrap_content"
+				android:text="@string/vibrate_when_possible" />
+
+			<RadioButton android:id="@+id/notif_vibrate_when_silent"
+				android:layout_width="wrap_content" android:layout_height="wrap_content"
+				android:text="@string/vibrate_when_silent" />
+
+
+			<RadioButton android:id="@+id/notif_vibrate_never"
+				android:layout_width="wrap_content" android:layout_height="wrap_content"
+				android:text="@string/vibrate_off" />
+
+		</RadioGroup>
+
+	</LinearLayout>
+</ScrollView>

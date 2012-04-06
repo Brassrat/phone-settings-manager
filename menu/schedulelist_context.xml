@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+  xmlns:android="http://schemas.android.com/apk/res/android">
+<item android:id="@+id/editSchedule" android:title="@string/editSchedule"></item>
+<item android:id="@+id/deleteSchedule" android:title="@string/deleteSchedule"></item>
+<item android:id="@+id/toggleSchedule" android:title="@string/toggleSchedule"></item>
+<item android:id="@+id/applySettings" android:title="@string/applySettings" ></item>
+</menu>
