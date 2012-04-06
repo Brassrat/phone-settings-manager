@@ -137,6 +137,8 @@
     <string name="disableProfiles">Enable/Disable</string>
     <string name="disable">disable</string>
     <string name="enable">enable</string>
+    <string name="wifi_title">Wifi</string>
+    <string name="newAttribute_WifiMode">Wifi</string>
 
     
 </resources>
