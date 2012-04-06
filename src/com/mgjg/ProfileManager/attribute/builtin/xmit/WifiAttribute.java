@@ -1,13 +1,13 @@
-package com.mgjg.ProfileManager.attribute.builtin.airplane;
+package com.mgjg.ProfileManager.attribute.builtin.xmit;
 
 import java.util.List;
 
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
+import android.net.wifi.WifiManager;
 import android.provider.Settings;
 import android.view.Gravity;
 import android.view.View;
@@ -22,12 +22,12 @@ import com.mgjg.ProfileManager.attribute.AttributeView;
 import com.mgjg.ProfileManager.registry.AttributeRegistry;
 import com.mgjg.ProfileManager.utils.AttributeTableLayout;
 
-public class AirPlaneAttribute extends AttributeBase
+public class WifiAttribute extends AttributeBase
 {
 
   public static AttributeBase[] init(Context context)
   {
-    return new AttributeBase[] { new AirPlaneAttribute() };
+    return new AttributeBase[] { new WifiAttribute() };
   }
 
   private TextView viewText; // not used
@@ -35,37 +35,37 @@ public class AirPlaneAttribute extends AttributeBase
 
   private CheckBox createCheckBox;
 
-  public AirPlaneAttribute()
+  public WifiAttribute()
   {
     super(0, 0, 0, false, "");
   }
 
-  private AirPlaneAttribute(long attributeId, long profileId, int intValue, boolean booleanValue, String settings)
+  private WifiAttribute(long attributeId, long profileId, int intValue, boolean booleanValue, String settings)
   {
     super(attributeId, profileId, intValue, booleanValue, settings);
   }
 
   @Override
-  public AirPlaneAttribute createInstance(long attributeId, long profileId, int intValue, boolean booleanValue, String settings)
+  public WifiAttribute createInstance(long attributeId, long profileId, int intValue, boolean booleanValue, String settings)
   {
-    return new AirPlaneAttribute(attributeId, profileId, intValue, booleanValue, settings);
+    return new WifiAttribute(attributeId, profileId, intValue, booleanValue, settings);
   }
 
   @Override
   public String activate(Context context)
   {
-    boolean isEnabled = isAirPlaneMode(context);
+    boolean isEnabled = isWifiMode(context);
     if (isEnabled != isBoolean())
     {
-      // toggle airplane mode
-      setAirplaneMode(context, !isEnabled);
+      // toggle wifi mode
+      setWifiMode(context, !isEnabled);
     }
     return getToast(context);
   }
 
   public String getNew(Context context)
   {
-    return context.getString(R.string.newAttribute_AirPlaneMode);
+    return context.getString(R.string.newAttribute_WifiMode);
   }
   
   @Override
@@ -106,31 +106,35 @@ public class AirPlaneAttribute extends AttributeBase
     }
   }
 
-  private boolean isAirPlaneMode(Context context)
+  private boolean isWifiMode(Context context)
   {
-    return Settings.System.getInt(context.getContentResolver(), Settings.System.AIRPLANE_MODE_ON, 0) == 1;
+    WifiManager wifi = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+    return wifi.isWifiEnabled();
   }
 
-  private void setAirplaneMode(Context context, boolean enabled)
+  private void setWifiMode(Context context, boolean enabled)
   {
-    Settings.System.putInt(context.getContentResolver(), Settings.System.AIRPLANE_MODE_ON, enabled ? 1 : 0);
-
-    // Post an intent to reload
-    Intent intent = new Intent(Intent.ACTION_AIRPLANE_MODE_CHANGED);
-    intent.putExtra("state", enabled);
-    context.sendBroadcast(intent);
+    WifiManager wifi = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+    if (enabled != wifi.isWifiEnabled())
+    {
+      wifi.setWifiEnabled(enabled);
+      if (enabled)
+      {
+        wifi.reassociate();
+      }
+    }
   }
 
   @Override
   public String getName(Context context)
   {
-    return "AirPlane";
+    return context.getString(R.string.wifi_title);
   }
 
   @Override
   public int getTypeId()
   {
-    return AttributeRegistry.TYPE_XMIT + 0;
+    return AttributeRegistry.TYPE_XMIT + 1;
   }
 
   @Override
@@ -240,7 +244,7 @@ public class AirPlaneAttribute extends AttributeBase
       {
         setBoolean(!isBoolean());
         ((CheckBox) v).setChecked(isBoolean());
-        setAirplaneMode(context, isBoolean());
+        setWifiMode(context, isBoolean());
       }
 
     });
@@ -273,7 +277,7 @@ public class AirPlaneAttribute extends AttributeBase
     CheckBox checkBox = (CheckBox) layout.findViewById(ID_CHECKBOX);
     if (null != checkBox)
     {
-      checkBox.setChecked(isAirPlaneMode(context));
+      checkBox.setChecked(isWifiMode(context));
     }
   }
 

@@ -65,7 +65,7 @@ public class AttributeRegistry
       // todo read registry data from table, for now just initialize the know builtin attributes
       for (String clz : new String[] {
           "com.mgjg.ProfileManager.attribute.builtin.sound.SoundAttribute",
-          "com.mgjg.ProfileManager.attribute.builtin.airplane.AirPlaneAttribute" })
+          "com.mgjg.ProfileManager.attribute.builtin.xmit.AirPlaneAttribute" })
       {
         register(context, clz);
       }

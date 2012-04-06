@@ -1,4 +1,4 @@
-package com.mgjg.ProfileManager.attribute.radiothermostat;
+package com.mgjg.ProfileManager.attribute.builtin.xmit;
 
 import java.util.List;
 
