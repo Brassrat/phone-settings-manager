@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <TextView android:id="@+id/AttributeProfile"
+        android:text="Attributes for profile ..."
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:textSize="12.0sp"
+        android:textColor="#ff000000"
+        android:background="#ff888888" />
+    <ListView android:id="@+id/android:list"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+    <TextView android:id="@+id/android:empty"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="Use the Menu button to add an attribute" />
+</LinearLayout>

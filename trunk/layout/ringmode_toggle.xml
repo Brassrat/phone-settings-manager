@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:padding="10dip">
+
+    <TextView
+        android:id="@+id/toggle_text"
+        android:text="@string/toggle_text"
+        android:textSize="20dip"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content" />
+
+    <RadioGroup
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RadioButton
+            android:id="@+id/ring_vibrate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ring_vibrate" />
+
+        <RadioButton
+            android:id="@+id/vibrate_only"
+            android:text="@string/vibrate_only"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content" />
+
+        <RadioButton
+            android:id="@+id/silent"
+            android:text="@string/silent"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content" />
+    </RadioGroup>
+    <TextView
+        android:text="@string/use_menu_shortcut"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp" />
+
+</LinearLayout>
