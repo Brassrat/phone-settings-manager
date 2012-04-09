@@ -1,16 +1,13 @@
 package com.mgjg.ProfileManager.attribute.builtin.sound;
 
 import android.content.Context;
-import android.media.AudioManager;
-
-import com.mgjg.ProfileManager.R;
 
 public final class SystemVolumeAttribute extends SoundAttribute
 {
 
   SystemVolumeAttribute()
   {
-    this(0, 0, 0, false, null);
+    super();
   }
 
   private SystemVolumeAttribute(long attributeId, long aProfileId, int aVolume, boolean aVibrate, String settings)
@@ -31,33 +28,15 @@ public final class SystemVolumeAttribute extends SoundAttribute
   }
 
   @Override
-  public int getNameResourceId()
+  public int getListOrder()
   {
-    return R.string.newAttribute_SystemVolume;
+    return ORDER_AUDIO_SYSTEM;
   }
 
   @Override
-  public int getToastNameResourceId()
+  public int getSoundAttributeIndex()
   {
-    return R.string.toast_SystemVolume;
-  }
-
-  @Override
-  public int getNewResourceId()
-  {
-    return R.id.newAttribute_SystemVolume;
-  }
-
-  @Override
-  public int getTypeId()
-  {
-    return TYPE_AUDIO_SYSTEM;
-  }
-
-  @Override
-  public int getAudioStreamId()
-  {
-    return AudioManager.STREAM_SYSTEM;
+    return SOUND_ATTR_SYSTEM;
   }
 
 }

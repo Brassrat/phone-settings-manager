@@ -17,6 +17,7 @@
 package com.mgjg.ProfileManager;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import android.app.Activity;
@@ -84,6 +85,7 @@ public class MainSettings extends ListActivity
     {
       Log.e("com.mgjg.ProfileManager", "Unknown active type: " + e.getType(), e);
     }
+    Collections.sort(layouts);
     setListAdapter(new AttributeUpdateableViewListAdapter(this, layouts));
     setStatusText(this, layouts);
 
@@ -254,6 +256,7 @@ public class MainSettings extends ListActivity
       ProfileAttribute pa = registry.getAttribute(type);
       layouts.add(new AttributeTableLayout(pa, new AttributeUpdatableView(context, pa, layouts)));
     }
+    // order layouts ...
     return;
   }
 }

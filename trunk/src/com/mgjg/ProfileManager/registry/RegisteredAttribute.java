@@ -1,12 +1,12 @@
 package com.mgjg.ProfileManager.registry;
 
 import static com.mgjg.ProfileManager.provider.AttributeRegistryHelper.COLUMN_REGISTRY_ACTIVE;
-import static com.mgjg.ProfileManager.provider.AttributeRegistryHelper.COLUMN_REGISTRY_ID;
-import static com.mgjg.ProfileManager.provider.AttributeRegistryHelper.COLUMN_REGISTRY_NAME;
-import static com.mgjg.ProfileManager.provider.AttributeRegistryHelper.COLUMN_REGISTRY_TYPE;
-import static com.mgjg.ProfileManager.provider.AttributeRegistryHelper.COLUMN_REGISTRY_MENU;
 import static com.mgjg.ProfileManager.provider.AttributeRegistryHelper.COLUMN_REGISTRY_CLASS;
+import static com.mgjg.ProfileManager.provider.AttributeRegistryHelper.COLUMN_REGISTRY_ID;
+import static com.mgjg.ProfileManager.provider.AttributeRegistryHelper.COLUMN_REGISTRY_MENU;
+import static com.mgjg.ProfileManager.provider.AttributeRegistryHelper.COLUMN_REGISTRY_NAME;
 import static com.mgjg.ProfileManager.provider.AttributeRegistryHelper.COLUMN_REGISTRY_PARAM;
+import static com.mgjg.ProfileManager.provider.AttributeRegistryHelper.COLUMN_REGISTRY_TYPE;
 
 import java.lang.reflect.Constructor;
 
@@ -20,6 +20,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.mgjg.ProfileManager.attribute.ProfileAttribute;
+import com.mgjg.ProfileManager.utils.Listable;
 import com.mgjg.ProfileManager.utils.Viewable;
 
 public class RegisteredAttribute implements Viewable<RegisteredAttribute>
@@ -32,8 +33,9 @@ public class RegisteredAttribute implements Viewable<RegisteredAttribute>
   private boolean active;
   private final String className;
   private final String params;
+  private final int order;
 
-  public RegisteredAttribute(long id, String name, int type, String menu, boolean active, String className, String params)
+  public RegisteredAttribute(long id, String name, int type, String menu, boolean active, String className, String params, int order)
   {
     this.id = id;
     this.name = name;
@@ -42,6 +44,7 @@ public class RegisteredAttribute implements Viewable<RegisteredAttribute>
     this.active = active;
     this.className = className;
     this.params = params;
+    this.order = order;
   }
 
   public ProfileAttribute createInstance()
@@ -131,5 +134,20 @@ public class RegisteredAttribute implements Viewable<RegisteredAttribute>
       return true;
     }
     return false;
+  }
+
+  @Override
+  public int compareTo(Listable another)
+  {
+    int thisOrder = getListOrder();
+    int othOrder = another.getListOrder();
+    // we know that thisOrder and othOrder are small integers so can just subtract to fulfill compareTo contract
+    return thisOrder - othOrder;
+  }
+
+  @Override
+  public int getListOrder()
+  {
+    return this.order;
   }
 }

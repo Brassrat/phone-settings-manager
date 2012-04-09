@@ -186,6 +186,9 @@ public class AttributeProvider extends ProfileManagerProvider<ProfileAttribute>
     case FILTER_ATTRIBUTE_ID:
       return new String[] { COLUMN_ATTRIBUTE_ID };
 
+    case FILTER_ATTRIBUTE_PROFILE_ID:
+      return new String[] { COLUMN_ATTRIBUTE_PROFILE_ID };
+      
     default:
       // should never get here if app is coded correctly
       throw new IllegalArgumentException("Invalid Filter " + matchedCode);

@@ -16,6 +16,7 @@
 package com.mgjg.ProfileManager.provider;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import android.content.ContentValues;
@@ -160,6 +161,7 @@ public abstract class ProfileManagerProviderHelper<T extends Listable>
         }
       } while (c.moveToNext());
     }
+    la.sort();
     return la;
   }
 

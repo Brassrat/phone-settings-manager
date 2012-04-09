@@ -17,6 +17,7 @@
 package com.mgjg.ProfileManager.utils;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import android.content.Context;
@@ -109,4 +110,8 @@ public abstract class ListAdapter<T extends Listable> extends BaseAdapter
     }
   }
 
+  public void sort()
+  {
+    Collections.sort(mItems);
+  }
 }

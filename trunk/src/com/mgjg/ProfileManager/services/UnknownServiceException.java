@@ -13,21 +13,24 @@
  * either express or implied. See the License for the specific language 
  * governing permissions and limitations under the License. 
  */
-package com.mgjg.ProfileManager.utils;
+package com.mgjg.ProfileManager.services;
 
-import com.mgjg.ProfileManager.provider.Providee;
-
-/**
- * Classes that implement this interface can be managed by the ListAdapter
- * 
- * @author Jay Goldman
- * 
- */
-public interface Listable extends Providee, Comparable<Listable>
+public class UnknownServiceException extends Exception
 {
-  long getId();
 
-  boolean isEnabled();
-  
-  int getListOrder();
+  private static final long serialVersionUID = 1L;
+
+  private final String name;
+
+  UnknownServiceException(String serviceName)
+  {
+    super("Service name '" + serviceName + "' is not known"); // TODO need string resource
+    this.name = serviceName;
+  }
+
+  public String getName()
+  {
+    return name;
+  }
+
 }
