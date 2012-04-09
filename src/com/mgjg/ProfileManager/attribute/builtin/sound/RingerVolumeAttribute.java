@@ -9,14 +9,12 @@ import static android.media.AudioManager.VIBRATE_SETTING_ON;
 import android.content.Context;
 import android.media.AudioManager;
 
-import com.mgjg.ProfileManager.R;
-
 public final class RingerVolumeAttribute extends SoundAttribute
 {
 
   RingerVolumeAttribute()
   {
-    this(0, 0, 0, false, null);
+    super();
   }
 
   private RingerVolumeAttribute(long attributeId, long aProfileId, int aVolume, boolean aVibrate, String settings)
@@ -37,39 +35,15 @@ public final class RingerVolumeAttribute extends SoundAttribute
   }
 
   @Override
-  public int getNameResourceId()
+  public int getListOrder()
   {
-    return R.string.newAttribute_RingerVolume;
+    return ORDER_AUDIO_RING;
   }
 
   @Override
-  public int getToastNameResourceId()
+  public int getSoundAttributeIndex()
   {
-    return R.string.toast_RingerVolume;
-  }
-
-  @Override
-  public int getNewResourceId()
-  {
-    return R.id.newAttribute_RingerVolume;
-  }
-
-  @Override
-  public int getTypeId()
-  {
-    return TYPE_AUDIO_RING;
-  }
-
-  @Override
-  public int getAudioStreamId()
-  {
-    return AudioManager.STREAM_RING;
-  }
-
-  @Override
-  protected int getVibrateType()
-  {
-    return AudioManager.VIBRATE_TYPE_RINGER;
+    return SOUND_ATTR_RING;
   }
 
   @Override
@@ -85,12 +59,6 @@ public final class RingerVolumeAttribute extends SoundAttribute
     {
       audio.setRingerMode(RINGER_MODE_NORMAL);
     }
-  }
-
-  @Override
-  public boolean isSupportsBoolean()
-  {
-    return true;
   }
 
 }

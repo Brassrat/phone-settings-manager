@@ -23,7 +23,7 @@ import com.mgjg.ProfileManager.attribute.ActiveCount;
 import com.mgjg.ProfileManager.attribute.AttributeUpdatableView;
 import com.mgjg.ProfileManager.attribute.ProfileAttribute;
 
-public class AttributeTableLayout implements Listable
+public class AttributeTableLayout implements Listable, Comparable<Listable>
 {
 
   private final ProfileAttribute attribute;
@@ -81,4 +81,17 @@ public class AttributeTableLayout implements Listable
     attribute.updateView(aa, view);
   }
 
+  public int getListOrder()
+  {
+    return attribute.getListOrder();
+  }
+  
+  @Override
+  public int compareTo(Listable another)
+  {
+    int thisOrder = getListOrder();
+    int othOrder = another.getListOrder();
+    // we know that thisOrder and othOrder are small integers so can just subtract to fulfill compareTo contract
+    return thisOrder - othOrder;
+  }
 }

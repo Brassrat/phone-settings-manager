@@ -24,6 +24,7 @@ import android.widget.TableLayout;
 
 import com.mgjg.ProfileManager.registry.UnknownAttributeException;
 import com.mgjg.ProfileManager.utils.AttributeTableLayout;
+import com.mgjg.ProfileManager.utils.Listable;
 import com.mgjg.ProfileManager.utils.Viewable;
 
 /**
@@ -33,7 +34,7 @@ import com.mgjg.ProfileManager.utils.Viewable;
  * @author Jay Goldman
  * 
  */
-public interface ProfileAttribute extends Viewable<ProfileAttribute>
+public interface ProfileAttribute extends Viewable<ProfileAttribute>, Comparable<Listable>
 {
 
   /**
@@ -74,10 +75,14 @@ public interface ProfileAttribute extends Viewable<ProfileAttribute>
 
   String getToast(Context context);
 
-  int getTypeId();
-
-  String getNew(Context context);
-
+  int getTypeId(); // registered type id
+  
+  /**
+   * value used to sort attributes in display of current values
+   * TODO - get from registry
+   */
+  int getListOrder(); // order for to show in list
+  
   /**
    * returns settings for this attribute as a string
    * 

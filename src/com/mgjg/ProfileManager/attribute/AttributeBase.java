@@ -22,6 +22,7 @@ import android.widget.TextView;
 import com.mgjg.ProfileManager.R;
 import com.mgjg.ProfileManager.registry.UnknownAttributeException;
 import com.mgjg.ProfileManager.utils.AttributeTableLayout;
+import com.mgjg.ProfileManager.utils.Listable;
 
 public abstract class AttributeBase implements ProfileAttribute
 {
@@ -34,6 +35,8 @@ public abstract class AttributeBase implements ProfileAttribute
 
   // can be set, but should only be set after insert
   private long id;
+
+  // set-able values
   private String settings;
   private boolean booleanValue;
   private int intValue;
@@ -288,6 +291,26 @@ public abstract class AttributeBase implements ProfileAttribute
     {
       text.setText(activeCount.getCountText(getTypeId()));
     }
+  }
+
+  public int labelMinWidth()
+  {
+    // need to figure this out from screen... hard-code for now
+    return 8 * 24;
+  }
+
+  public int rightPadding()
+  {
+    return 20; // padding to right of active widget to make right-hand edge accessible
+  }
+
+  @Override
+  public int compareTo(Listable another)
+  {
+    int thisOrder = getListOrder();
+    int othOrder = another.getListOrder();
+    // we know that thisOrder and othOrder are small integers so can just subtract to fulfill compareTo contract
+    return thisOrder - othOrder;
   }
 
 }

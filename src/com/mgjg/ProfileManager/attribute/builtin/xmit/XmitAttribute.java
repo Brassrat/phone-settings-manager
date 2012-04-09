@@ -2,13 +2,17 @@ package com.mgjg.ProfileManager.attribute.builtin.xmit;
 
 import java.util.List;
 
+import org.json.JSONException;
+
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.IntentFilter;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -17,20 +21,45 @@ import android.widget.TextView;
 import com.mgjg.ProfileManager.R;
 import com.mgjg.ProfileManager.attribute.AttributeBase;
 import com.mgjg.ProfileManager.attribute.AttributeView;
+import com.mgjg.ProfileManager.attribute.ProfileAttribute;
+import com.mgjg.ProfileManager.registry.AttributeRegistry;
+import com.mgjg.ProfileManager.services.UnknownServiceException;
 import com.mgjg.ProfileManager.utils.AttributeTableLayout;
 
 public abstract class XmitAttribute extends AttributeBase
 {
 
-  private final static AirPlaneAttribute AIRPLANE = new AirPlaneAttribute();
-  private final static WifiAttribute WIFI = new WifiAttribute();
-  
-  public static AttributeBase[] init(Context context)
+  private static String makeRegistryJSON(Context context, String serviceName, int typeId, String name, int order)
   {
-    return new AttributeBase[] { AIRPLANE, WIFI};
+    return String.format("{ \"service\" : \"%1$s\", \"id\" : \"%2$d\", \"name\" : \"%3$s\", \"order\" : \"%4$d\"}",
+        serviceName, AttributeRegistry.TYPE_XMIT + typeId, name, order);
   }
 
-  private TextView viewText; // not used
+  public static ProfileAttribute[] init(Context context)
+  {
+    try
+    {
+      // hard-coded registry entries for now ...
+      JSONBooleanAttribute AIRPLANE = new JSONBooleanAttribute(context,
+          makeRegistryJSON(context, "AirPlane", 0, context.getString(R.string.title_airplane), 10));
+      JSONBooleanAttribute WIFI = new JSONBooleanAttribute(context,
+          makeRegistryJSON(context, "WiFi", 1, context.getString(R.string.title_wifi), 11));
+      JSONBooleanAttribute MOBILE_DATA = new JSONBooleanAttribute(context,
+          makeRegistryJSON(context, "MobileData", 2, context.getString(R.string.title_mobiledata), 12));
+      return new ProfileAttribute[] { AIRPLANE, WIFI, MOBILE_DATA };
+    }
+    catch (JSONException e)
+    {
+      Log.e("com.mgjg.ProfileManager", "Unable to initialize Xmit Attributes: " + e.getMessage());
+      return new ProfileAttribute[0];
+    }
+    catch (UnknownServiceException e)
+    {
+      Log.e("com.mgjg.ProfileManager", "Unable to initialize Xmit Attributes: " + e.getMessage());
+      return new ProfileAttribute[0];
+    }
+  }
+
   private CheckBox viewCheckBox;
 
   private CheckBox createCheckBox;
@@ -44,18 +73,18 @@ public abstract class XmitAttribute extends AttributeBase
   {
     super(attributeId, profileId, intValue, booleanValue, settings);
   }
+
   @Override
   public final String activate(Context context)
   {
     boolean isEnabled = isMode(context);
     if (isEnabled != isBoolean())
     {
-      // toggle wifi mode
       setMode(context, !isEnabled);
     }
     return getToast(context);
   }
-  
+
   @Override
   public final String getToast(Context context)
   {
@@ -75,16 +104,6 @@ public abstract class XmitAttribute extends AttributeBase
     {
       createCheckBox.setChecked(isBoolean());
       createCheckBox.setTextColor(isBoolean() ? Color.GREEN : Color.RED);
-    }
-
-    if (null != viewText)
-    {
-      String vibText = isBoolean() ? "On" : "Off";
-      if (!vibText.equalsIgnoreCase(viewText.getText().toString()))
-      {
-        viewText.setText(vibText);
-        viewText.setTextColor(isBoolean() ? Color.GREEN : Color.RED);
-      }
     }
 
     if (null != viewCheckBox)
@@ -125,19 +144,19 @@ public abstract class XmitAttribute extends AttributeBase
   @Override
   public final void populateGui(Activity aa)
   {
-    
+
     View bar = aa.findViewById(R.id.volume);
     if (null != bar)
     {
       bar.setVisibility(View.GONE);
     }
-    
+
     View lbl = aa.findViewById(R.id.vibrateLabel);
     if (null != lbl)
     {
       lbl.setVisibility(View.GONE);
     }
-    
+
     if (null == createCheckBox)
     {
       createCheckBox = (CheckBox) aa.findViewById(R.id.vibrateCheckbox);
@@ -153,6 +172,8 @@ public abstract class XmitAttribute extends AttributeBase
     TextView label = new TextView(context);
     label.setPadding(2, 2, 2, 2);
     label.setText(getName(context) + ":");
+    label.setMinWidth(labelMinWidth());
+    label.setGravity(Gravity.LEFT + Gravity.CENTER_VERTICAL);
 
     viewCheckBox = new CheckBox(context);
     viewCheckBox.setPadding(2, 2, 2, 2);
@@ -161,10 +182,24 @@ public abstract class XmitAttribute extends AttributeBase
     viewCheckBox.setFocusable(false);
     viewCheckBox.setFocusableInTouchMode(false);
     viewCheckBox.setClickable(false);
+    viewCheckBox.setGravity(Gravity.CENTER_HORIZONTAL);
 
     TableRow row = new TableRow(context);
-    row.addView(label);
-    row.addView(viewCheckBox);
+
+    TableRow.LayoutParams labelParams = new TableRow.LayoutParams(
+        TableRow.LayoutParams.FILL_PARENT,
+        TableRow.LayoutParams.WRAP_CONTENT);
+    labelParams.span = 1;
+    labelParams.gravity = Gravity.LEFT + Gravity.CENTER_VERTICAL;
+    row.addView(label, labelParams);
+
+    TableRow.LayoutParams checkParams = new TableRow.LayoutParams(
+        TableRow.LayoutParams.FILL_PARENT,
+        TableRow.LayoutParams.WRAP_CONTENT);
+    checkParams.span = 1;
+    checkParams.gravity = Gravity.CENTER_HORIZONTAL;
+    checkParams.rightMargin = rightPadding();
+    row.addView(viewCheckBox, checkParams);
 
     tableLayout.addView(row, AttributeView.paramsFillWrap);
   }
@@ -172,15 +207,31 @@ public abstract class XmitAttribute extends AttributeBase
   @Override
   public final void addUpdatableView(final Context context, final TableLayout layout, final List<AttributeTableLayout> layouts)
   {
-    TableRow row = new TableRow(context);
+    TableRow labelRow = new TableRow(context);
+
+    layout.addView(labelRow, new ViewGroup.LayoutParams(
+        ViewGroup.LayoutParams.FILL_PARENT,
+        ViewGroup.LayoutParams.WRAP_CONTENT));
 
     TextView label = new TextView(context);
-    label.setPadding(2, 2, 2, 2);
-    label.setText(getName(context));
+    label.setPadding(2, 4, 2, 3);
+    label.setText(getName(context) + ":");
+    label.setMinWidth(labelMinWidth());
+    label.setGravity(Gravity.LEFT + Gravity.CENTER_VERTICAL);
 
-    row.addView(label, new TableRow.LayoutParams(
-        TableRow.LayoutParams.WRAP_CONTENT,
-        TableRow.LayoutParams.WRAP_CONTENT));
+    TableRow.LayoutParams singleColumnParams = new TableRow.LayoutParams(
+        TableRow.LayoutParams.FILL_PARENT,
+        TableRow.LayoutParams.WRAP_CONTENT);
+    singleColumnParams.span = 1;
+
+    labelRow.addView(label, singleColumnParams);
+
+    TextView count = new TextView(context);
+    count.setId(ID_COUNT_TEXT);
+    count.setPadding(2, 4, 2, 3);
+    count.setGravity(Gravity.LEFT + Gravity.CENTER_VERTICAL);
+    count.setText("TBD");
+    labelRow.addView(count, singleColumnParams);
 
     // <TableRow>
     // <TextView android:id="@+id/label"
@@ -191,8 +242,8 @@ public abstract class XmitAttribute extends AttributeBase
     // </TableRow>
     CheckBox checkBox = new CheckBox(context);
     checkBox.setId(ID_CHECKBOX);
-    // vibrateCheckBox.setPadding(2, 2, 2, 2);
-    checkBox.setGravity(Gravity.LEFT);
+    checkBox.setPadding(2, 4, rightPadding(), 3);
+    checkBox.setGravity(Gravity.RIGHT);
     checkBox.setChecked(isBoolean());
     checkBox.setOnClickListener(new View.OnClickListener()
     {
@@ -207,30 +258,21 @@ public abstract class XmitAttribute extends AttributeBase
     });
 
     TableRow.LayoutParams checkBoxParams = new TableRow.LayoutParams(
-        TableRow.LayoutParams.WRAP_CONTENT,
+        TableRow.LayoutParams.FILL_PARENT,
         TableRow.LayoutParams.WRAP_CONTENT);
-    // checkBoxParams.span = 1;
-    // checkBoxParams.gravity = Gravity.CENTER_HORIZONTAL;
+    checkBoxParams.span = 1;
+    checkBoxParams.gravity = Gravity.RIGHT;
+    checkBoxParams.rightMargin = rightPadding();
 
-    row.addView(checkBox, checkBoxParams);
+    labelRow.addView(checkBox, checkBoxParams);
 
-    layout.addView(row, AttributeView.paramsFillWrap);
-
-    TableRow countRow = new TableRow(context);
-
-    TextView count = new TextView(context);
-    count.setId(ID_COUNT_TEXT);
-    count.setPadding(2, 7, 2, 2);
-    count.setText("TBD");
-    countRow.addView(count);
-
-    layout.addView(countRow);
     updateView(context, layout);
   }
 
   protected abstract void setMode(Context context, boolean enabled);
+
   protected abstract boolean isMode(Context context);
-  
+
   @Override
   public final void updateView(Context context, TableLayout layout)
   {
@@ -262,5 +304,4 @@ public abstract class XmitAttribute extends AttributeBase
     context.registerReceiver(receiver, intentFilter);
 
   }
-
 }

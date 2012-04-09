@@ -432,12 +432,27 @@ public final class ScheduleEntry implements Listable
     if (isActive())
     {
       Calendar cal = Calendar.getInstance(TimeZone.getDefault(), Locale.getDefault());
-      //if the schedule is active for today, apply the settings
+      // if the schedule is active for today, apply the settings
       if (activeDays[getDayIndex(cal)])
       {
         return activate(context);
       }
     }
     return "";
+  }
+
+  @Override
+  public int compareTo(Listable another)
+  {
+    int thisOrder = getListOrder();
+    int othOrder = another.getListOrder();
+    // we know that thisOrder and othOrder are small integers so can just subtract to fulfill compareTo contract
+    return thisOrder - othOrder;
+  }
+
+  @Override
+  public int getListOrder()
+  {
+    return startHour * 60 + startMinute;
   }
 }

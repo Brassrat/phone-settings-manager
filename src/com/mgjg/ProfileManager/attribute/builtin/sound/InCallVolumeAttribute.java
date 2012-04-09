@@ -1,16 +1,13 @@
 package com.mgjg.ProfileManager.attribute.builtin.sound;
 
 import android.content.Context;
-import android.media.AudioManager;
-
-import com.mgjg.ProfileManager.R;
 
 public final class InCallVolumeAttribute extends SoundAttribute
 {
 
   InCallVolumeAttribute()
   {
-    super(0, 0, 0, false, null);
+    super();
   }
 
   private InCallVolumeAttribute(long attributeId, long aProfileId, int aVolume, boolean aVibrate, String settings)
@@ -31,33 +28,16 @@ public final class InCallVolumeAttribute extends SoundAttribute
   }
 
   @Override
-  public int getNameResourceId()
+  public int getListOrder()
   {
-    return R.string.newAttribute_CallVolume;
+    return ORDER_AUDIO_VOICE_CALL;
   }
 
+  
   @Override
-  public int getToastNameResourceId()
+  public int getSoundAttributeIndex()
   {
-    return R.string.toast_CallVolume;
+    return SOUND_ATTR_VOICE_CALL;
   }
-
-  @Override
-  public int getNewResourceId()
-  {
-    return R.id.newAttribute_CallVolume;
-  }
-
-  @Override
-  public int getTypeId()
-  {
-    return TYPE_AUDIO_VOICE_CALL;
-  }
-
-  @Override
-  public int getAudioStreamId()
-  {
-    return AudioManager.STREAM_VOICE_CALL;
-  }
-
+  
 }

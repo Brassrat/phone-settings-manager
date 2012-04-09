@@ -166,11 +166,12 @@ public class ProfileEdit extends Activity
     if (null == profileId)
     {
       // must save before we edit
-      // odd case ... normally we will not save unless told to?
-      saveState();
+      saveState(false);
     }
     if (null == profileId)
     {
+      String msg = "Must set profile name before editting attributes";
+      Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
       return;
     }
     Intent ai = new Intent(this, AttributeList.class)
@@ -184,11 +185,12 @@ public class ProfileEdit extends Activity
     if (null == profileId)
     {
       // must save before we edit
-      // odd case ... normally we will not save unless told to?
-      saveState();
+      saveState(false);
     }
     if (null == profileId)
     {
+      String msg = "Must set profile name before editting attributes";
+      Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
       return;
     }
     Intent si = new Intent(this, ScheduleList.class)
@@ -295,7 +297,7 @@ public class ProfileEdit extends Activity
      */
     if (isModified() && !mSaved)
     {
-      saveState();
+      saveState(true);
     }
   }
 
@@ -329,7 +331,7 @@ public class ProfileEdit extends Activity
      */
     if (isModified() && !mSaved)
     {
-      saveState();
+      saveState(true);
     }
 
     // store some things for re-display on resume
@@ -342,13 +344,18 @@ public class ProfileEdit extends Activity
   /**
    * writes profile to db
    */
-  private Long saveState()
+  private Long saveState(boolean toastOnNoSave)
   {
 
     profile.setName(name.getText().toString());
-    if (profile.getName().length() <= 0)
+    if ((profile.getName().length() <= 0) || "NO NAME".equals(profile.getName()))
     {
       // no name ... no save
+      if (toastOnNoSave)
+      {
+        String msg = "Must set profile name before it can be saved";
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+      }
       return null;
     }
     profile.setActive(active.isChecked());
@@ -385,7 +392,7 @@ public class ProfileEdit extends Activity
 
       if (!mSaved)
       {
-        saveState();
+        saveState(true);
       }
 
       setResult(RESULT_OK,

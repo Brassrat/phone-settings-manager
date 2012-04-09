@@ -3,12 +3,7 @@
     <string name="app_name">Profile Manager</string>
     
     <!-- MainSettings strings -->
-    <string name="system_textview">System Volume</string>
-    <string name="media_textview">Media Volume</string>
-    <string name="ringer_textview">Ringer Volume</string>
-    <string name="phonecall_textview">In-Call Volume</string>
-    <string name="alarm_textview">Alarm Volume</string>
-    <string name="notif_textview">Notification Volume</string>
+
     
     <string name="timer_button">Schedule</string>
     
@@ -59,14 +54,6 @@
     <string name="deleteAttribute">Delete</string>
     <string name="editAttributeList">Edit</string>
     <string name="editAttribute">Edit</string>
-    
-    <!--  Volume  -->
-    <string name="newAttribute_SystemVolume">System Volume</string>
-    <string name="newAttribute_RingerVolume">Ringer Volume</string>
-    <string name="newAttribute_MediaVolume">Media Volume</string>
-    <string name="newAttribute_CallVolume">Call Volume</string>
-    <string name="newAttribute_AlarmVolume">Alarm Volume</string>
-    <string name="newAttribute_NotificationVolume">Notification Volume</string>
     
     <!-- Schedules -->
     <string name="ScheduleListProfile">Schedules for </string>
@@ -132,13 +119,23 @@
     <string name="inactive">INACTIVE</string>
     <string name="enabled">Enabled</string>
     <string name="disabled">Disabled</string>
-    <string name="airplane_title">AirPlane</string>
-    <string name="newAttribute_AirPlaneMode">AirPlane Mode</string>
+
     <string name="disableProfiles">Enable/Disable</string>
     <string name="disable">disable</string>
     <string name="enable">enable</string>
-    <string name="wifi_title">Wifi</string>
-    <string name="newAttribute_WifiMode">Wifi</string>
+    <string name="mute">mute</string>
+    <string name="unmute">unmute</string>
+    
+    <!--  Builtin Attributes -->
+    <string name="title_system">System Volume</string>
+    <string name="title_media">Media Volume</string>
+    <string name="title_ringer">Ringer Volume</string>
+    <string name="title_phonecall">In-Call Volume</string>
+    <string name="title_alarm">Alarm Volume</string>
+    <string name="title_notif">Notification Volume</string>
+    <string name="title_airplane">AirPlane</string>
+    <string name="title_wifi">Wifi</string>
+    <string name="title_mobiledata">MobileData</string>
 
     
 </resources>

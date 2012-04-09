@@ -35,7 +35,6 @@ public class AttributeRegistryHelper extends ProfileManagerProviderHelper<Regist
   public AttributeRegistryHelper(Context context)
   {
     super(context);
-    // TODO Auto-generated constructor stub
   }
 
   public static final String TABLE_REGISTRY = "registry";
@@ -48,6 +47,7 @@ public class AttributeRegistryHelper extends ProfileManagerProviderHelper<Regist
   public static final String COLUMN_REGISTRY_MENU = "_menu";
   public static final String COLUMN_REGISTRY_CLASS = "_class";
   public static final String COLUMN_REGISTRY_PARAM = "_param";
+  public static final String COLUMN_REGISTRY_ORDER = "_order";
 
   public static final String REGISTRY_DEFAULT_ORDER =
       COLUMN_REGISTRY_NAME + " desc, "
@@ -55,6 +55,7 @@ public class AttributeRegistryHelper extends ProfileManagerProviderHelper<Regist
           + COLUMN_REGISTRY_ACTIVE + ","
           + COLUMN_REGISTRY_CLASS + ","
           + COLUMN_REGISTRY_PARAM + ","
+          + COLUMN_REGISTRY_ORDER + ","
           + TABLE_REGISTRY + "." + COLUMN_REGISTRY_ID;
 
   // names for Intent values
@@ -116,7 +117,8 @@ public class AttributeRegistryHelper extends ProfileManagerProviderHelper<Regist
     String menu = c.getString(c.getColumnIndexOrThrow(COLUMN_REGISTRY_MENU));
     String clz = c.getString(c.getColumnIndexOrThrow(COLUMN_REGISTRY_CLASS));
     String param = c.getString(c.getColumnIndexOrThrow(COLUMN_REGISTRY_PARAM));
-    return new RegisteredAttribute(id, name, type, menu, active, clz, param);
+    int order = c.getInt(c.getColumnIndexOrThrow(COLUMN_REGISTRY_ORDER));
+    return new RegisteredAttribute(id, name, type, menu, active, clz, param, order);
   }
 
   // public final int deleteAttribute(long id)

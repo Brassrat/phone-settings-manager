@@ -80,7 +80,7 @@ public class AttributeRegistry
       @SuppressWarnings("unchecked")
       Class<AttributeBase> cl = (Class<AttributeBase>) Class.forName(clz);
       Method method = cl.getMethod("init", Context.class);
-      AttributeBase[] attrs = (AttributeBase[]) method.invoke(null, context);
+      ProfileAttribute[] attrs = (ProfileAttribute[]) method.invoke(null, context);
       register(context, attrs);
     }
     catch (Throwable t)
@@ -89,9 +89,9 @@ public class AttributeRegistry
     }
   }
 
-  static void register(Context context, AttributeBase[] attrs)
+  private static void register(Context context, ProfileAttribute[] attrs)
   {
-    for (AttributeBase attr : attrs)
+    for (ProfileAttribute attr : attrs)
     {
       registry.register(context, attr);
     }
@@ -151,7 +151,7 @@ public class AttributeRegistry
     for (Map.Entry<String, ProfileAttribute> mape : RegisteredAttributesByName.entrySet())
     {
       ProfileAttribute attr = mape.getValue();
-      attrMenu.add(NONE, attr.getTypeId(), NONE, attr.getNew(activity));
+      attrMenu.add(NONE, attr.getTypeId(), NONE, attr.getName(activity));
     }
     
     // add default menu entries...

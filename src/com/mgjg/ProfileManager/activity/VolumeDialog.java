@@ -47,22 +47,22 @@ public class VolumeDialog extends Activity
       switch (volumeType)
       {
       case AudioManager.STREAM_SYSTEM:
-        title = getString(R.string.system_textview);
+        title = getString(R.string.title_system);
         break;
       case AudioManager.STREAM_RING:
-        title = getString(R.string.ringer_textview);
+        title = getString(R.string.title_ringer);
         break;
       case AudioManager.STREAM_NOTIFICATION:
-        title = getString(R.string.notif_textview);
+        title = getString(R.string.title_notif);
         break;
       case AudioManager.STREAM_MUSIC:
-        title = getString(R.string.media_textview);
+        title = getString(R.string.title_media);
         break;
       case AudioManager.STREAM_VOICE_CALL:
-        title = getString(R.string.phonecall_textview);
+        title = getString(R.string.title_phonecall);
         break;
       case AudioManager.STREAM_ALARM:
-        title = getString(R.string.alarm_textview);
+        title = getString(R.string.title_alarm);
         break;
       }
 

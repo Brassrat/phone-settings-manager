@@ -5,13 +5,11 @@ import static android.media.AudioManager.VIBRATE_SETTING_ON;
 import android.content.Context;
 import android.media.AudioManager;
 
-import com.mgjg.ProfileManager.R;
-
 public final class NotificationVolumeAttribute extends SoundAttribute
 {
   NotificationVolumeAttribute()
   {
-    super(0, 0, 0, false, null);
+    super();
   }
 
   private NotificationVolumeAttribute(long attributeId, long aProfileId, int aVolume, boolean aVibrate, String settings)
@@ -32,53 +30,23 @@ public final class NotificationVolumeAttribute extends SoundAttribute
   }
 
   @Override
-  public int getNameResourceId()
+  public int getListOrder()
   {
-    return R.string.newAttribute_NotificationVolume;
+    return ORDER_AUDIO_NOTIFICATION;
   }
 
   @Override
-  public int getToastNameResourceId()
+  public int getSoundAttributeIndex()
   {
-    return R.string.toast_NotificationVolume;
+    return SOUND_ATTR_NOTIFICATION;
   }
 
-  @Override
-  public int getNewResourceId()
-  {
-    return R.id.newAttribute_NotificationVolume;
-  }
-
-  @Override
-  public int getTypeId()
-  {
-    return TYPE_AUDIO_NOTIFICATION;
-  }
-
-  @Override
-  public int getAudioStreamId()
-  {
-    return AudioManager.STREAM_NOTIFICATION;
-  }
-
-  @Override
-  protected int getVibrateType()
-  {
-    return AudioManager.VIBRATE_TYPE_NOTIFICATION;
-  }
-  
   @Override
   protected void activate(AudioManager audio)
   {
     audio.setStreamVolume(getAudioStreamId(), getNumber(), SET_VOL_FLAGS);
     audio.setVibrateSetting(getVibrateType(), (isBoolean() ? VIBRATE_SETTING_ON : VIBRATE_SETTING_OFF));
     // audio.setRingerMode(RINGER_MODE_NORMAL);
-  }
-
-  @Override
-  public boolean isSupportsBoolean()
-  {
-    return true;
   }
 
 }

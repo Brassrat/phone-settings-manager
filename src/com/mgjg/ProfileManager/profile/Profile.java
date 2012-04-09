@@ -98,64 +98,6 @@ public class Profile implements Listable
     this.active = active;
   }
 
-  // public List<ScheduleEntry> getSchedules()
-  // {
-  // if (null == schedules)
-  // {
-  // schedules = new ArrayList<ScheduleEntry>();
-  // }
-  // return schedules;
-  // }
-  //
-  // public void addSchedule(ScheduleEntry attr)
-  // {
-  // if (null == attr)
-  // {
-  // attr = ScheduleEntry.defaultSchedule(getId());
-  // }
-  // getSchedules().add(attr);
-  // }
-  //
-  // public void addSchedule(String timeStart)
-  // {
-  // ScheduleEntry attr = ScheduleEntry.defaultSchedule(getId(), timeStart);
-  // getSchedules().add(attr);
-  // }
-  //
-  // public void clearSchedules()
-  // {
-  // getSchedules().clear();
-  // }
-  //
-  // public void removeSchedule(ScheduleEntry attr)
-  // {
-  // getSchedules().remove(attr);
-  // }
-
-  // public List<ProfileAttribute> getAttributes()
-  // {
-  // if (null == attributes)
-  // {
-  // attributes = new ArrayList<ProfileAttribute>();
-  // }
-  // return attributes;
-  // }
-  //
-  // public void addAttribute(ProfileAttribute attr)
-  // {
-  // getAttributes().add(attr);
-  // }
-  //
-  // public void clearAttributes()
-  // {
-  // getAttributes().clear();
-  // }
-  //
-  // public void removeAttribute(ProfileAttribute attr)
-  // {
-  // getAttributes().remove(attr);
-  // }
-
   /**
    * Required for use in a ListAdapter; indicates that this is selectable and clickable
    * 
@@ -202,5 +144,24 @@ public class Profile implements Listable
     values.put(COLUMN_PROFILE_TYPE, getType());
     values.put(COLUMN_PROFILE_NAME, getName());
     return values;
+  }
+
+  @Override
+  public int compareTo(Listable another)
+  {
+    if (another instanceof Profile)
+    {
+      return name.compareTo(((Profile) another).name);
+    }
+    int thisOrder = getListOrder();
+    int othOrder = another.getListOrder();
+    // we know that thisOrder and othOrder are small integers so can just subtract to fulfill compareTo contract
+    return thisOrder - othOrder;
+  }
+
+  @Override
+  public int getListOrder()
+  {
+    return 0;
   }
 }

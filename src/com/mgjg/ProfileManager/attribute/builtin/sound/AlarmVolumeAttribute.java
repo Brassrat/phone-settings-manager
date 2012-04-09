@@ -1,16 +1,13 @@
 package com.mgjg.ProfileManager.attribute.builtin.sound;
 
 import android.content.Context;
-import android.media.AudioManager;
-
-import com.mgjg.ProfileManager.R;
 
 public final class AlarmVolumeAttribute extends SoundAttribute
 {
 
   AlarmVolumeAttribute()
   {
-    super(0, 0, 0, false, null);
+    super();
   }
 
   private AlarmVolumeAttribute(long aAttributeId, long aProfileId, int aVolume, boolean aVibrate, String settings)
@@ -31,33 +28,15 @@ public final class AlarmVolumeAttribute extends SoundAttribute
   }
 
   @Override
-  public int getNameResourceId()
+  public int getListOrder()
   {
-    return R.string.newAttribute_AlarmVolume;
+    return ORDER_AUDIO_ALARM;
   }
-
+  
   @Override
-  public int getToastNameResourceId()
+  public int getSoundAttributeIndex()
   {
-    return R.string.toast_AlarmVolume;
+    return SOUND_ATTR_ALARM;
   }
-
-  @Override
-  public int getNewResourceId()
-  {
-    return R.id.newAttribute_AlarmVolume;
-  }
-
-  @Override
-  public int getTypeId()
-  {
-    return TYPE_AUDIO_ALARM;
-  }
-
-  @Override
-  public int getAudioStreamId()
-  {
-    return AudioManager.STREAM_ALARM;
-  }
-
+  
 }
