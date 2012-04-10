@@ -35,28 +35,13 @@ public class Profile implements Listable
   private final int type;
   private boolean active;
 
-  // private List<ScheduleEntry> schedules;
-  // private List<ProfileAttribute> attributes;
-
   public Profile(long id, String name, int type, boolean active)
   {
     this.id = id;
     this.name = name;
     this.type = type;
     this.active = active;
-    // this.schedules = schedules;
-    // this.attributes = attributes;
   }
-
-  // public Profile(long id, String name, int type, boolean active, List<ScheduleEntry> schedules, List<ProfileAttribute> attributes)
-  // {
-  // this.id = id;
-  // this.name = name;
-  // this.type = type;
-  // this.active = active;
-  // this.schedules = schedules;
-  // this.attributes = attributes;
-  // }
 
   /**
    * @return the id
@@ -139,7 +124,6 @@ public class Profile implements Listable
   {
     ContentValues values = new ContentValues();
 
-    // profile.setActive(true);
     values.put(COLUMN_PROFILE_ACTIVE, isActive() ? "1" : "0");
     values.put(COLUMN_PROFILE_TYPE, getType());
     values.put(COLUMN_PROFILE_NAME, getName());

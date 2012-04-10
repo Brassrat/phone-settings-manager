@@ -16,7 +16,6 @@
 package com.mgjg.ProfileManager.provider;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import android.content.ContentValues;
@@ -131,8 +130,6 @@ public abstract class ProfileManagerProviderHelper<T extends Listable>
   }
 
   public abstract ListAdapter<T> createListAdapter(int filter, Object... value);
-
-  // public abstract ListAdapter<T> createListAdapter(Context context, Uri uri);
 
   /**
    * fill list using query cursor

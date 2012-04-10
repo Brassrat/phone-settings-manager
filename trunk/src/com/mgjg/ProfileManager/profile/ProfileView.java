@@ -39,13 +39,13 @@ import com.mgjg.ProfileManager.utils.Util;
  */
 public final class ProfileView extends LinearLayout
 {
-  
+
   // ids for elements of view which are dynamically created
   // since all of the elements are dynamic we can choose any values we want
   private static final int PROFILE_ACTIVE_ID = 1000;
   private static final int PROFILE_NAME_ID = 1001;
   private static final int PROFILE_NEXT_START_TIME_ID = 1002;
-  
+
   /**
    * @param context
    * @param schedule
@@ -72,42 +72,39 @@ public final class ProfileView extends LinearLayout
     TextView name = new TextView(context);
     name.setId(PROFILE_NAME_ID);
 
-    float zz = name.getTextSize();
+    float zz = name.getTextSize();  // change to preference
     name.setPadding(2, 2, 2, 2);
-    // int hh = tb.getHeight();
     name.setTextSize(zz);
     name.setGravity(Gravity.LEFT);
     // name.setLayoutParams(paramsFillWrap);
 
-    TextView blanks = new TextView(context);
-    blanks.setPadding(2, 2, 2, 2);
-    blanks.setText("   ");
-    blanks.setTextSize(zz);
-
+//    TextView blanks = new TextView(context);
+//    blanks.setPadding(2, 2, 2, 2);
+//    blanks.setText("   ");
+//    blanks.setTextSize(zz);
 
     TextView next = new TextView(context);
-    blanks.setPadding(10, 2, 10, 2);
+    next.setPadding(2, 2, 10, 2);
     next.setId(PROFILE_NEXT_START_TIME_ID);
     next.setTextSize(zz);
-    next.setGravity(Gravity.RIGHT);
-    //next.setMinWidth((int) (zz*10));
-    
+//    next.setGravity(Gravity.RIGHT);
+
     TableRow profileRow = new TableRow(context);
     profileRow.addView(cb);
     profileRow.addView(name);
-    profileRow.addView(blanks);
-    
+//    profileRow.addView(blanks);
+
     TableRow.LayoutParams right = new TableRow.LayoutParams(
         TableRow.LayoutParams.FILL_PARENT,
         TableRow.LayoutParams.WRAP_CONTENT);
-    right.gravity = Gravity.RIGHT+Gravity.CENTER_VERTICAL;
-    
+    right.gravity = Gravity.RIGHT + Gravity.CENTER_VERTICAL;
+
     profileRow.addView(next, right);
 
     TableLayout tableLayout = new TableLayout(context);
     tableLayout.setId((int) profile.getId());
     tableLayout.addView(profileRow);
-    tableLayout.setColumnStretchable(3, true);
+    tableLayout.setColumnStretchable(2, true);
     addView(tableLayout, paramsFillWrap);
 
     ScheduleHelper.init(context);

@@ -227,6 +227,7 @@ public class ProfileEdit extends Activity
   @Override
   protected void onActivityResult(int requestCode, int resultCode, Intent data)
   {
+    data.putExtra(INTENT_ATTRIBUTE_PROFILE_ID, profileId);
     super.onActivityResult(requestCode, resultCode, data);
   }
 
@@ -409,6 +410,6 @@ public class ProfileEdit extends Activity
   {
     // stop the current 'activity' i.e., exit without saving
     setResult(RESULT_CANCELED);
-    super.finish();
+    finish();
   }
 }

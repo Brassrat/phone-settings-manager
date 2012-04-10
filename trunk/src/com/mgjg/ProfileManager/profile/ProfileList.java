@@ -34,6 +34,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.Button;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import com.mgjg.ProfileManager.R;
@@ -102,9 +103,9 @@ public final class ProfileList extends ListActivity
     Intent ii = new Intent(this, ProfileEdit.class)
         .putExtra(INTENT_PROFILE_ID, profileId);
     startActivityForResult(ii, ACTIVITY_EDIT);
-    registerProfile(profileId);
+    // registerProfile(profileId);
   }
-  
+
   private void registerProfile(long profileId)
   {
     if (profileId > 0)
@@ -150,6 +151,16 @@ public final class ProfileList extends ListActivity
   {
     super.onCreateContextMenu(menu, vv, menuInfo);
     getMenuInflater().inflate(R.menu.profilelist_context, menu);
+    MenuItem item = menu.findItem(R.id.toggleProfile);
+    if (null != item)
+    {
+      AdapterContextMenuInfo info = (AdapterContextMenuInfo) menuInfo;
+      ListAdapter la = getListAdapter();
+      Profile pp = (Profile) la.getItem(info.position);
+      CharSequence menuTitle = this.getText(pp.isEnabled() ? R.string.disable : R.string.enable);
+      item.setTitle(menuTitle);
+      item.setTitleCondensed(menuTitle);
+    }
   }
 
   /*
@@ -162,7 +173,7 @@ public final class ProfileList extends ListActivity
   {
     AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
     ScheduleHelper schedHelper = new ScheduleHelper(this);
-    List<ScheduleEntry> schedules ;
+    List<ScheduleEntry> schedules;
     switch (item.getItemId())
     {
     case R.id.editProfile:
@@ -226,7 +237,7 @@ public final class ProfileList extends ListActivity
     case R.id.newProfile:
       newProfile();
       return true;
-      
+
     case R.id.applySettings:
       new ScheduleHelper(this).registerAlarm();
       return true;
@@ -280,10 +291,13 @@ public final class ProfileList extends ListActivity
   {
     super.onActivityResult(requestCode, resultCode, data);
 
-    if (resultCode == RESULT_OK &&
-        (requestCode == ACTIVITY_EDIT || requestCode == ACTIVITY_CREATE))
+    if (requestCode == ACTIVITY_EDIT || requestCode == ACTIVITY_CREATE)
     {
-
+      if (null != data)
+      {
+        long profileId = data.getLongExtra(INTENT_PROFILE_ID, 0);
+        registerProfile(profileId);
+      }
     }
 
     fillData();
