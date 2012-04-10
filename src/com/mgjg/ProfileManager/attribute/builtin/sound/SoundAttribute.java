@@ -708,12 +708,12 @@ public abstract class SoundAttribute extends AttributeBase implements Comparable
   }
 
   private static final int vibrateType[] = {
-      0,
+      -1,
       AudioManager.VIBRATE_TYPE_RINGER,
-      0,
+      -1,
       AudioManager.VIBRATE_TYPE_NOTIFICATION,
-      0,
-      0 };
+      -1,
+      -1 };
 
   /**
    * returns AudioManager VIBRATE_TYPE_XXX value appropriate for this Sound Attribute
@@ -728,7 +728,7 @@ public abstract class SoundAttribute extends AttributeBase implements Comparable
   @Override
   public final boolean isSupportsBoolean()
   {
-    return getVibrateType() != 0;
+    return (getVibrateType() >= 0);
   }
 
   protected final static int ORDER_AUDIO_SYSTEM = 1;

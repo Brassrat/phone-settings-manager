@@ -194,7 +194,7 @@ public final class ScheduleHelper extends ProfileManagerProviderHelper<ScheduleE
     for (ScheduleEntry schedule : schedules)
     {
       // clear all alarms for this profile
-      setAlarm(schedule.getId(), false);
+      setAlarm(false, false, schedule.getId());
     }
     return schedules.size();
   }

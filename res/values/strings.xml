@@ -24,6 +24,9 @@
     <!-- Preferences -->
     <string name="ShownStartup">ShownStartup</string>
     <string name="ShownVolumeCouplingWarning">ShownVolumeCouplingWarning</string>
+    <string name="ShowToasts">ShowToasts</string>
+    <string name="ShowStartupNotifications">ShowStartupNotfications</string>
+    <string name="ShowNotifications">ShowNotfications</string>
 
     <!-- Vibrate Settings -->
     <string name="notification_vibrate">Notification Settings</string>
@@ -37,15 +40,6 @@
     <string name="ring_vibrate">May Ring, May Vibrate</string>
     <string name="vibrate_only">Vibrate Only</string>
     <string name="silent">Silent</string>
-    
-    <!-- Attribute View Settings 
-    <string name="VolumeSettingSystem">System Volume: </string>
-    <string name="VolumeSettingRinger">Ringer Volume: </string>
-    <string name="VolumeSettingNotification">Notification Volume: </string>
-    <string name="VolumeSettingMedia">Media Volume: </string>
-    <string name="VolumeSettingAlarm">Alarm Volume: </string>
-    <string name="VolumeSettingInCall">In-Call Volume: </string>
-    -->
     
     <!-- Attributes -->
     <string name="newAttributeList">New Attribute List</string>
@@ -61,6 +55,8 @@
     <string name="deleteSchedule">Delete</string>
     <string name="editSchedule">Edit</string>
     <string name="toggleSchedule">Toggle Active/Inactive</string>
+    <string name="enableSchedule">Enable</string>
+    <string name="disableSchedule">Disable</string>
     <string name="applySettings">Apply Settings</string>
     
     <string name="day0">Sun</string>
@@ -97,6 +93,8 @@
     <string name="profileNameLabel">Name:</string>
     <string name="profileEdit">Edit Profile</string>
     <string name="toggleProfile">Toggle Active/Inactive</string>
+    <string name="enableProfile">Enable Profile</string>
+    <string name="disableProfile">Disable Profile</string>
     <string name="newProfile">New Profile</string>
     <string name="editProfiles">Edit Profiles</string>
     <string name="profiles">Profiles</string>
@@ -121,10 +119,10 @@
     <string name="disabled">Disabled</string>
 
     <string name="disableProfiles">Enable/Disable</string>
-    <string name="disable">disable</string>
-    <string name="enable">enable</string>
-    <string name="mute">mute</string>
-    <string name="unmute">unmute</string>
+    <string name="disable">Disable</string>
+    <string name="enable">Enable</string>
+    <string name="mute">Mute</string>
+    <string name="unmute">Unmute</string>
     
     <!--  Builtin Attributes -->
     <string name="title_system">System Volume</string>

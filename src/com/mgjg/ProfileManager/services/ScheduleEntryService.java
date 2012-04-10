@@ -107,27 +107,34 @@ public final class ScheduleEntryService extends IntentService
 
   private void sendToast(NotificationManager notificationManager, CharSequence toast)
   {
-    if (toast.length() > 0)
+    Context context = getApplicationContext();
+    if ((toast.length() > 0))
     {
-      Toast.makeText(this, "Profile Manager: " + toast, Toast.LENGTH_LONG).show();
-      int icon = R.drawable.toast;
-      CharSequence tickerText = "Profile Manager";
-      long when = System.currentTimeMillis();
+      if (Util.isBooleanPref(context, R.string.ShowToasts, true))
+      {
+        Toast.makeText(context, "Profile Manager: " + toast, Toast.LENGTH_LONG).show();
+      }
+      if (Util.isBooleanPref(context, R.string.ShowNotifications, true))
+      {
+        int icon = R.drawable.toast;
+        CharSequence tickerText = "Profile Manager";
+        long when = System.currentTimeMillis();
 
-      Notification notification = new Notification(icon, tickerText, when);
-      notification.flags |= Notification.FLAG_AUTO_CANCEL;
+        Notification notification = new Notification(icon, tickerText, when);
+        notification.flags |= Notification.FLAG_AUTO_CANCEL;
 
-      Context context = getApplicationContext();
-      CharSequence contentTitle = "Profile Manager";
-      CharSequence contentText = toast;
-      Intent notificationIntent = new Intent(this, ToastNotification.class);
-      notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-      notificationIntent.setAction("com.mgjg.ProfileManager.TOAST");
-      PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
+        CharSequence contentTitle = "Profile Manager";
+        CharSequence contentText = toast;
+        Intent notificationIntent = new Intent(this, ToastNotification.class);
+        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        notificationIntent.setAction("com.mgjg.ProfileManager.TOAST");
+        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, new Intent(), 
+            PendingIntent.FLAG_ONE_SHOT + PendingIntent.FLAG_UPDATE_CURRENT);
 
-      notification.setLatestEventInfo(context, contentTitle, contentText, contentIntent);
+        notification.setLatestEventInfo(context, contentTitle, contentText, contentIntent);
 
-      notificationManager.notify(ToastNotification.TOAST_ID, notification);
+        notificationManager.notify(ToastNotification.TOAST_ID, notification);
+      }
     }
   }
 }
