@@ -26,7 +26,7 @@ import com.mgjg.ProfileManager.registry.AttributeRegistry;
 import com.mgjg.ProfileManager.services.UnknownServiceException;
 import com.mgjg.ProfileManager.utils.AttributeTableLayout;
 
-public abstract class XmitAttribute extends AttributeBase
+public abstract class BooleanAttributeBase extends AttributeBase
 {
 
   private static String makeRegistryJSON(Context context, String serviceName, int typeId, String name, int order)
@@ -64,12 +64,12 @@ public abstract class XmitAttribute extends AttributeBase
 
   private CheckBox createCheckBox;
 
-  protected XmitAttribute()
+  protected BooleanAttributeBase()
   {
     super(0, 0, 0, false, "");
   }
 
-  protected XmitAttribute(long attributeId, long profileId, int intValue, boolean booleanValue, String settings)
+  protected BooleanAttributeBase(long attributeId, long profileId, int intValue, boolean booleanValue, String settings)
   {
     super(attributeId, profileId, intValue, booleanValue, settings);
   }
