@@ -8,7 +8,7 @@ import android.content.Context;
 import com.mgjg.ProfileManager.services.BooleanService;
 import com.mgjg.ProfileManager.services.UnknownServiceException;
 
-public class JSONBooleanAttribute extends XmitAttribute
+public class JSONBooleanAttribute extends BooleanAttributeBase
 {
   private final BooleanService service;
   private final int typeId;
