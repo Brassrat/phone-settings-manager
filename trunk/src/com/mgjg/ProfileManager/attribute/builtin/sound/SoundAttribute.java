@@ -32,6 +32,7 @@ import java.util.List;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.media.AudioManager;
 import android.view.Gravity;
@@ -50,6 +51,7 @@ import com.mgjg.ProfileManager.attribute.AttributeBase;
 import com.mgjg.ProfileManager.attribute.AttributeEdit;
 import com.mgjg.ProfileManager.attribute.AttributeView;
 import com.mgjg.ProfileManager.attribute.ProfileAttribute;
+import com.mgjg.ProfileManager.provider.AttributeRegistryProvider;
 import com.mgjg.ProfileManager.registry.AttributeRegistry;
 import com.mgjg.ProfileManager.utils.AttributeTableLayout;
 import com.mgjg.ProfileManager.utils.Listable;
@@ -632,6 +634,8 @@ public abstract class SoundAttribute extends AttributeBase implements Comparable
 
     // put everything back to their previous values
     audio.setRingerMode(ringerMode);
+    audio.setVibrateSetting(VIBRATE_TYPE_RINGER, ringVibType);
+    audio.setVibrateSetting(VIBRATE_TYPE_NOTIFICATION, notifVibType);
     audio.setStreamVolume(STREAM_RING, ringVol, 0);
     audio.setStreamVolume(STREAM_NOTIFICATION, notifVol, 0);
 
@@ -745,5 +749,19 @@ public abstract class SoundAttribute extends AttributeBase implements Comparable
     int othOrder = another.getListOrder();
     // we know that thisOrder and othOrder are small integers so can just subtract to fulfill compareTo contract
     return thisOrder - othOrder;
+  }
+
+  private final static String soundName[] = { "System", "Ring", "Alarm", "Notification", "Call", "Media" };
+  private static final int soundIndexes[] = { SOUND_ATTR_SYSTEM, SOUND_ATTR_RING, SOUND_ATTR_ALARM, SOUND_ATTR_NOTIFICATION, SOUND_ATTR_VOICE_CALL, SOUND_ATTR_MUSIC };
+  private final static int soundOrder[] = { ORDER_AUDIO_SYSTEM, ORDER_AUDIO_RING, ORDER_AUDIO_ALARM, ORDER_AUDIO_NOTIFICATION, ORDER_AUDIO_VOICE_CALL, ORDER_AUDIO_MUSIC };
+
+  public static void addRegistryEntries(SQLiteDatabase db)
+  {
+    for (int xx : soundIndexes)
+    {
+      @SuppressWarnings("unused")
+      long ll = AttributeRegistryProvider.addRegistryEntry(db, soundName[xx], typeId[xx],
+          "com.mgjg.ProfileManager.attribute.builtin.sound.SoundAttribute", "", soundOrder[xx]);
+    }
   }
 }

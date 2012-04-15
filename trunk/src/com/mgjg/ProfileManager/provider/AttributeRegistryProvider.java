@@ -19,6 +19,7 @@ import static com.mgjg.ProfileManager.provider.AttributeRegistryHelper.COLUMN_RE
 import static com.mgjg.ProfileManager.provider.AttributeRegistryHelper.COLUMN_REGISTRY_CLASS;
 import static com.mgjg.ProfileManager.provider.AttributeRegistryHelper.COLUMN_REGISTRY_ID;
 import static com.mgjg.ProfileManager.provider.AttributeRegistryHelper.COLUMN_REGISTRY_NAME;
+import static com.mgjg.ProfileManager.provider.AttributeRegistryHelper.COLUMN_REGISTRY_ORDER;
 import static com.mgjg.ProfileManager.provider.AttributeRegistryHelper.COLUMN_REGISTRY_PARAM;
 import static com.mgjg.ProfileManager.provider.AttributeRegistryHelper.COLUMN_REGISTRY_TYPE;
 import static com.mgjg.ProfileManager.provider.AttributeRegistryHelper.FILTER_REGISTRY_ID;
@@ -36,6 +37,8 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 
+import com.mgjg.ProfileManager.attribute.builtin.sound.SoundAttribute;
+import com.mgjg.ProfileManager.attribute.builtin.xmit.XmitAttribute;
 import com.mgjg.ProfileManager.profile.Profile;
 
 /**
@@ -52,10 +55,11 @@ public class AttributeRegistryProvider extends ProfileManagerProvider<Profile>
       + TABLE_REGISTRY + " ("
       + COLUMN_REGISTRY_ID + " integer primary key autoincrement, "
       + COLUMN_REGISTRY_NAME + " text not null, " // unique
-      + COLUMN_REGISTRY_TYPE + " integer not null default 0, "
+      + COLUMN_REGISTRY_TYPE + " integer not null default 0 unique, "
       + COLUMN_REGISTRY_ACTIVE + " integer not null default 1, "
       + COLUMN_REGISTRY_CLASS + " text not null, "
-      + COLUMN_REGISTRY_PARAM + " text not null"
+      + COLUMN_REGISTRY_PARAM + " text not null, "
+      + COLUMN_REGISTRY_ORDER + " integer not null default 0"
       + ");";
 
   // expose a URI for our data
@@ -231,8 +235,26 @@ public class AttributeRegistryProvider extends ProfileManagerProvider<Profile>
     db.execSQL(TABLE_REGISTRY_CREATE);
   }
 
+  public static long addRegistryEntry(SQLiteDatabase db, String name, int type, String clz, String param, int order)
+  {
+    ContentValues values = new ContentValues();
+    // values.put(COLUMN_REGISTRY_ID, id);
+    values.put(COLUMN_REGISTRY_NAME, name);
+    values.put(COLUMN_REGISTRY_TYPE, type);
+    values.put(COLUMN_REGISTRY_ACTIVE, true);
+    values.put(COLUMN_REGISTRY_CLASS, clz);
+    values.put(COLUMN_REGISTRY_PARAM, param);
+    values.put(COLUMN_REGISTRY_ORDER, order);
+    return db.insert(TABLE_REGISTRY, null, values);
+  }
+
   public static void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
   {
-
+    if ((oldVersion < 2) && (newVersion > 1))
+    {
+      db.execSQL("ALTER TABLE " + TABLE_REGISTRY + " ADD COLUMN " + COLUMN_REGISTRY_ORDER + " integer not null default 0;");
+      XmitAttribute.addRegistryEntries(db);
+      SoundAttribute.addRegistryEntries(db);
+    }
   }
 }

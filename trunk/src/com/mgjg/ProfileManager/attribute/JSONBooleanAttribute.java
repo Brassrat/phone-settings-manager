@@ -1,4 +1,4 @@
-package com.mgjg.ProfileManager.attribute.builtin.xmit;
+package com.mgjg.ProfileManager.attribute;
 
 import org.json.JSONException;
 import org.json.JSONObject;

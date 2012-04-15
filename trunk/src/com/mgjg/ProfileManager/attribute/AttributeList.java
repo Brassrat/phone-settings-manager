@@ -274,7 +274,7 @@ public class AttributeList extends ListActivity
   {
     super.onActivityResult(requestCode, resultCode, data);
 
-    if (resultCode == RESULT_OK && (requestCode == ACTIVITY_EDIT || requestCode == ACTIVITY_CREATE))
+    if (resultCode != RESULT_CANCELED && (requestCode == ACTIVITY_EDIT || requestCode == ACTIVITY_CREATE))
     {
       @SuppressWarnings("unused")
       long profileId = data.getLongExtra(INTENT_ATTRIBUTE_PROFILE_ID, 0);
