@@ -28,6 +28,7 @@ import java.util.List;
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -275,10 +276,12 @@ public class AttributeEdit extends Activity
       {
         saveState();
       }
-
+      AttributeHelper helper = new AttributeHelper(this);
+      Uri data = helper.getContentUri(FILTER_ATTRIBUTE_ID, attributeId);
       setResult(RESULT_OK,
           new Intent().putExtra(INTENT_ATTRIBUTE_ID, attributeId)
-              .putExtra(INTENT_ATTRIBUTE_PROFILE_ID, profileId));
+              .putExtra(INTENT_ATTRIBUTE_PROFILE_ID, profileId)
+              .setData(data));
     }
 
     super.finish();

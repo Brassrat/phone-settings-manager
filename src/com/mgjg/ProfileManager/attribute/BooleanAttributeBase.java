@@ -1,15 +1,12 @@
-package com.mgjg.ProfileManager.attribute.builtin.xmit;
+package com.mgjg.ProfileManager.attribute;
 
 import java.util.List;
-
-import org.json.JSONException;
 
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.IntentFilter;
 import android.graphics.Color;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,46 +16,10 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.mgjg.ProfileManager.R;
-import com.mgjg.ProfileManager.attribute.AttributeBase;
-import com.mgjg.ProfileManager.attribute.AttributeView;
-import com.mgjg.ProfileManager.attribute.ProfileAttribute;
-import com.mgjg.ProfileManager.registry.AttributeRegistry;
-import com.mgjg.ProfileManager.services.UnknownServiceException;
 import com.mgjg.ProfileManager.utils.AttributeTableLayout;
 
 public abstract class BooleanAttributeBase extends AttributeBase
 {
-
-  private static String makeRegistryJSON(Context context, String serviceName, int typeId, String name, int order)
-  {
-    return String.format("{ \"service\" : \"%1$s\", \"id\" : \"%2$d\", \"name\" : \"%3$s\", \"order\" : \"%4$d\"}",
-        serviceName, AttributeRegistry.TYPE_XMIT + typeId, name, order);
-  }
-
-  public static ProfileAttribute[] init(Context context)
-  {
-    try
-    {
-      // hard-coded registry entries for now ...
-      JSONBooleanAttribute AIRPLANE = new JSONBooleanAttribute(context,
-          makeRegistryJSON(context, "AirPlane", 0, context.getString(R.string.title_airplane), 10));
-      JSONBooleanAttribute WIFI = new JSONBooleanAttribute(context,
-          makeRegistryJSON(context, "WiFi", 1, context.getString(R.string.title_wifi), 11));
-      JSONBooleanAttribute MOBILE_DATA = new JSONBooleanAttribute(context,
-          makeRegistryJSON(context, "MobileData", 2, context.getString(R.string.title_mobiledata), 12));
-      return new ProfileAttribute[] { AIRPLANE, WIFI, MOBILE_DATA };
-    }
-    catch (JSONException e)
-    {
-      Log.e("com.mgjg.ProfileManager", "Unable to initialize Xmit Attributes: " + e.getMessage());
-      return new ProfileAttribute[0];
-    }
-    catch (UnknownServiceException e)
-    {
-      Log.e("com.mgjg.ProfileManager", "Unable to initialize Xmit Attributes: " + e.getMessage());
-      return new ProfileAttribute[0];
-    }
-  }
 
   private CheckBox viewCheckBox;
 

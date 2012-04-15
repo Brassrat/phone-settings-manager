@@ -7,6 +7,7 @@ import static com.mgjg.ProfileManager.provider.AttributeRegistryHelper.COLUMN_RE
 import static com.mgjg.ProfileManager.provider.AttributeRegistryHelper.COLUMN_REGISTRY_NAME;
 import static com.mgjg.ProfileManager.provider.AttributeRegistryHelper.COLUMN_REGISTRY_PARAM;
 import static com.mgjg.ProfileManager.provider.AttributeRegistryHelper.COLUMN_REGISTRY_TYPE;
+import static com.mgjg.ProfileManager.provider.AttributeRegistryHelper.COLUMN_REGISTRY_ORDER;
 
 import java.lang.reflect.Constructor;
 
@@ -74,6 +75,7 @@ public class RegisteredAttribute implements Viewable<RegisteredAttribute>
     values.put(COLUMN_REGISTRY_ACTIVE, active);
     values.put(COLUMN_REGISTRY_CLASS, className);
     values.put(COLUMN_REGISTRY_PARAM, params);
+    values.put(COLUMN_REGISTRY_ORDER, order);
     return values;
   }
 
