@@ -233,6 +233,8 @@ public class AttributeRegistryProvider extends ProfileManagerProvider<Profile>
   public static void createTable(SQLiteDatabase db) throws SQLException
   {
     db.execSQL(TABLE_REGISTRY_CREATE);
+    XmitAttribute.addRegistryEntries(db);
+    SoundAttribute.addRegistryEntries(db);
   }
 
   public static long addRegistryEntry(SQLiteDatabase db, String name, int type, String clz, String param, int order)
