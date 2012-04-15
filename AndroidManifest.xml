@@ -19,7 +19,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.mgjg.ProfileManager"
     android:versionCode="2"
-    android:versionName="2.0.02">
+    android:versionName="2.0.04">
 
     <uses-sdk android:minSdkVersion="10" />
 

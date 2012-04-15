@@ -54,8 +54,8 @@ public class XmitAttribute extends JSONBooleanAttribute
 
   public static void addRegistryEntries(SQLiteDatabase db)
   {
-    @SuppressWarnings("unused")
     String param = makeRegistryJSON(null, "AirPlane", AttributeRegistry.TYPE_XMIT + 0, "AirPlane", 10);
+    @SuppressWarnings("unused")
     long ll = AttributeRegistryProvider.addRegistryEntry(db, "AirPlane", AttributeRegistry.TYPE_XMIT + 0,
         "com.mgjg.ProfileManager.attribute.builtin.xmit.XmitAttribute", param, 10);
     param = makeRegistryJSON(null, "WiFi", AttributeRegistry.TYPE_XMIT + 1, "WiFi", 11);
