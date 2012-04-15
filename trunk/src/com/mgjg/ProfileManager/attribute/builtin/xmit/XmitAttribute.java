@@ -40,7 +40,7 @@ public class XmitAttribute extends JSONBooleanAttribute
       return new ProfileAttribute[0];
     }
   }
-  
+
   public XmitAttribute(Context context, String registryDefinition) throws JSONException, UnknownServiceException
   {
     super(context, registryDefinition);
@@ -51,12 +51,18 @@ public class XmitAttribute extends JSONBooleanAttribute
     return String.format("{ \"service\" : \"%1$s\", \"id\" : \"%2$d\", \"name\" : \"%3$s\", \"order\" : \"%4$d\"}",
         serviceName, AttributeRegistry.TYPE_XMIT + typeId, name, order);
   }
-  
+
   public static void addRegistryEntries(SQLiteDatabase db)
   {
     @SuppressWarnings("unused")
-    long ll = AttributeRegistryProvider.addRegistryEntry(db, "AirPlane", AttributeRegistry.TYPE_XMIT + 0, "com.mgjg.ProfileManager.attribute.builtin.xmit.XmitAttribute", "", 10);
-    ll = AttributeRegistryProvider.addRegistryEntry(db, "WiFi", AttributeRegistry.TYPE_XMIT + 1, "com.mgjg.ProfileManager.attribute.builtin.xmit.XmitAttribute", "", 11);
-    ll = AttributeRegistryProvider.addRegistryEntry(db, "MobileData", AttributeRegistry.TYPE_XMIT + 2, "com.mgjg.ProfileManager.attribute.builtin.xmit.XmitAttribute", "", 12);
+    String param = makeRegistryJSON(null, "AirPlane", AttributeRegistry.TYPE_XMIT + 0, "AirPlane", 10);
+    long ll = AttributeRegistryProvider.addRegistryEntry(db, "AirPlane", AttributeRegistry.TYPE_XMIT + 0,
+        "com.mgjg.ProfileManager.attribute.builtin.xmit.XmitAttribute", param, 10);
+    param = makeRegistryJSON(null, "WiFi", AttributeRegistry.TYPE_XMIT + 1, "WiFi", 11);
+    ll = AttributeRegistryProvider.addRegistryEntry(db, "WiFi", AttributeRegistry.TYPE_XMIT + 1,
+        "com.mgjg.ProfileManager.attribute.builtin.xmit.XmitAttribute", param, 11);
+    param = makeRegistryJSON(null, "MobileData", AttributeRegistry.TYPE_XMIT + 2, "MobileData", 12);
+    ll = AttributeRegistryProvider.addRegistryEntry(db, "MobileData", AttributeRegistry.TYPE_XMIT + 2,
+        "com.mgjg.ProfileManager.attribute.builtin.xmit.XmitAttribute", param, 12);
   }
 }
