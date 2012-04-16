@@ -12,10 +12,12 @@ package com.mgjg.ProfileManager.registry;
 
 import static android.view.Menu.NONE;
 import static com.mgjg.ProfileManager.provider.AttributeHelper.COLUMN_ATTRIBUTE_TYPE;
+import static com.mgjg.ProfileManager.provider.ProfileManagerProvider.FILTER_ALL_ACTIVE;
 
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -31,6 +33,7 @@ import com.mgjg.ProfileManager.attribute.AttributeBase;
 import com.mgjg.ProfileManager.attribute.ProfileAttribute;
 import com.mgjg.ProfileManager.attribute.ProfileAttributeFactoryImpl;
 import com.mgjg.ProfileManager.provider.AttributeHelper;
+import com.mgjg.ProfileManager.provider.AttributeRegistryHelper;
 
 public class AttributeRegistry
 {
@@ -60,16 +63,22 @@ public class AttributeRegistry
   {
     if (!initialized)
     {
-      initialized = true;
       AttributeHelper.setProfileAttributeFactory(ProfileAttributeFactoryImpl.createProfileAttributeFactory(context));
       // todo read registry data from table, for now just initialize the know builtin attributes
-      for (String clz : new String[] {
-          "com.mgjg.ProfileManager.attribute.builtin.sound.SoundAttribute",
-          "com.mgjg.ProfileManager.attribute.builtin.xmit.XmitAttribute"} )
+      AttributeRegistryHelper helper = new AttributeRegistryHelper(context);
+      List<RegisteredAttribute> aa = helper.getList(FILTER_ALL_ACTIVE);
+      for (RegisteredAttribute ra : aa)
       {
-        register(context, clz);
+        Log.v("com.mgjg.ProfileManager", "Processing registered attribute " + ra.getId());
+        ra.register(context, registry);
       }
-
+//      for (String clz : new String[] {
+//          "com.mgjg.ProfileManager.attribute.builtin.sound.SoundAttribute",
+//          "com.mgjg.ProfileManager.attribute.builtin.xmit.XmitAttribute" })
+//      {
+//        register(context, clz);
+//      }
+      initialized = true;
     }
   }
 
@@ -121,7 +130,7 @@ public class AttributeRegistry
   {
     return RegisteredAttributesByType.containsKey(type);
   }
-  
+
   public synchronized ProfileAttribute getAttribute(int type) throws UnknownAttributeException
   {
     if (isType(type))
@@ -153,7 +162,7 @@ public class AttributeRegistry
       ProfileAttribute attr = mape.getValue();
       attrMenu.add(NONE, attr.getTypeId(), NONE, attr.getName(activity));
     }
-    
+
     // add default menu entries...
     menu.add(NONE, R.id.done, NONE, activity.getString(R.string.done));
   }

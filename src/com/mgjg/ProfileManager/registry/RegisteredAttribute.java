@@ -3,16 +3,16 @@ package com.mgjg.ProfileManager.registry;
 import static com.mgjg.ProfileManager.provider.AttributeRegistryHelper.COLUMN_REGISTRY_ACTIVE;
 import static com.mgjg.ProfileManager.provider.AttributeRegistryHelper.COLUMN_REGISTRY_CLASS;
 import static com.mgjg.ProfileManager.provider.AttributeRegistryHelper.COLUMN_REGISTRY_ID;
-import static com.mgjg.ProfileManager.provider.AttributeRegistryHelper.COLUMN_REGISTRY_MENU;
 import static com.mgjg.ProfileManager.provider.AttributeRegistryHelper.COLUMN_REGISTRY_NAME;
+import static com.mgjg.ProfileManager.provider.AttributeRegistryHelper.COLUMN_REGISTRY_ORDER;
 import static com.mgjg.ProfileManager.provider.AttributeRegistryHelper.COLUMN_REGISTRY_PARAM;
 import static com.mgjg.ProfileManager.provider.AttributeRegistryHelper.COLUMN_REGISTRY_TYPE;
-import static com.mgjg.ProfileManager.provider.AttributeRegistryHelper.COLUMN_REGISTRY_ORDER;
 
 import java.lang.reflect.Constructor;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import android.view.Gravity;
 import android.widget.CheckBox;
@@ -21,6 +21,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.mgjg.ProfileManager.attribute.ProfileAttribute;
+import com.mgjg.ProfileManager.provider.AttributeRegistryProvider;
 import com.mgjg.ProfileManager.utils.Listable;
 import com.mgjg.ProfileManager.utils.Viewable;
 
@@ -30,31 +31,29 @@ public class RegisteredAttribute implements Viewable<RegisteredAttribute>
   private long id;
   private String name;
   private int type;
-  private String menu;
   private boolean active;
   private final String className;
   private final String params;
   private final int order;
 
-  public RegisteredAttribute(long id, String name, int type, String menu, boolean active, String className, String params, int order)
+  public RegisteredAttribute(long id, String name, int type, boolean active, String className, String params, int order)
   {
     this.id = id;
     this.name = name;
     this.type = type;
-    this.menu = menu;
     this.active = active;
     this.className = className;
     this.params = params;
     this.order = order;
   }
 
-  public ProfileAttribute createInstance()
+  public ProfileAttribute createInstance(Context context)
   {
     try
     {
       Class<?> clz = Class.forName(className);
-      Constructor<?> construct = clz.getConstructor(String.class);
-      return (ProfileAttribute) construct.newInstance(params);
+      Constructor<?> construct = clz.getConstructor(Context.class, String.class);
+      return (ProfileAttribute) construct.newInstance(context, params);
     }
     catch (Exception e)
     {
@@ -71,11 +70,39 @@ public class RegisteredAttribute implements Viewable<RegisteredAttribute>
     values.put(COLUMN_REGISTRY_ID, id);
     values.put(COLUMN_REGISTRY_NAME, name);
     values.put(COLUMN_REGISTRY_TYPE, type);
-    values.put(COLUMN_REGISTRY_MENU, menu);
     values.put(COLUMN_REGISTRY_ACTIVE, active);
     values.put(COLUMN_REGISTRY_CLASS, className);
     values.put(COLUMN_REGISTRY_PARAM, params);
     values.put(COLUMN_REGISTRY_ORDER, order);
+    return values;
+  }
+
+  public ContentValues makeUpdateValues(RegisteredAttribute other)
+  {
+    ContentValues values = new ContentValues();
+    if (type == other.type)
+    {
+      if (!name.equals(other.name))
+      {
+        values.put(COLUMN_REGISTRY_NAME, other.name);
+      }
+      if (active != other.active)
+      {
+        values.put(COLUMN_REGISTRY_ACTIVE, other.active);
+      }
+      if (!className.equals(other.className))
+      {
+        values.put(COLUMN_REGISTRY_CLASS, other.className);
+      }
+      if (!params.equals(other.params))
+      {
+        values.put(COLUMN_REGISTRY_PARAM, other.params);
+      }
+      if (order != other.order)
+      {
+        values.put(COLUMN_REGISTRY_ORDER, other.order);
+      }
+    }
     return values;
   }
 
@@ -151,5 +178,22 @@ public class RegisteredAttribute implements Viewable<RegisteredAttribute>
   public int getListOrder()
   {
     return this.order;
+  }
+
+  public void register(Context context, AttributeRegistry registry)
+  {
+    ProfileAttribute pa = createInstance(context);
+    Log.v("com.mgjg.ProfileManager", "register attribute " + pa.getName(context));
+    registry.register(context, pa);
+  }
+
+  public long addRegistryEntry(SQLiteDatabase db)
+  {
+    return AttributeRegistryProvider.addRegistryEntry(db, name, type, className, params, order);
+  }
+
+  public boolean sameType(RegisteredAttribute other)
+  {
+    return type == other.type;
   }
 }

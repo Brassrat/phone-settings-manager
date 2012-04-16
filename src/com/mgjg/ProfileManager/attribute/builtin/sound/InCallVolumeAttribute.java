@@ -7,9 +7,15 @@ public final class InCallVolumeAttribute extends SoundAttribute
 
   InCallVolumeAttribute()
   {
-    super();
+    this(null, "");
   }
 
+  public InCallVolumeAttribute(Context context, String params)
+  {
+    super(context, params);
+  }
+  
+  
   private InCallVolumeAttribute(long attributeId, long aProfileId, int aVolume, boolean aVibrate, String settings)
   {
     super(attributeId, aProfileId, aVolume, aVibrate, settings);

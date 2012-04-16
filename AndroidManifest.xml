@@ -19,7 +19,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.mgjg.ProfileManager"
     android:versionCode="2"
-    android:versionName="2.0.04">
+    android:versionName="2.0.19">
 
     <uses-sdk android:minSdkVersion="10" />
 
@@ -112,6 +112,7 @@
             android:authorities="com.mgjg.ProfileManager.provider.AttributeProvider" android:name=".provider.AttributeProvider"/>
         <provider 
             android:authorities="com.mgjg.ProfileManager.provider.ProfileProvider" android:name=".provider.ProfileProvider"></provider>
+        <provider android:name=".provider.AttributeRegistryProvider" android:authorities="com.mgjg.ProfileManager.provider.AttributeRegistryProvider"></provider>
 
     </application>
 

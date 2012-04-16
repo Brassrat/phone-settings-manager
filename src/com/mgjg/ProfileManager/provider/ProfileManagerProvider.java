@@ -40,6 +40,7 @@ public abstract class ProfileManagerProvider<T extends Listable> extends Content
   public static final int FILTER_ALL_ACTIVE = 10;
 
   private SQLiteDatabaseHelper dbHelper;
+  private boolean mayUpgrade = true;
 
   /*
    * (non-Javadoc)
@@ -52,6 +53,7 @@ public abstract class ProfileManagerProvider<T extends Listable> extends Content
     dbHelper = new SQLiteDatabaseHelper(getContext());
     return (dbHelper == null) ? false : true;
   }
+  
 
   protected static Uri createTableUri(String authority, String table)
   {
@@ -88,6 +90,7 @@ public abstract class ProfileManagerProvider<T extends Listable> extends Content
      * do the insert
      */
     SQLiteDatabase db = dbHelper.getWritableDatabase();
+    mayUpgrade = false;
     String table = getTable(NO_FILTER);
     long rowId = db.insert(table, null, initialValues);
     if (rowId > 0)
@@ -129,6 +132,7 @@ public abstract class ProfileManagerProvider<T extends Listable> extends Content
         throw new IllegalArgumentException(msg);
       }
       int count = dbHelper.getWritableDatabase().delete(getTable(matchedCode), whereClause.toString(), whereArgs);
+      mayUpgrade = false;
       getContext().getContentResolver().notifyChange(uri, null);
       return count;
     }
@@ -164,6 +168,7 @@ public abstract class ProfileManagerProvider<T extends Listable> extends Content
         throw new IllegalArgumentException(msg);
       }
       int count = dbHelper.getWritableDatabase().update(getTable(matchedCode), values, whereClause.toString(), whereArgs);
+      mayUpgrade = false;
       getContext().getContentResolver().notifyChange(uri, null);
       return count;
     }
@@ -230,6 +235,11 @@ public abstract class ProfileManagerProvider<T extends Listable> extends Content
 
       try
       {
+        if (mayUpgrade)
+        {
+          mayUpgrade = false;
+          dbHelper.getWritableDatabase();
+        }
         Cursor c = qb.query(dbHelper.getReadableDatabase(), projection, selection, selectionArgs, null, null, orderBy); // Tell the cursor what uri to watch, so it knows when its source data changes
         c.setNotificationUri(getContext().getContentResolver(), uri);
         return c;

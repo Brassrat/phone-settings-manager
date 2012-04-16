@@ -4,12 +4,17 @@ import android.content.Context;
 
 public final class SystemVolumeAttribute extends SoundAttribute
 {
-
+  
   SystemVolumeAttribute()
   {
-    super();
+    this(null, "");
   }
 
+  public SystemVolumeAttribute(Context context,String params)
+  {
+    super(context, params);
+  }
+  
   private SystemVolumeAttribute(long attributeId, long aProfileId, int aVolume, boolean aVibrate, String settings)
   {
     super(attributeId, aProfileId, aVolume, aVibrate, settings);

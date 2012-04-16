@@ -7,9 +7,14 @@ public final class MediaVolumeAttribute extends SoundAttribute
 
   MediaVolumeAttribute()
   {
-    super();
+    this(null, "");
   }
 
+  public MediaVolumeAttribute(Context context,String params)
+  {
+    super(context, params);
+  }
+  
   private MediaVolumeAttribute(long attributeId, long aProfileId, int aVolume, boolean aVibrate, String settings)
   {
     super(attributeId, aProfileId, aVolume, aVibrate, settings);
