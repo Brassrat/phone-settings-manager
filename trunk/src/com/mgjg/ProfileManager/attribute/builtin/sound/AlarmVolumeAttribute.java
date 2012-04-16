@@ -7,9 +7,14 @@ public final class AlarmVolumeAttribute extends SoundAttribute
 
   AlarmVolumeAttribute()
   {
-    super();
+    this(null, "");
   }
 
+  public AlarmVolumeAttribute(Context context, String params)
+  {
+    super(context, params);
+  }
+  
   private AlarmVolumeAttribute(long aAttributeId, long aProfileId, int aVolume, boolean aVibrate, String settings)
   {
     super(aAttributeId, aProfileId, aVolume, aVibrate, settings);

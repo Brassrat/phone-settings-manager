@@ -66,28 +66,7 @@ public class MainSettings extends ListActivity
   {
     super.onCreate(instanceState);
     setContentView(R.layout.main);
-    AttributeRegistry.init(this);
     ScheduleHelper.init(this);
-
-    layouts = new ArrayList<AttributeTableLayout>();
-    List<Integer> activeTypes = new ArrayList<Integer>();
-    // treat all registered attributes as active
-    // TODO - change to get active list from registry
-    for (Integer type : AttributeRegistry.getInstance().registeredAttributes())
-    {
-      activeTypes.add(type);
-    }
-    try
-    {
-      setupAttributeViews(this, activeTypes, layouts);
-    }
-    catch (UnknownAttributeException e)
-    {
-      Log.e("com.mgjg.ProfileManager", "Unknown active type: " + e.getType(), e);
-    }
-    Collections.sort(layouts);
-    setListAdapter(new AttributeUpdateableViewListAdapter(this, layouts));
-    setStatusText(this, layouts);
 
     boolean hasShownStartup = Util.isBooleanPref(this, R.string.ShownStartup, false);
     if (!hasShownStartup)
@@ -102,8 +81,25 @@ public class MainSettings extends ListActivity
 
       Util.putBooleanPref(this, R.string.ShownStartup, true);
     }
+    //createView();
   }
 
+  @Override
+  public void onStart()
+  {
+    if (null == layouts)
+    {
+      createView();
+    }
+    super.onStart();
+  }
+  
+  @Override
+  public void onPause()
+  {
+    super.onPause();
+  }
+  
   @Override
   public boolean onKeyLongPress(int keyCode, KeyEvent event)
   {
@@ -138,7 +134,7 @@ public class MainSettings extends ListActivity
     super.onPrepareOptionsMenu(menu);
     return true;
   }
-  
+
   @Override
   public boolean onCreateOptionsMenu(Menu menu)
   {
@@ -194,7 +190,7 @@ public class MainSettings extends ListActivity
       Intent edit = new Intent(this, ProfileList.class);
       startActivityForResult(edit, ACTIVITY_LIST);
       return true;
-      
+
     case R.id.disable_profiles:
       boolean disabled = Util.isBooleanPref(this, R.string.disableProfiles, false);
       Util.putBooleanPref(this, R.string.disableProfiles, !disabled);
@@ -248,7 +244,7 @@ public class MainSettings extends ListActivity
 
   }
 
-  public void setupAttributeViews(Context context, List<Integer> activeTypes, List<AttributeTableLayout> layouts) throws UnknownAttributeException
+  private void setupAttributeViews(Context context, List<Integer> activeTypes, List<AttributeTableLayout> layouts) throws UnknownAttributeException
   {
     AttributeRegistry registry = AttributeRegistry.getInstance();
     for (Integer type : activeTypes)
@@ -258,5 +254,29 @@ public class MainSettings extends ListActivity
     }
     // order layouts ...
     return;
+  }
+
+  public void createView()
+  {
+    AttributeRegistry.init(this);
+    layouts = new ArrayList<AttributeTableLayout>();
+    List<Integer> activeTypes = new ArrayList<Integer>();
+    // treat all registered attributes as active
+    // TODO - change to get active list from registry
+    for (Integer type : AttributeRegistry.getInstance().registeredAttributes())
+    {
+      activeTypes.add(type);
+    }
+    try
+    {
+      setupAttributeViews(this, activeTypes, layouts);
+    }
+    catch (UnknownAttributeException e)
+    {
+      Log.e("com.mgjg.ProfileManager", "Unknown active type: " + e.getType(), e);
+    }
+    Collections.sort(layouts);
+    setListAdapter(new AttributeUpdateableViewListAdapter(this, layouts));
+    setStatusText(this, layouts);
   }
 }

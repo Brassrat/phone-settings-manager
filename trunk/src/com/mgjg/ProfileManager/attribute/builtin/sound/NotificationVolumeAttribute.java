@@ -7,11 +7,17 @@ import android.media.AudioManager;
 
 public final class NotificationVolumeAttribute extends SoundAttribute
 {
+
   NotificationVolumeAttribute()
   {
-    super();
+    this(null, "");
   }
 
+  public NotificationVolumeAttribute(Context context,String params)
+  {
+    super(context, params);
+  }
+  
   private NotificationVolumeAttribute(long attributeId, long aProfileId, int aVolume, boolean aVibrate, String settings)
   {
     super(attributeId, aProfileId, aVolume, aVibrate, settings);

@@ -27,6 +27,7 @@ import static android.media.AudioManager.VIBRATE_SETTING_ON;
 import static android.media.AudioManager.VIBRATE_TYPE_NOTIFICATION;
 import static android.media.AudioManager.VIBRATE_TYPE_RINGER;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
@@ -51,8 +52,8 @@ import com.mgjg.ProfileManager.attribute.AttributeBase;
 import com.mgjg.ProfileManager.attribute.AttributeEdit;
 import com.mgjg.ProfileManager.attribute.AttributeView;
 import com.mgjg.ProfileManager.attribute.ProfileAttribute;
-import com.mgjg.ProfileManager.provider.AttributeRegistryProvider;
 import com.mgjg.ProfileManager.registry.AttributeRegistry;
+import com.mgjg.ProfileManager.registry.RegisteredAttribute;
 import com.mgjg.ProfileManager.utils.AttributeTableLayout;
 import com.mgjg.ProfileManager.utils.Listable;
 import com.mgjg.ProfileManager.utils.Util;
@@ -93,11 +94,11 @@ public abstract class SoundAttribute extends AttributeBase implements Comparable
   private SeekBar createVolume;
   private CheckBox createVibrate;
 
-  protected SoundAttribute()
+  protected SoundAttribute(Context context, String params)
   {
     super();
   }
-
+  
   protected SoundAttribute(long attributeId, long profileId, int volume, boolean vibrate, String settings)
   {
     super(attributeId, profileId, volume, vibrate, settings);
@@ -754,14 +755,23 @@ public abstract class SoundAttribute extends AttributeBase implements Comparable
   private final static String soundName[] = { "System", "Ring", "Alarm", "Notification", "Call", "Media" };
   private static final int soundIndexes[] = { SOUND_ATTR_SYSTEM, SOUND_ATTR_RING, SOUND_ATTR_ALARM, SOUND_ATTR_NOTIFICATION, SOUND_ATTR_VOICE_CALL, SOUND_ATTR_MUSIC };
   private final static int soundOrder[] = { ORDER_AUDIO_SYSTEM, ORDER_AUDIO_RING, ORDER_AUDIO_ALARM, ORDER_AUDIO_NOTIFICATION, ORDER_AUDIO_VOICE_CALL, ORDER_AUDIO_MUSIC };
+  private final static String soundClass[] = { "System", "Ringer", "Alarm", "Notification", "InCall", "Media" };
 
-  public static void addRegistryEntries(SQLiteDatabase db)
+  private static String makeRegistryJSON(int typeId, String name, int order)
   {
+    return String.format("{ \"id\" : \"%1$d\", \"name\" : \"%2$s\", \"order\" : \"%3$d\"}", typeId, name, order);
+  }
+
+  public static List<RegisteredAttribute> addRegistryEntries(SQLiteDatabase db)
+  {
+    List<RegisteredAttribute> ras = new ArrayList<RegisteredAttribute>();
     for (int xx : soundIndexes)
     {
-      @SuppressWarnings("unused")
-      long ll = AttributeRegistryProvider.addRegistryEntry(db, soundName[xx], typeId[xx],
-          "com.mgjg.ProfileManager.attribute.builtin.sound.SoundAttribute", "", soundOrder[xx]);
+      String params = makeRegistryJSON(typeId[xx], soundName[xx], soundOrder[xx]);
+      ras.add(new RegisteredAttribute(0, soundName[xx], typeId[xx],
+          true, "com.mgjg.ProfileManager.attribute.builtin.sound." + soundClass[xx] + "VolumeAttribute", params, soundOrder[xx]));
     }
+
+    return ras;
   }
 }

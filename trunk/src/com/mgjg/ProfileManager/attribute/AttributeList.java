@@ -196,33 +196,35 @@ public class AttributeList extends ListActivity
       return true;
     }
 
-    // int type = AttributeRegistry.getInstance().getTypeNew(resId);
-    try
+    if (resId > 0)
     {
-      ProfileAttribute attr = AttributeRegistry.getInstance().getAttribute(resId);
-      int type = attr.getTypeId();
-      AttributeHelper helper = new AttributeHelper(this);
-      List<ProfileAttribute> attributes = helper.getList(FILTER_ATTRIBUTE_PROFILE_TYPE, profileId, type);
-      Intent ii = new Intent(this, AttributeEdit.class)
-          .putExtra(INTENT_ATTRIBUTE_TYPE, type)
-          .putExtra(INTENT_ATTRIBUTE_PROFILE_ID, profileId)
-          .putExtra(INTENT_ATTRIBUTE_PROFILE_NAME, profileName);
-      int activity;
-      if (!attributes.isEmpty())
+      try
       {
-        ii.putExtra(INTENT_ATTRIBUTE_ID, attributes.get(0).getId());
-        activity = ACTIVITY_EDIT;
+        ProfileAttribute attr = AttributeRegistry.getInstance().getAttribute(resId);
+        int type = attr.getTypeId();
+        AttributeHelper helper = new AttributeHelper(this);
+        List<ProfileAttribute> attributes = helper.getList(FILTER_ATTRIBUTE_PROFILE_TYPE, profileId, type);
+        Intent ii = new Intent(this, AttributeEdit.class)
+            .putExtra(INTENT_ATTRIBUTE_TYPE, type)
+            .putExtra(INTENT_ATTRIBUTE_PROFILE_ID, profileId)
+            .putExtra(INTENT_ATTRIBUTE_PROFILE_NAME, profileName);
+        int activity;
+        if (!attributes.isEmpty())
+        {
+          ii.putExtra(INTENT_ATTRIBUTE_ID, attributes.get(0).getId());
+          activity = ACTIVITY_EDIT;
+        }
+        else
+        {
+          activity = ACTIVITY_CREATE;
+        }
+        startActivityForResult(ii, activity);
+        return true;
       }
-      else
+      catch (Exception e)
       {
-        activity = ACTIVITY_CREATE;
+        // not Done and not a type, try super
       }
-      startActivityForResult(ii, activity);
-      return true;
-    }
-    catch (Exception e)
-    {
-      // not Done and not a type, try super
     }
     return super.onOptionsItemSelected(item);
   }

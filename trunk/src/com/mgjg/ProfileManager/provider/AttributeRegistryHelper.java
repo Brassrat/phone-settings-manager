@@ -41,10 +41,9 @@ public class AttributeRegistryHelper extends ProfileManagerProviderHelper<Regist
   public static final String TABLE_ALIAS_REGISTRY = "r";
 
   public static final String COLUMN_REGISTRY_ID = "_id";
-  public static final String COLUMN_REGISTRY_NAME = "_name";
-  public static final String COLUMN_REGISTRY_TYPE = "_type"; // registered type id
+  public static final String COLUMN_REGISTRY_NAME = "_name"; // registered name, unique
+  public static final String COLUMN_REGISTRY_TYPE = "_type"; // registered type id, unique
   public static final String COLUMN_REGISTRY_ACTIVE = "_active";
-  public static final String COLUMN_REGISTRY_MENU = "_menu";
   public static final String COLUMN_REGISTRY_CLASS = "_class";
   public static final String COLUMN_REGISTRY_PARAM = "_param";
   public static final String COLUMN_REGISTRY_ORDER = "_order";
@@ -71,7 +70,7 @@ public class AttributeRegistryHelper extends ProfileManagerProviderHelper<Regist
   @Override
   public Uri getContentUri()
   {
-    return ProfileProvider.CONTENT_URI;
+    return AttributeRegistryProvider.CONTENT_URI;
   }
 
   @Override
@@ -110,22 +109,19 @@ public class AttributeRegistryHelper extends ProfileManagerProviderHelper<Regist
   @Override
   public RegisteredAttribute newInstance(Cursor c)
   {
+    return create(c);
+  }
+
+  public static RegisteredAttribute create(Cursor c)
+  {
     long id = c.getLong(c.getColumnIndexOrThrow(COLUMN_REGISTRY_ID));
     String name = c.getString(c.getColumnIndexOrThrow(COLUMN_REGISTRY_NAME));
     boolean active = c.getInt(c.getColumnIndexOrThrow(COLUMN_REGISTRY_ACTIVE)) > 0;
     int type = c.getInt(c.getColumnIndexOrThrow(COLUMN_REGISTRY_TYPE));
-    String menu = c.getString(c.getColumnIndexOrThrow(COLUMN_REGISTRY_MENU));
     String clz = c.getString(c.getColumnIndexOrThrow(COLUMN_REGISTRY_CLASS));
     String param = c.getString(c.getColumnIndexOrThrow(COLUMN_REGISTRY_PARAM));
     int order = c.getInt(c.getColumnIndexOrThrow(COLUMN_REGISTRY_ORDER));
-    return new RegisteredAttribute(id, name, type, menu, active, clz, param, order);
+    return new RegisteredAttribute(id, name, type, active, clz, param, order);
   }
-
-  // public final int deleteAttribute(long id)
-  // {
-  // new ScheduleHelper(context).deleteProfile(id);
-  // new AttributeHelper(context).deleteProfile(id);
-  // return delete(FILTER_REGISTRY_ID, id);
-  // }
 
 }

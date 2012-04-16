@@ -28,18 +28,24 @@ import static com.mgjg.ProfileManager.provider.AttributeRegistryHelper.FILTER_RE
 import static com.mgjg.ProfileManager.provider.AttributeRegistryHelper.REGISTRY_DEFAULT_ORDER;
 import static com.mgjg.ProfileManager.provider.AttributeRegistryHelper.TABLE_REGISTRY;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import android.content.ContentValues;
 import android.content.UriMatcher;
+import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
+import android.util.Log;
 
 import com.mgjg.ProfileManager.attribute.builtin.sound.SoundAttribute;
 import com.mgjg.ProfileManager.attribute.builtin.xmit.XmitAttribute;
 import com.mgjg.ProfileManager.profile.Profile;
+import com.mgjg.ProfileManager.registry.RegisteredAttribute;
 
 /**
  * Abstracts access to profile manager attribute registry data in SQLite db
@@ -49,7 +55,7 @@ import com.mgjg.ProfileManager.profile.Profile;
 public class AttributeRegistryProvider extends ProfileManagerProvider<Profile>
 {
 
-  public static final String AUTHORITY = "com.mgjg.ProfileManager.provider.ProfileProvider";
+  public static final String AUTHORITY = "com.mgjg.ProfileManager.provider.AttributeRegistryProvider";
 
   public static final String TABLE_REGISTRY_CREATE = "create table "
       + TABLE_REGISTRY + " ("
@@ -89,6 +95,9 @@ public class AttributeRegistryProvider extends ProfileManagerProvider<Profile>
     sGoalProjectionMap.put(COLUMN_REGISTRY_NAME, COLUMN_REGISTRY_NAME);
     sGoalProjectionMap.put(COLUMN_REGISTRY_ACTIVE, TABLE_REGISTRY + "." + COLUMN_REGISTRY_ACTIVE);
     sGoalProjectionMap.put(COLUMN_REGISTRY_TYPE, COLUMN_REGISTRY_TYPE);
+    sGoalProjectionMap.put(COLUMN_REGISTRY_CLASS, COLUMN_REGISTRY_CLASS);
+    sGoalProjectionMap.put(COLUMN_REGISTRY_PARAM, COLUMN_REGISTRY_PARAM);
+    sGoalProjectionMap.put(COLUMN_REGISTRY_ORDER, COLUMN_REGISTRY_ORDER);
   }
 
   @Override
@@ -252,11 +261,66 @@ public class AttributeRegistryProvider extends ProfileManagerProvider<Profile>
 
   public static void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
   {
-    if ((oldVersion < 2) && (newVersion > 1))
+
+    if (newVersion > oldVersion)
     {
-      db.execSQL("ALTER TABLE " + TABLE_REGISTRY + " ADD COLUMN " + COLUMN_REGISTRY_ORDER + " integer not null default 0;");
-      XmitAttribute.addRegistryEntries(db);
-      SoundAttribute.addRegistryEntries(db);
+      final List<RegisteredAttribute> ras = XmitAttribute.addRegistryEntries(db);
+      ras.addAll(SoundAttribute.addRegistryEntries(db));
+
+      try
+      {
+
+        Cursor c = db.query(TABLE_REGISTRY, null, null, null, null, null, null);
+        if (c != null)
+        {
+          if (c.getColumnIndex(COLUMN_REGISTRY_ORDER) < 0)
+          {
+            db.execSQL("ALTER TABLE " + TABLE_REGISTRY + " ADD COLUMN " + COLUMN_REGISTRY_ORDER + " integer not null default 0;");
+            c = db.query(TABLE_REGISTRY, null, null, null, null, null, null);
+          }
+          if (c.moveToFirst())
+          {
+            List<RegisteredAttribute> dbras = new ArrayList<RegisteredAttribute>();
+            do
+            {
+              dbras.add(AttributeRegistryHelper.create(c));
+            } while (c.moveToNext());
+
+            for (RegisteredAttribute dbra : dbras)
+            {
+              Iterator<RegisteredAttribute> it = ras.iterator();
+              while (it.hasNext())
+              {
+                RegisteredAttribute ra = it.next();
+                if (dbra.sameType(ra))
+                {
+                  ContentValues values = dbra.makeUpdateValues(ra);
+                  if (values.size() > 0)
+                  {
+                    @SuppressWarnings("unused")
+                    int ct = db.update(TABLE_REGISTRY, values, COLUMN_REGISTRY_ID + "=?", new String[] { String.valueOf(dbra.getId()) });
+                  }
+                  it.remove();
+                  break;
+                }
+              }
+            }
+          }
+        }
+
+      }
+      catch (SQLException e)
+      {
+        Log.v(TABLE_REGISTRY, e.getMessage(), e);
+        throw e;
+      }
+
+      for (RegisteredAttribute ra : ras)
+      {
+        @SuppressWarnings("unused")
+        long ll = ra.addRegistryEntry(db);
+      }
+
     }
   }
 }

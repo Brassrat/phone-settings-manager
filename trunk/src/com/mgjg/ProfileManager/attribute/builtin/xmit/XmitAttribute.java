@@ -1,5 +1,8 @@
 package com.mgjg.ProfileManager.attribute.builtin.xmit;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.json.JSONException;
 
 import android.content.Context;
@@ -9,8 +12,8 @@ import android.util.Log;
 import com.mgjg.ProfileManager.R;
 import com.mgjg.ProfileManager.attribute.JSONBooleanAttribute;
 import com.mgjg.ProfileManager.attribute.ProfileAttribute;
-import com.mgjg.ProfileManager.provider.AttributeRegistryProvider;
 import com.mgjg.ProfileManager.registry.AttributeRegistry;
+import com.mgjg.ProfileManager.registry.RegisteredAttribute;
 import com.mgjg.ProfileManager.services.UnknownServiceException;
 
 public class XmitAttribute extends JSONBooleanAttribute
@@ -40,7 +43,7 @@ public class XmitAttribute extends JSONBooleanAttribute
       return new ProfileAttribute[0];
     }
   }
-
+ 
   public XmitAttribute(Context context, String registryDefinition) throws JSONException, UnknownServiceException
   {
     super(context, registryDefinition);
@@ -52,17 +55,22 @@ public class XmitAttribute extends JSONBooleanAttribute
         serviceName, AttributeRegistry.TYPE_XMIT + typeId, name, order);
   }
 
-  public static void addRegistryEntries(SQLiteDatabase db)
+  public static List<RegisteredAttribute> addRegistryEntries(SQLiteDatabase db)
   {
-    String param = makeRegistryJSON(null, "AirPlane", AttributeRegistry.TYPE_XMIT + 0, "AirPlane", 10);
-    @SuppressWarnings("unused")
-    long ll = AttributeRegistryProvider.addRegistryEntry(db, "AirPlane", AttributeRegistry.TYPE_XMIT + 0,
-        "com.mgjg.ProfileManager.attribute.builtin.xmit.XmitAttribute", param, 10);
-    param = makeRegistryJSON(null, "WiFi", AttributeRegistry.TYPE_XMIT + 1, "WiFi", 11);
-    ll = AttributeRegistryProvider.addRegistryEntry(db, "WiFi", AttributeRegistry.TYPE_XMIT + 1,
-        "com.mgjg.ProfileManager.attribute.builtin.xmit.XmitAttribute", param, 11);
-    param = makeRegistryJSON(null, "MobileData", AttributeRegistry.TYPE_XMIT + 2, "MobileData", 12);
-    ll = AttributeRegistryProvider.addRegistryEntry(db, "MobileData", AttributeRegistry.TYPE_XMIT + 2,
-        "com.mgjg.ProfileManager.attribute.builtin.xmit.XmitAttribute", param, 12);
+    List<RegisteredAttribute> ras = new ArrayList<RegisteredAttribute>();
+    String params = makeRegistryJSON(null, "AirPlane", 0, "AirPlane", 10);
+    ras.add(new RegisteredAttribute(0, "AirPlane", AttributeRegistry.TYPE_XMIT + 0,
+        true, "com.mgjg.ProfileManager.attribute.builtin.xmit.XmitAttribute", params, 10));
+
+    params = makeRegistryJSON(null, "WiFi", 1, "WiFi", 11);
+    ras.add(new RegisteredAttribute(0, "WiFi", AttributeRegistry.TYPE_XMIT + 1,
+        true, "com.mgjg.ProfileManager.attribute.builtin.xmit.XmitAttribute", params, 11));
+
+    params = makeRegistryJSON(null, "MobileData", 2, "MobileData", 12);
+    ras.add(new RegisteredAttribute(0, "MobileData", AttributeRegistry.TYPE_XMIT + 2,
+        true, "com.mgjg.ProfileManager.attribute.builtin.xmit.XmitAttribute", params, 12));
+
+    return ras;
+
   }
 }
