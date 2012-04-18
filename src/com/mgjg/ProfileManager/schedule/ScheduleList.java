@@ -16,16 +16,15 @@
  */
 package com.mgjg.ProfileManager.schedule;
 
-import static com.mgjg.ProfileManager.provider.ScheduleHelper.INTENT_SCHEDULE_ID;
-import static com.mgjg.ProfileManager.provider.ScheduleHelper.INTENT_SCHEDULE_PROFILE_ID;
-import static com.mgjg.ProfileManager.provider.ScheduleHelper.INTENT_SCHEDULE_PROFILE_NAME;
 import static com.mgjg.ProfileManager.provider.ScheduleHelper.COLUMN_SCHEDULE_ACTIVE;
 import static com.mgjg.ProfileManager.provider.ScheduleHelper.FILTER_SCHEDULE_ID;
 import static com.mgjg.ProfileManager.provider.ScheduleHelper.FILTER_SCHEDULE_PROFILE_ID;
+import static com.mgjg.ProfileManager.provider.ScheduleHelper.INTENT_SCHEDULE_ID;
+import static com.mgjg.ProfileManager.provider.ScheduleHelper.INTENT_SCHEDULE_PROFILE_ID;
+import static com.mgjg.ProfileManager.provider.ScheduleHelper.INTENT_SCHEDULE_PROFILE_NAME;
 
 import java.util.List;
 
-import android.app.ListActivity;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.os.Bundle;
@@ -40,6 +39,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.mgjg.ProfileManager.ProfileListActivity;
 import com.mgjg.ProfileManager.R;
 import com.mgjg.ProfileManager.provider.ScheduleHelper;
 
@@ -48,7 +48,7 @@ import com.mgjg.ProfileManager.provider.ScheduleHelper;
  * 
  * @author Mike Partridge
  */
-public class ScheduleList extends ListActivity
+public class ScheduleList extends ProfileListActivity
 {
   private static final int ACTIVITY_CREATE = 0;
   private static final int ACTIVITY_EDIT = 1;
@@ -105,7 +105,7 @@ public class ScheduleList extends ListActivity
   /**
    * retrieves schedules from the db and populates the list
    */
-  private void fillData()
+  protected void fillData()
   {
     ScheduleHelper helper = new ScheduleHelper(this);
     setListAdapter(helper.createListAdapter(FILTER_SCHEDULE_PROFILE_ID, profileId));
@@ -139,17 +139,27 @@ public class ScheduleList extends ListActivity
     startActivityForResult(ii, ACTIVITY_CREATE);
   }
 
+  protected boolean itemIsActive(AdapterContextMenuInfo menuInfo)
+  {
+    int position = ((AdapterContextMenuInfo) menuInfo).position;
+    ScheduleEntry sched = (ScheduleEntry) getListView().getItemAtPosition(position);
+    return sched.isActive();
+  }
+
+  protected void deleteItem(AdapterContextMenuInfo info)
+  {
+    new ScheduleHelper(this).deleteSchedule(info.id);
+  }
+
   /*
    * (non-Javadoc)
    * 
    * @see android.app.Activity#onCreateContextMenu(android.view.ContextMenu, android.view.View, android.view.ContextMenu.ContextMenuInfo)
    */
   @Override
-  public void onCreateContextMenu(ContextMenu menu, View v,
-      ContextMenuInfo menuInfo)
+  public void onCreateContextMenu(ContextMenu menu, View vv, ContextMenuInfo menuInfo)
   {
-    super.onCreateContextMenu(menu, v, menuInfo);
-    getMenuInflater().inflate(R.menu.schedulelist_context, menu);
+    onCreateContextMenu(R.menu.schedulelist_context, menu, vv, (AdapterContextMenuInfo) menuInfo);
   }
 
   /*
@@ -161,31 +171,22 @@ public class ScheduleList extends ListActivity
   public boolean onContextItemSelected(MenuItem item)
   {
     AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
-    ScheduleEntry sched = (ScheduleEntry) getListView().getItemAtPosition(info.position);
-    // long scheduleId = sched.getId();
-    long scheduleId = info.id;
-    if (sched.getId() != scheduleId)
-    {
-      Log.e("com.mgjg.ProfileManager", "info.id <> sched.id");
-    }
     switch (item.getItemId())
     {
-    case R.id.editSchedule:
-      editSchedule(scheduleId);
+    case R.id.edit:
+      editSchedule(info.id);
       break;
 
-    case R.id.deleteSchedule:
-      new ScheduleHelper(this).deleteSchedule(scheduleId);
-      fillData();
+    case R.id.delete:
+      deleteConfirmed("Schedule ", info);
       break;
 
-    case R.id.toggleSchedule:
-      toggleSchedule(scheduleId);
-      fillData();
+    case R.id.toggle:
+      toggleSchedule(info.id);
       break;
 
     case R.id.applySettings:
-      new ScheduleHelper(this).setAlarm(scheduleId, true);
+      new ScheduleHelper(this).setAlarm(info.id, true);
       break;
 
     default:
@@ -222,11 +223,11 @@ public class ScheduleList extends ListActivity
       newSchedule();
       break;
 
-      // todo add setting all alarms for a profile
-//    case R.id.applySettings:
-//      new ScheduleHelper(this).setAlarm();
-//      break;
-      
+    // todo add setting all alarms for a profile
+    // case R.id.applySettings:
+    // new ScheduleHelper(this).setAlarm();
+    // break;
+
     default:
       return super.onOptionsItemSelected(item);
     }
@@ -312,6 +313,8 @@ public class ScheduleList extends ListActivity
 
     // set/unset the alarm
     helper.setAlarm(scheduleId, !active);
+    
+    fillData();
   }
 
   @Override
