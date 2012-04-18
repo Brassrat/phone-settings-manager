@@ -52,12 +52,6 @@
     <!-- Schedules -->
     <string name="ScheduleListProfile">Schedules for </string>
     <string name="newSchedule">New Schedule</string>
-    <string name="deleteSchedule">Delete</string>
-    <string name="editSchedule">Edit</string>
-    <string name="toggleSchedule">Toggle Active/Inactive</string>
-    <string name="enableSchedule">Enable</string>
-    <string name="disableSchedule">Disable</string>
-    <string name="applySettings">Apply Settings</string>
     
     <string name="day0">Sun</string>
     <string name="day1">Mon</string>
@@ -88,13 +82,9 @@
     <string name="activeScheduleCount">active schedule</string><string name="activeAttributeCount">active</string>
     <string name="activeAttributeCountPlural">active</string><string name="activeScheduleCountPlural">active</string>
     <string name="activeAttributeCountNone">no active</string><string name="activeScheduleCountNone">no active</string>
-    <string name="editProfile">Edit</string>
-    <string name="deleteProfile">Delete</string>
+    <string name="applySettings">Apply Settings</string>
     <string name="profileNameLabel">Name:</string>
     <string name="profileEdit">Edit Profile</string>
-    <string name="toggleProfile">Toggle Active/Inactive</string>
-    <string name="enableProfile">Enable Profile</string>
-    <string name="disableProfile">Disable Profile</string>
     <string name="newProfile">New Profile</string>
     <string name="editProfiles">Edit Profiles</string>
     <string name="profiles">Profiles</string>
@@ -119,6 +109,10 @@
     <string name="disabled">Disabled</string>
 
     <string name="disableProfiles">Enable/Disable</string>
+    <string name="edit">Edit</string>
+    <string name="deleteProfile">Delete Profile</string>
+    <string name="deleteSchedule">Delete Schedule</string>
+    <string name="delete">Delete</string>
     <string name="disable">Disable</string>
     <string name="enable">Enable</string>
     <string name="mute">Mute</string>

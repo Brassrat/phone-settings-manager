@@ -157,6 +157,7 @@ public class AttributeRegistry
     // MenuInflater inflater = activity.getMenuInflater();
     // inflater.inflate(R.menu.attributelist_options, menu);
     SubMenu attrMenu = menu.addSubMenu(activity.getString(R.string.AddAttribute));
+    // TODO - need to use attribute order 
     for (Map.Entry<String, ProfileAttribute> mape : RegisteredAttributesByName.entrySet())
     {
       ProfileAttribute attr = mape.getValue();

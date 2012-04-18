@@ -23,7 +23,6 @@ import static com.mgjg.ProfileManager.provider.ScheduleHelper.FILTER_SCHEDULE_PR
 
 import java.util.List;
 
-import android.app.ListActivity;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.os.Bundle;
@@ -34,9 +33,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.Button;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 
+import com.mgjg.ProfileManager.ProfileListActivity;
 import com.mgjg.ProfileManager.R;
 import com.mgjg.ProfileManager.provider.AttributeHelper;
 import com.mgjg.ProfileManager.provider.ProfileHelper;
@@ -48,7 +47,7 @@ import com.mgjg.ProfileManager.schedule.ScheduleEntry;
  * 
  * @author Jay Goldman
  */
-public final class ProfileList extends ListActivity
+public final class ProfileList extends ProfileListActivity
 {
   private static final int ACTIVITY_CREATE = 0;
   private static final int ACTIVITY_EDIT = 1;
@@ -81,7 +80,7 @@ public final class ProfileList extends ListActivity
   /**
    * retrieves profiles from the db and populates the list
    */
-  private void fillData()
+  protected void fillData()
   {
     ProfileHelper helper = new ProfileHelper(this);
     setListAdapter(helper.createListAdapter(ProfileHelper.NO_FILTER, (Object) null));
@@ -103,7 +102,6 @@ public final class ProfileList extends ListActivity
     Intent ii = new Intent(this, ProfileEdit.class)
         .putExtra(INTENT_PROFILE_ID, profileId);
     startActivityForResult(ii, ACTIVITY_EDIT);
-    // registerProfile(profileId);
   }
 
   private void registerProfile(long profileId)
@@ -141,26 +139,42 @@ public final class ProfileList extends ListActivity
     registerProfile(profileId);
   }
 
+  @Override
+  protected boolean itemIsActive(AdapterContextMenuInfo menuInfo)
+  {
+    int position = ((AdapterContextMenuInfo) menuInfo).position;
+    Profile pp = (Profile) getListView().getItemAtPosition(position);
+    return pp.isActive();
+  }
+
+  @Override
+  protected void deleteItem(AdapterContextMenuInfo info)
+  {
+    ProfileHelper helper = new ProfileHelper(this);
+    ScheduleHelper schedHelper = new ScheduleHelper(this);
+    List<ScheduleEntry> schedules = schedHelper.getList(FILTER_SCHEDULE_PROFILE_ID, info.id);
+
+    for (ScheduleEntry schedule : schedules)
+    {
+      // set/unset all alarms for this profile
+      schedHelper.setAlarm(schedule.getId(), false);
+    }
+
+    new AttributeHelper(this).deleteProfile(info.id);
+
+    helper.delete(FILTER_PROFILE_ID, info.id);
+  }
+  
   /*
    * (non-Javadoc)
    * 
    * @see android.app.Activity#onCreateContextMenu(android.view.ContextMenu, android.view.View, android.view.ContextMenu.ContextMenuInfo)
    */
+
   @Override
   public void onCreateContextMenu(ContextMenu menu, View vv, ContextMenuInfo menuInfo)
   {
-    super.onCreateContextMenu(menu, vv, menuInfo);
-    getMenuInflater().inflate(R.menu.profilelist_context, menu);
-    MenuItem item = menu.findItem(R.id.toggleProfile);
-    if (null != item)
-    {
-      AdapterContextMenuInfo info = (AdapterContextMenuInfo) menuInfo;
-      ListAdapter la = getListAdapter();
-      Profile pp = (Profile) la.getItem(info.position);
-      CharSequence menuTitle = this.getText(pp.isEnabled() ? R.string.disable : R.string.enable);
-      item.setTitle(menuTitle);
-      item.setTitleCondensed(menuTitle);
-    }
+    onCreateContextMenu(R.menu.profilelist_context, menu, vv, (AdapterContextMenuInfo) menuInfo);
   }
 
   /*
@@ -172,33 +186,19 @@ public final class ProfileList extends ListActivity
   public boolean onContextItemSelected(MenuItem item)
   {
     AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
-    ScheduleHelper schedHelper = new ScheduleHelper(this);
-    List<ScheduleEntry> schedules;
     switch (item.getItemId())
     {
-    case R.id.editProfile:
+    case R.id.edit:
       editProfile(info.id);
       return true;
 
-    case R.id.deleteProfile:
-      ProfileHelper helper = new ProfileHelper(this);
-      schedules = schedHelper.getList(FILTER_SCHEDULE_PROFILE_ID, info.id);
-
-      for (ScheduleEntry schedule : schedules)
-      {
-        // set/unset all alarms for this profile
-        schedHelper.setAlarm(schedule.getId(), false);
-      }
-
-      new AttributeHelper(this).deleteProfile(info.id);
-
-      helper.delete(FILTER_PROFILE_ID, info.id);
-      fillData();
+    case R.id.delete:
+      Profile pp = (Profile) getListView().getItemAtPosition(info.position);
+      deleteConfirmed("Profile " + pp.getName(), info);
       return true;
 
-    case R.id.toggleProfile:
+    case R.id.toggle:
       toggleProfile(info.id);
-      fillData();
       return true;
 
     case R.id.applySettings:
@@ -334,6 +334,7 @@ public final class ProfileList extends ListActivity
         // toggle the alarm
         schedHelper.setAlarm(schedule.getId(), active);
       }
+      fillData();
     }
 
   }

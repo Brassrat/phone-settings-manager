@@ -66,6 +66,17 @@ public class MainSettings extends ListActivity
   {
     super.onCreate(instanceState);
     setContentView(R.layout.main);
+//    PackageInfo pInfo;
+//    try
+//    {
+//      pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+//      String version = pInfo.versionName;
+//    }
+//    catch (NameNotFoundException e)
+//    {
+//
+//    }
+
     ScheduleHelper.init(this);
 
     boolean hasShownStartup = Util.isBooleanPref(this, R.string.ShownStartup, false);
