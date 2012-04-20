@@ -19,7 +19,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.mgjg.ProfileManager"
     android:versionCode="2"
-    android:versionName="2.0.25">
+    android:versionName="2.0.26">
 
     <uses-sdk android:minSdkVersion="10" />
 
@@ -79,15 +79,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
-            <!-- 
-        <activity android:theme="@android:style/Theme.Dialog" android:name=".activity.VolumeDialog">
-            <intent-filter>
-                <action android:name="com.mgjg.intent.VOLUME_CONTROL" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        -->
         
         <activity android:name=".schedule.ScheduleList"/>
         <activity android:name=".schedule.ScheduleEdit"/>      
