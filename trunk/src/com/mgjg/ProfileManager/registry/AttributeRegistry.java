@@ -14,7 +14,6 @@ import static android.view.Menu.NONE;
 import static com.mgjg.ProfileManager.provider.AttributeHelper.COLUMN_ATTRIBUTE_TYPE;
 import static com.mgjg.ProfileManager.provider.ProfileManagerProvider.FILTER_ALL_ACTIVE;
 
-import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -29,7 +28,6 @@ import android.view.Menu;
 import android.view.SubMenu;
 
 import com.mgjg.ProfileManager.R;
-import com.mgjg.ProfileManager.attribute.AttributeBase;
 import com.mgjg.ProfileManager.attribute.ProfileAttribute;
 import com.mgjg.ProfileManager.attribute.ProfileAttributeFactoryImpl;
 import com.mgjg.ProfileManager.provider.AttributeHelper;
@@ -72,37 +70,7 @@ public class AttributeRegistry
         Log.v("com.mgjg.ProfileManager", "Processing registered attribute " + ra.getId());
         ra.register(context, registry);
       }
-//      for (String clz : new String[] {
-//          "com.mgjg.ProfileManager.attribute.builtin.sound.SoundAttribute",
-//          "com.mgjg.ProfileManager.attribute.builtin.xmit.XmitAttribute" })
-//      {
-//        register(context, clz);
-//      }
       initialized = true;
-    }
-  }
-
-  static void register(Context context, String clz)
-  {
-    try
-    {
-      @SuppressWarnings("unchecked")
-      Class<AttributeBase> cl = (Class<AttributeBase>) Class.forName(clz);
-      Method method = cl.getMethod("init", Context.class);
-      ProfileAttribute[] attrs = (ProfileAttribute[]) method.invoke(null, context);
-      register(context, attrs);
-    }
-    catch (Throwable t)
-    {
-      Log.e("com.mgjg", "Specified class is not valid " + clz, t);
-    }
-  }
-
-  private static void register(Context context, ProfileAttribute[] attrs)
-  {
-    for (ProfileAttribute attr : attrs)
-    {
-      registry.register(context, attr);
     }
   }
 

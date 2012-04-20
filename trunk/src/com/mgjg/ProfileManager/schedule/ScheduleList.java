@@ -28,7 +28,6 @@ import java.util.List;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;

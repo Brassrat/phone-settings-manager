@@ -1,5 +1,4 @@
 /**
- * Copyright 2009 Mike Partridge
  * Copyright 2011 Jay Goldman
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); 
@@ -22,7 +21,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 /**
- * @author Mike Partridge /Jay Goldman
+ * @author Jay Goldman
  * 
  */
 public class SQLiteDatabaseHelper extends SQLiteOpenHelper
