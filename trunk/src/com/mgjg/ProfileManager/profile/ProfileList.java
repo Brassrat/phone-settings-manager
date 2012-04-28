@@ -32,7 +32,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView.AdapterContextMenuInfo;
-import android.widget.Button;
 import android.widget.ListView;
 
 import com.mgjg.ProfileManager.ProfileListActivity;
@@ -61,20 +60,11 @@ public final class ProfileList extends ProfileListActivity
   protected void onCreate(Bundle instanceState)
   {
     super.onCreate(instanceState);
+  }
+
+  protected void onCreateInstance(Bundle instanceState)
+  {
     setContentView(R.layout.profile_list);
-
-    fillData();
-
-    registerForContextMenu(getListView());
-
-    Button add = (Button) findViewById(R.id.newProfile);
-    add.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View view)
-      {
-        newProfile();
-      }
-    });
   }
 
   /**
@@ -130,7 +120,7 @@ public final class ProfileList extends ProfileListActivity
     }
   }
 
-  private void newProfile()
+  protected void newListItem()
   {
     Intent ii = new Intent(this, ProfileEdit.class)
         .putExtra(INTENT_PROFILE_ID, 0);
@@ -164,7 +154,7 @@ public final class ProfileList extends ProfileListActivity
 
     helper.delete(FILTER_PROFILE_ID, info.id);
   }
-  
+
   /*
    * (non-Javadoc)
    * 
@@ -234,8 +224,8 @@ public final class ProfileList extends ProfileListActivity
 
     switch (item.getItemId())
     {
-    case R.id.newProfile:
-      newProfile();
+    case R.id.newItemButton:
+      newListItem();
       return true;
 
     case R.id.applySettings:
@@ -244,30 +234,6 @@ public final class ProfileList extends ProfileListActivity
     }
 
     return super.onOptionsItemSelected(item);
-  }
-
-  /*
-   * (non-Javadoc)
-   * 
-   * @see android.app.Activity#onPause()
-   */
-  @Override
-  protected void onPause()
-  {
-    super.onPause();
-  }
-
-  /*
-   * (non-Javadoc)
-   * 
-   * @see android.app.Activity#onResume()
-   */
-  @Override
-  protected void onResume()
-  {
-    super.onResume();
-
-    fillData();
   }
 
   /*
@@ -339,18 +305,4 @@ public final class ProfileList extends ProfileListActivity
 
   }
 
-  @Override
-  public void onBackPressed()
-  {
-    // stop the current 'activity' i.e., exit without saving
-    setResult(RESULT_CANCELED);
-    super.finish();
-  }
-
-  @Override
-  public void finish()
-  {
-    setResult(RESULT_OK);
-    super.finish();
-  }
 }

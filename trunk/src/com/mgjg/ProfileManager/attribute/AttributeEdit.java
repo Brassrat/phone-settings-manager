@@ -198,6 +198,11 @@ public class AttributeEdit extends Activity
   {
     super.onResume();
 
+  }
+
+  @Override
+  protected void onRestoreInstanceState(Bundle instanceState)
+  {
     // have to refetch from db
     initAttributeAndType(null, profileId, attributeId);
     if (null != attribute)
@@ -207,7 +212,7 @@ public class AttributeEdit extends Activity
     mSaved = false;
     canceled = false;
   }
-
+  
   /*
    * (non-Javadoc)
    * 
@@ -282,6 +287,7 @@ public class AttributeEdit extends Activity
           new Intent().putExtra(INTENT_ATTRIBUTE_ID, attributeId)
               .putExtra(INTENT_ATTRIBUTE_PROFILE_ID, profileId)
               .setData(data));
+      attribute.finishCreate();
     }
 
     super.finish();
@@ -290,19 +296,10 @@ public class AttributeEdit extends Activity
   @Override
   public void onBackPressed()
   {
-    // stop the current 'activity' i.e., exit without saving
     setResult(RESULT_CANCELED);
-    attribute.finishCreate();
     super.finish();
   }
-
-  @Override
-  public void onDestroy()
-  {
-    attribute.finishCreate();
-    super.onDestroy();
-  }
-
+  
   private void initAttributeAndType(Bundle instanceState, long profileId, Long attributeId)
   {
     attribute = null;
@@ -357,4 +354,5 @@ public class AttributeEdit extends Activity
       type = attribute.getTypeId();
     }
   }
+
 }

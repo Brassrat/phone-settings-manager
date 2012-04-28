@@ -74,6 +74,9 @@
     <string name="activeLabel">Active:</string>
     
     <string name="savedSchedule">Schedule saved</string><string name="savedAttribute">Attribute saved</string>
+    <string name="mustSetProfileNameBeforeSave">Must set profile name before it can be saved, use back key to cancel</string>
+    <string name="mustSetProfileNameBeforeEditAttributes">Must set profile name before editting attributes</string>
+    <string name="mustSetProfileNameBeforeEditSchedules">Must set profile name before editting schedules</string>
     
     <string name="done">Done</string>
     
@@ -128,6 +131,8 @@
     <string name="title_airplane">AirPlane</string>
     <string name="title_wifi">Wifi</string>
     <string name="title_mobiledata">MobileData</string>
+    <string name="AttributesForProfile">Attributes for profile ...</string>
+    <string name="type_name">Type Name</string>
 
     
 </resources>

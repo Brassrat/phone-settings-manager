@@ -57,6 +57,7 @@ public class ScheduleEdit extends Activity
       R.id.day5toggle,
       R.id.day6toggle,
   };
+  
   private Long scheduleId;
   private Long profileId = 0L;
   private String profileName;
@@ -236,25 +237,7 @@ public class ScheduleEdit extends Activity
       saveSchedule();
     }
   }
-
-  /*
-   * (non-Javadoc)
-   * 
-   * @see android.app.Activity#onResume()
-   */
-  @Override
-  protected void onResume()
-  {
-    super.onResume();
-    // canceled = false;
-    //
-    // TimePicker startTime = (TimePicker) findViewById(R.id.startTime);
-    // CheckBox active = (CheckBox) findViewById(R.id.activeCheckbox);
-    // schedule = populateFields(startTime, active);
-    // profileId = schedule.getProfile_id();
-    // saved = false;
-  }
-
+  
   /*
    * (non-Javadoc)
    * 
@@ -283,6 +266,18 @@ public class ScheduleEdit extends Activity
     instanceState.putCharSequence(INTENT_SCHEDULE_PROFILE_NAME, profileName);
   }
 
+  /*
+   * (non-Javadoc)
+   * 
+   * @see android.app.Activity#onResume()
+   */
+  @Override
+  protected void onResume()
+  {
+    super.onResume();
+    // nothing else to do ... onRestoreInstanceState was sufficient
+  }
+  
   @Override
   protected void onRestoreInstanceState(Bundle instanceState)
   {
@@ -384,14 +379,15 @@ public class ScheduleEdit extends Activity
     {
       saveSchedule();
     }
-    setResult(!canceled ? RESULT_OK : RESULT_CANCELED);
+    setResult(canceled ? RESULT_CANCELED : RESULT_OK);
     super.finish();
   }
 
   @Override
   public void onBackPressed()
   {
-    setResult(!canceled ? RESULT_OK : RESULT_CANCELED);
+    setResult(RESULT_CANCELED);
+    canceled=true;
     super.finish();
   }
 }
