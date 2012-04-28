@@ -29,13 +29,13 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.KeyEvent;
+//import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnKeyListener;
+//import android.view.View.OnKeyListener;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -57,7 +57,7 @@ public class ProfileEdit extends Activity
 {
 
   private TextView name;
-  private boolean clearNoName;
+  //private boolean clearNoName;
   private CheckBox active;
 
   private Long profileId;
@@ -91,39 +91,39 @@ public class ProfileEdit extends Activity
     }
 
     name = (TextView) findViewById(R.id.nameLabel);
-    clearNoName = true;
-    name.setOnClickListener(new OnClickListener() {
+//    clearNoName = true;
+//    name.setOnClickListener(new OnClickListener() {
+//
+//      @Override
+//      public void onClick(View v)
+//      {
+//
+//        if (clearNoName && ("NO NAME".equals(name.getText().toString())))
+//        {
+//          clearNoName = false;
+//          name.setText("");
+//        }
+//
+//      }
+//
+//    });
 
-      @Override
-      public void onClick(View v)
-      {
-
-        if (clearNoName && ("NO NAME".equals(name.getText().toString())))
-        {
-          clearNoName = false;
-          name.setText("");
-        }
-
-      }
-
-    });
-
-    name.setOnKeyListener(new OnKeyListener() {
-
-      @Override
-      public boolean onKey(View v, int keyCode, KeyEvent event)
-      {
-
-        if (clearNoName && ("NO NAME".equals(name.getText().toString())))
-        {
-          clearNoName = false;
-          name.setText("");
-        }
-        return false;
-
-      }
-
-    });
+//    name.setOnKeyListener(new OnKeyListener() {
+//
+//      @Override
+//      public boolean onKey(View v, int keyCode, KeyEvent event)
+//      {
+//
+//        if (clearNoName && ("NO NAME".equals(name.getText().toString())))
+//        {
+//          clearNoName = false;
+//          name.setText("");
+//        }
+//        return false;
+//
+//      }
+//
+//    });
     active = (CheckBox) findViewById(R.id.activeCheckbox);
     populateFields();
 
@@ -150,6 +150,33 @@ public class ProfileEdit extends Activity
     name.setFocusableInTouchMode(true);
 
     mSaved = false;
+
+    Button done = (Button) findViewById(R.id.doneButton);
+    if (null != done)
+    {
+      done.setOnClickListener(new OnClickListener() {
+
+        @Override
+        public void onClick(View v)
+        {
+          done();
+        }
+      });
+    }
+  }
+
+  private void done()
+  {
+    CharSequence nm = name.getText();
+    if ((nm.length() <= 0) || "NO NAME".equals(nm))
+    {
+      CharSequence msg = this.getText(R.string.mustSetProfileNameBeforeSave);
+      Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+    }
+    else
+    {
+      finish();
+    }
   }
 
   @Override
@@ -170,7 +197,7 @@ public class ProfileEdit extends Activity
     }
     if (null == profileId)
     {
-      String msg = "Must set profile name before editting attributes";
+      CharSequence msg = this.getText(R.string.mustSetProfileNameBeforeEditAttributes);
       Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
       return;
     }
@@ -189,7 +216,7 @@ public class ProfileEdit extends Activity
     }
     if (null == profileId)
     {
-      String msg = "Must set profile name before editting attributes";
+      CharSequence msg = this.getText(R.string.mustSetProfileNameBeforeEditSchedules);
       Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
       return;
     }
@@ -259,10 +286,14 @@ public class ProfileEdit extends Activity
     {
       profileId = null;
       profile = new Profile(0, "NO NAME", 0, true);
+      name.setText("");
+    }
+    else
+    {
+      name.setText(profile.getName());
     }
 
     active.setChecked(profile.isActive());
-    name.setText(profile.getName());
   }
 
   /*
@@ -311,9 +342,12 @@ public class ProfileEdit extends Activity
   protected void onResume()
   {
     super.onResume();
+  }
 
+  @Override
+  protected void onRestoreInstanceState(Bundle instanceState)
+  {
     populateFields();
-
     mSaved = false;
   }
 
@@ -354,7 +388,7 @@ public class ProfileEdit extends Activity
       // no name ... no save
       if (toastOnNoSave)
       {
-        String msg = "Must set profile name before it can be saved";
+        CharSequence msg = this.getText(R.string.mustSetProfileNameBeforeSave);
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
       }
       return null;
@@ -390,17 +424,15 @@ public class ProfileEdit extends Activity
 
     if (isModified())
     {
-
       if (!mSaved)
       {
         saveState(true);
       }
-
-      setResult(RESULT_OK,
-          new Intent().putExtra(INTENT_PROFILE_ID, profileId)
-              .putExtra(INTENT_PROFILE_ACTIVE, active.isChecked()));
-
     }
+
+    setResult(RESULT_OK,
+        new Intent().putExtra(INTENT_PROFILE_ID, profileId)
+            .putExtra(INTENT_PROFILE_ACTIVE, active.isChecked()));
 
     super.finish();
   }
@@ -408,8 +440,8 @@ public class ProfileEdit extends Activity
   @Override
   public void onBackPressed()
   {
-    // stop the current 'activity' i.e., exit without saving
     setResult(RESULT_CANCELED);
-    finish();
+    super.finish();
   }
+
 }

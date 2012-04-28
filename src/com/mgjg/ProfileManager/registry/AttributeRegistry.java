@@ -25,7 +25,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.SubMenu;
+import android.widget.ListView;
 
 import com.mgjg.ProfileManager.R;
 import com.mgjg.ProfileManager.attribute.ProfileAttribute;
@@ -119,20 +121,48 @@ public class AttributeRegistry
     return getAttribute(type).createInstance(context, c);
   }
 
-  public void onCreateOptionsMenu(Activity activity, Menu menu)
+  public SubMenu onCreateOptionsMenu(Activity activity, Menu menu)
+  {
+    // add sub-menu for selectable attributes
+    SubMenu attrsMenu = menu.addSubMenu(activity.getString(R.string.AddAttribute));
+    // add default menu entries...
+//    menu.add(NONE, R.id.done, NONE, activity.getString(R.string.done));
+    return attrsMenu;
+  }
+
+  /**
+   * add sub-menu of 
+   * @param activity
+   * @param menu
+   * @param lv
+   * @return
+   */
+  public MenuItem onPrepareOptionsMenu(Activity activity, Menu menu, ListView lv)
   {
     // add selectable attributes to menu
-    // MenuInflater inflater = activity.getMenuInflater();
-    // inflater.inflate(R.menu.attributelist_options, menu);
-    SubMenu attrMenu = menu.addSubMenu(activity.getString(R.string.AddAttribute));
-    // TODO - need to use attribute order 
-    for (Map.Entry<String, ProfileAttribute> mape : RegisteredAttributesByName.entrySet())
+    MenuItem menuItem = menu.getItem(0);
+    SubMenu attrMenu = menuItem.getSubMenu();
+    attrMenu.clear();
+    for (ProfileAttribute attr : RegisteredAttributesByName.values())
     {
-      ProfileAttribute attr = mape.getValue();
-      attrMenu.add(NONE, attr.getTypeId(), NONE, attr.getName(activity));
+      if (!isInList(lv, attr.getTypeId()))
+      {
+        attrMenu.add(NONE, attr.getTypeId(), attr.getListOrder(), attr.getName(activity));
+      }
     }
-
-    // add default menu entries...
-    menu.add(NONE, R.id.done, NONE, activity.getString(R.string.done));
+    return menuItem;
+  }
+  
+  private boolean isInList(ListView lv, int typeId)
+  {
+    int xx = lv.getChildCount();
+    for (int pp = 0; pp < xx; ++pp)
+    {
+      if (typeId == ((ProfileAttribute) lv.getItemAtPosition(pp)).getTypeId())
+      {
+        return true;
+      }
+    }
+    return false;
   }
 }

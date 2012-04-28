@@ -34,7 +34,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView.AdapterContextMenuInfo;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -47,10 +46,8 @@ import com.mgjg.ProfileManager.provider.ScheduleHelper;
  * 
  * @author Mike Partridge
  */
-public class ScheduleList extends ProfileListActivity
+public final class ScheduleList extends ProfileListActivity
 {
-  private static final int ACTIVITY_CREATE = 0;
-  private static final int ACTIVITY_EDIT = 1;
 
   private long profileId;
   private String profileName;
@@ -64,7 +61,10 @@ public class ScheduleList extends ProfileListActivity
   protected void onCreate(Bundle instanceState)
   {
     super.onCreate(instanceState);
+  }
 
+  protected void onCreateInstance(Bundle instanceState)
+  {
     if (instanceState == null)
     {
       Intent ii = getIntent();
@@ -86,24 +86,12 @@ public class ScheduleList extends ProfileListActivity
 
     TextView header = (TextView) findViewById(R.id.ScheduleForProfile);
     header.setText(getText(R.string.ScheduleListProfile) + " " + profileName);
-
-    fillData();
-
-    registerForContextMenu(getListView());
-
-    Button add = (Button) findViewById(R.id.newSchedule);
-    add.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View view)
-      {
-        newSchedule();
-      }
-    });
   }
 
   /**
    * retrieves schedules from the db and populates the list
    */
+  @Override
   protected void fillData()
   {
     ScheduleHelper helper = new ScheduleHelper(this);
@@ -121,16 +109,8 @@ public class ScheduleList extends ProfileListActivity
     editSchedule(id);
   }
 
-  private void editSchedule(long scheduleId)
-  {
-    Intent ii = new Intent(this, ScheduleEdit.class)
-        .putExtra(INTENT_SCHEDULE_ID, scheduleId)
-        .putExtra(INTENT_SCHEDULE_PROFILE_ID, profileId)
-        .putExtra(INTENT_SCHEDULE_PROFILE_NAME, profileName);
-    startActivityForResult(ii, ACTIVITY_EDIT);
-  }
-
-  private void newSchedule()
+  @Override
+  protected void newListItem()
   {
     Intent ii = new Intent(this, ScheduleEdit.class)
         .putExtra(INTENT_SCHEDULE_PROFILE_ID, profileId)
@@ -204,7 +184,7 @@ public class ScheduleList extends ProfileListActivity
   {
     boolean result = super.onCreateOptionsMenu(menu);
     getMenuInflater().inflate(R.menu.schedulelist_options, menu);
-    return result;
+    return false; // do not show, access via button
   }
 
   /*
@@ -218,8 +198,8 @@ public class ScheduleList extends ProfileListActivity
 
     switch (item.getItemId())
     {
-    case R.id.newSchedule:
-      newSchedule();
+    case R.id.newItemButton:
+      newListItem();
       break;
 
     // todo add setting all alarms for a profile
@@ -234,28 +214,7 @@ public class ScheduleList extends ProfileListActivity
 
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see android.app.Activity#onPause()
-   */
-  @Override
-  protected void onPause()
-  {
-    super.onPause();
-  }
-
-  /*
-   * (non-Javadoc)
-   * 
-   * @see android.app.Activity#onResume()
-   */
-  @Override
-  protected void onResume()
-  {
-    super.onResume();
-    fillData();
-  }
+ 
 
   /*
    * (non-Javadoc)
@@ -270,23 +229,13 @@ public class ScheduleList extends ProfileListActivity
     instanceState.putString(INTENT_SCHEDULE_PROFILE_NAME, profileName);
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see android.app.Activity#onActivityResult(int, int, android.content.Intent)
-   */
-  @Override
-  protected void onActivityResult(int requestCode, int resultCode, Intent intent)
+  private void editSchedule(long scheduleId)
   {
-    super.onActivityResult(requestCode, resultCode, intent);
-
-    if (resultCode == RESULT_OK &&
-        (requestCode == ACTIVITY_EDIT || requestCode == ACTIVITY_CREATE))
-    {
-
-    }
-
-    fillData();
+    Intent ii = new Intent(this, ScheduleEdit.class)
+        .putExtra(INTENT_SCHEDULE_ID, scheduleId)
+        .putExtra(INTENT_SCHEDULE_PROFILE_ID, profileId)
+        .putExtra(INTENT_SCHEDULE_PROFILE_NAME, profileName);
+    startActivityForResult(ii, ACTIVITY_EDIT);
   }
 
   private void toggleSchedule(long scheduleId)
@@ -312,14 +261,8 @@ public class ScheduleList extends ProfileListActivity
 
     // set/unset the alarm
     helper.setAlarm(scheduleId, !active);
-    
+
     fillData();
   }
 
-  @Override
-  public void onBackPressed()
-  {
-    setResult(RESULT_OK);
-    super.finish();
-  }
 }
