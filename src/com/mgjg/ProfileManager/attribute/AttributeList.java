@@ -206,11 +206,11 @@ public class AttributeList extends ProfileListActivity
   public boolean onOptionsItemSelected(MenuItem item)
   {
     int resId = item.getItemId();
-    if (resId == R.id.done)
-    {
-      finish();
-      return true;
-    }
+//    if (resId == R.id.done)
+//    {
+//      finish();
+//      return true;
+//    }
 
     if (resId > 0)
     {
@@ -239,7 +239,7 @@ public class AttributeList extends ProfileListActivity
       }
       catch (Exception e)
       {
-        // not Done and not a type, try super
+        // not a type, try super
       }
     }
     return super.onOptionsItemSelected(item);
