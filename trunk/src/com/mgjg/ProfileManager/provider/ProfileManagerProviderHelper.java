@@ -40,7 +40,7 @@ public abstract class ProfileManagerProviderHelper<T extends Listable>
   public static final int FILTER_ALL_ACTIVE = 10;
 
   protected Context context;
-  
+
   protected static Uri createTableUri(String authority, String table)
   {
     return Uri.parse("content://" + authority + "/" + table);
@@ -50,7 +50,7 @@ public abstract class ProfileManagerProviderHelper<T extends Listable>
   {
     this.context = context;
   }
-  
+
   public Uri insertEntry(T entry)
   {
     Uri noteUri = context.getContentResolver().insert(getContentUri(), entry.makeValues());
@@ -58,7 +58,7 @@ public abstract class ProfileManagerProviderHelper<T extends Listable>
     return noteUri;
   }
 
-  public final Uri insert( ContentValues initialValues)
+  public final Uri insert(ContentValues initialValues)
   {
     return context.getContentResolver().insert(getContentUri(NO_FILTER, (Object) null), initialValues);
   }

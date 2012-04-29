@@ -60,6 +60,6 @@ public abstract class ManagedProviderHelper<T extends Listable>
   }
 
   protected abstract List<T> getEntries(Cursor cc);
-  
+
   public abstract Uri getContentUri(int filter, Object... values);
 }

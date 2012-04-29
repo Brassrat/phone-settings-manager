@@ -74,17 +74,16 @@ public class ScheduleProvider extends ProfileManagerProvider<ScheduleEntry>
 
   public static final String SCHEDULE_DEFAULT_ORDER =
       COLUMN_SCHEDULE_START_HOUR + ","
-      + COLUMN_SCHEDULE_START_MINUTE + ","
-      + COLUMN_SCHEDULE_DAY0 + " desc, "
-      + COLUMN_SCHEDULE_DAY1 + " desc, "
-      + COLUMN_SCHEDULE_DAY2 + " desc, "
-      + COLUMN_SCHEDULE_DAY3 + " desc, "
-      + COLUMN_SCHEDULE_DAY4 + " desc, "
-      + COLUMN_SCHEDULE_DAY5 + " desc, "
-      + COLUMN_SCHEDULE_DAY6 + " desc, "
-      + TABLE_SCHEDULE + "." + COLUMN_SCHEDULE_ID;
+          + COLUMN_SCHEDULE_START_MINUTE + ","
+          + COLUMN_SCHEDULE_DAY0 + " desc, "
+          + COLUMN_SCHEDULE_DAY1 + " desc, "
+          + COLUMN_SCHEDULE_DAY2 + " desc, "
+          + COLUMN_SCHEDULE_DAY3 + " desc, "
+          + COLUMN_SCHEDULE_DAY4 + " desc, "
+          + COLUMN_SCHEDULE_DAY5 + " desc, "
+          + COLUMN_SCHEDULE_DAY6 + " desc, "
+          + TABLE_SCHEDULE + "." + COLUMN_SCHEDULE_ID;
 
-  
   // expose a URI for our data
   public static final Uri CONTENT_URI = createTableUri(AUTHORITY, TABLE_SCHEDULE);
 
@@ -259,9 +258,9 @@ public class ScheduleProvider extends ProfileManagerProvider<ScheduleEntry>
   {
     db.execSQL(TABLE_SCHEDULE_CREATE);
   }
-  
+
   public static void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
   {
-    
+
   }
 }

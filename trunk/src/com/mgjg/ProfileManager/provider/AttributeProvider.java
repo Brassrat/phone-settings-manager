@@ -16,18 +16,18 @@
  */
 package com.mgjg.ProfileManager.provider;
 
+import static com.mgjg.ProfileManager.provider.AttributeHelper.COLUMN_ATTRIBUTE_BOOL_VALUE;
+import static com.mgjg.ProfileManager.provider.AttributeHelper.COLUMN_ATTRIBUTE_ID;
+import static com.mgjg.ProfileManager.provider.AttributeHelper.COLUMN_ATTRIBUTE_INT_VALUE;
+import static com.mgjg.ProfileManager.provider.AttributeHelper.COLUMN_ATTRIBUTE_PROFILE_ID;
+import static com.mgjg.ProfileManager.provider.AttributeHelper.COLUMN_ATTRIBUTE_SETTING;
+import static com.mgjg.ProfileManager.provider.AttributeHelper.COLUMN_ATTRIBUTE_TYPE;
 import static com.mgjg.ProfileManager.provider.AttributeHelper.DEFAULT_ORDER_ATTRIBUTE;
 import static com.mgjg.ProfileManager.provider.AttributeHelper.FILTER_ATTRIBUTE_ID;
 import static com.mgjg.ProfileManager.provider.AttributeHelper.FILTER_ATTRIBUTE_PROFILE_ACTIVE;
 import static com.mgjg.ProfileManager.provider.AttributeHelper.FILTER_ATTRIBUTE_PROFILE_ID;
 import static com.mgjg.ProfileManager.provider.AttributeHelper.FILTER_ATTRIBUTE_PROFILE_TYPE;
 import static com.mgjg.ProfileManager.provider.AttributeHelper.FILTER_ATTRIBUTE_TYPE;
-import static com.mgjg.ProfileManager.provider.AttributeHelper.COLUMN_ATTRIBUTE_ID;
-import static com.mgjg.ProfileManager.provider.AttributeHelper.COLUMN_ATTRIBUTE_PROFILE_ID;
-import static com.mgjg.ProfileManager.provider.AttributeHelper.COLUMN_ATTRIBUTE_SETTING;
-import static com.mgjg.ProfileManager.provider.AttributeHelper.COLUMN_ATTRIBUTE_TYPE;
-import static com.mgjg.ProfileManager.provider.AttributeHelper.COLUMN_ATTRIBUTE_BOOL_VALUE;
-import static com.mgjg.ProfileManager.provider.AttributeHelper.COLUMN_ATTRIBUTE_INT_VALUE;
 import static com.mgjg.ProfileManager.provider.AttributeHelper.TABLE_ATTRIBUTE;
 import static com.mgjg.ProfileManager.provider.ProfileHelper.COLUMN_PROFILE_ACTIVE;
 import static com.mgjg.ProfileManager.provider.ProfileHelper.COLUMN_PROFILE_ID;
@@ -188,7 +188,7 @@ public class AttributeProvider extends ProfileManagerProvider<ProfileAttribute>
 
     case FILTER_ATTRIBUTE_PROFILE_ID:
       return new String[] { COLUMN_ATTRIBUTE_PROFILE_ID };
-      
+
     default:
       // should never get here if app is coded correctly
       throw new IllegalArgumentException("Invalid Filter " + matchedCode);
@@ -277,9 +277,9 @@ public class AttributeProvider extends ProfileManagerProvider<ProfileAttribute>
   {
     db.execSQL(TABLE_ATTRIBUTE_CREATE);
   }
-  
+
   public static void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
   {
-    
+
   }
 }

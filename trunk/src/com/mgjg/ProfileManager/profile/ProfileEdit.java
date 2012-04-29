@@ -29,13 +29,11 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-//import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-//import android.view.View.OnKeyListener;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -57,7 +55,7 @@ public class ProfileEdit extends Activity
 {
 
   private TextView name;
-  //private boolean clearNoName;
+  // private boolean clearNoName;
   private CheckBox active;
 
   private Long profileId;
@@ -91,39 +89,39 @@ public class ProfileEdit extends Activity
     }
 
     name = (TextView) findViewById(R.id.nameLabel);
-//    clearNoName = true;
-//    name.setOnClickListener(new OnClickListener() {
-//
-//      @Override
-//      public void onClick(View v)
-//      {
-//
-//        if (clearNoName && ("NO NAME".equals(name.getText().toString())))
-//        {
-//          clearNoName = false;
-//          name.setText("");
-//        }
-//
-//      }
-//
-//    });
+    // clearNoName = true;
+    // name.setOnClickListener(new OnClickListener() {
+    //
+    // @Override
+    // public void onClick(View v)
+    // {
+    //
+    // if (clearNoName && ("NO NAME".equals(name.getText().toString())))
+    // {
+    // clearNoName = false;
+    // name.setText("");
+    // }
+    //
+    // }
+    //
+    // });
 
-//    name.setOnKeyListener(new OnKeyListener() {
-//
-//      @Override
-//      public boolean onKey(View v, int keyCode, KeyEvent event)
-//      {
-//
-//        if (clearNoName && ("NO NAME".equals(name.getText().toString())))
-//        {
-//          clearNoName = false;
-//          name.setText("");
-//        }
-//        return false;
-//
-//      }
-//
-//    });
+    // name.setOnKeyListener(new OnKeyListener() {
+    //
+    // @Override
+    // public boolean onKey(View v, int keyCode, KeyEvent event)
+    // {
+    //
+    // if (clearNoName && ("NO NAME".equals(name.getText().toString())))
+    // {
+    // clearNoName = false;
+    // name.setText("");
+    // }
+    // return false;
+    //
+    // }
+    //
+    // });
     active = (CheckBox) findViewById(R.id.activeCheckbox);
     populateFields();
 

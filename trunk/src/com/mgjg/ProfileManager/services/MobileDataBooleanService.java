@@ -36,31 +36,31 @@ public class MobileDataBooleanService implements BooleanService
   public boolean isEnabled(Context context)
   {
 
-//    Object[] objAndMethod = getObjAndMethod(context, "isMobileDataEnabled");
-//    if (null != objAndMethod)
-//    {
-//      try
-//      {
-//        Object value = ((Method) objAndMethod[1]).invoke(objAndMethod[0]);
-//        if ((null != value) && value instanceof Boolean)
-//        {
-//          return ((Boolean) value).booleanValue();
-//        }
-//      }
-//      catch (IllegalArgumentException e)
-//      {
-//        Log.e("com.mgjg.ProfileManager", "unable to enable/disable mobile data: illegal argument, " + e.getMessage());
-//      }
-//      catch (IllegalAccessException e)
-//      {
-//        Log.e("com.mgjg.ProfileManager", "unable to enable/disable mobile data: illegal access" + e.getMessage());
-//      }
-//      catch (InvocationTargetException e)
-//      {
-//        Log.e("com.mgjg.ProfileManager", "unable to enable/disable mobile data: invocation, " + e.getMessage());
-//      }
-//    }
-    
+    // Object[] objAndMethod = getObjAndMethod(context, "isMobileDataEnabled");
+    // if (null != objAndMethod)
+    // {
+    // try
+    // {
+    // Object value = ((Method) objAndMethod[1]).invoke(objAndMethod[0]);
+    // if ((null != value) && value instanceof Boolean)
+    // {
+    // return ((Boolean) value).booleanValue();
+    // }
+    // }
+    // catch (IllegalArgumentException e)
+    // {
+    // Log.e("com.mgjg.ProfileManager", "unable to enable/disable mobile data: illegal argument, " + e.getMessage());
+    // }
+    // catch (IllegalAccessException e)
+    // {
+    // Log.e("com.mgjg.ProfileManager", "unable to enable/disable mobile data: illegal access" + e.getMessage());
+    // }
+    // catch (InvocationTargetException e)
+    // {
+    // Log.e("com.mgjg.ProfileManager", "unable to enable/disable mobile data: invocation, " + e.getMessage());
+    // }
+    // }
+
     final ConnectivityManager conman = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
     NetworkInfo info = conman.getNetworkInfo(android.net.ConnectivityManager.TYPE_MOBILE);
     if (null != info)

@@ -17,10 +17,10 @@
 package com.mgjg.ProfileManager.attribute;
 
 import static com.mgjg.ProfileManager.provider.AttributeHelper.FILTER_ATTRIBUTE_ID;
+import static com.mgjg.ProfileManager.provider.AttributeHelper.FILTER_ATTRIBUTE_PROFILE_TYPE;
 import static com.mgjg.ProfileManager.provider.AttributeHelper.INTENT_ATTRIBUTE_ID;
 import static com.mgjg.ProfileManager.provider.AttributeHelper.INTENT_ATTRIBUTE_PROFILE_ID;
 import static com.mgjg.ProfileManager.provider.AttributeHelper.INTENT_ATTRIBUTE_PROFILE_NAME;
-import static com.mgjg.ProfileManager.provider.AttributeHelper.FILTER_ATTRIBUTE_PROFILE_TYPE;
 import static com.mgjg.ProfileManager.provider.AttributeHelper.INTENT_ATTRIBUTE_TYPE;
 
 import java.util.List;
@@ -212,7 +212,7 @@ public class AttributeEdit extends Activity
     mSaved = false;
     canceled = false;
   }
-  
+
   /*
    * (non-Javadoc)
    * 
@@ -299,7 +299,7 @@ public class AttributeEdit extends Activity
     setResult(RESULT_CANCELED);
     super.finish();
   }
-  
+
   private void initAttributeAndType(Bundle instanceState, long profileId, Long attributeId)
   {
     attribute = null;

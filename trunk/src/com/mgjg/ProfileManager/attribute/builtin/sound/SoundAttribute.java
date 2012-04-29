@@ -98,7 +98,7 @@ public abstract class SoundAttribute extends AttributeBase implements Comparable
   {
     super();
   }
-  
+
   protected SoundAttribute(long attributeId, long profileId, int volume, boolean vibrate, String settings)
   {
     super(attributeId, profileId, volume, vibrate, settings);

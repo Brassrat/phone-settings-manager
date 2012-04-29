@@ -17,16 +17,16 @@
 package com.mgjg.ProfileManager.provider;
 
 import static com.mgjg.ProfileManager.provider.ProfileHelper.COLUMN_PROFILE_ACTIVE;
-import static com.mgjg.ProfileManager.provider.ProfileHelper.PROFILE_DEFAULT_ORDER;
 import static com.mgjg.ProfileManager.provider.ProfileHelper.COLUMN_PROFILE_ID;
-import static com.mgjg.ProfileManager.provider.ProfileHelper.FILTER_PROFILE_ID;
 import static com.mgjg.ProfileManager.provider.ProfileHelper.COLUMN_PROFILE_MODE;
-import static com.mgjg.ProfileManager.provider.ProfileHelper.FILTER_PROFILE_MODE;
 import static com.mgjg.ProfileManager.provider.ProfileHelper.COLUMN_PROFILE_NAME;
-import static com.mgjg.ProfileManager.provider.ProfileHelper.FILTER_PROFILE_NAME;
-import static com.mgjg.ProfileManager.provider.ProfileHelper.TABLE_PROFILE;
 import static com.mgjg.ProfileManager.provider.ProfileHelper.COLUMN_PROFILE_TYPE;
+import static com.mgjg.ProfileManager.provider.ProfileHelper.FILTER_PROFILE_ID;
+import static com.mgjg.ProfileManager.provider.ProfileHelper.FILTER_PROFILE_MODE;
+import static com.mgjg.ProfileManager.provider.ProfileHelper.FILTER_PROFILE_NAME;
 import static com.mgjg.ProfileManager.provider.ProfileHelper.FILTER_PROFILE_TYPE;
+import static com.mgjg.ProfileManager.provider.ProfileHelper.PROFILE_DEFAULT_ORDER;
+import static com.mgjg.ProfileManager.provider.ProfileHelper.TABLE_PROFILE;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -240,9 +240,9 @@ public class ProfileProvider extends ProfileManagerProvider<Profile>
   {
     db.execSQL(TABLE_PROFILE_CREATE);
   }
-  
+
   public static void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
   {
-    
+
   }
 }

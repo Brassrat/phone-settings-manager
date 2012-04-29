@@ -66,16 +66,16 @@ public class MainSettings extends ListActivity
   {
     super.onCreate(instanceState);
     setContentView(R.layout.main);
-//    PackageInfo pInfo;
-//    try
-//    {
-//      pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
-//      String version = pInfo.versionName;
-//    }
-//    catch (NameNotFoundException e)
-//    {
-//
-//    }
+    // PackageInfo pInfo;
+    // try
+    // {
+    // pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+    // String version = pInfo.versionName;
+    // }
+    // catch (NameNotFoundException e)
+    // {
+    //
+    // }
 
     ScheduleHelper.init(this);
 
@@ -92,7 +92,7 @@ public class MainSettings extends ListActivity
 
       Util.putBooleanPref(this, R.string.ShownStartup, true);
     }
-    //createView();
+    // createView();
   }
 
   @Override
@@ -104,13 +104,13 @@ public class MainSettings extends ListActivity
     }
     super.onStart();
   }
-  
+
   @Override
   public void onPause()
   {
     super.onPause();
   }
-  
+
   @Override
   public boolean onKeyLongPress(int keyCode, KeyEvent event)
   {

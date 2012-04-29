@@ -128,7 +128,7 @@ public final class ScheduleEntryService extends IntentService
         Intent notificationIntent = new Intent(this, ToastNotification.class);
         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         notificationIntent.setAction("com.mgjg.ProfileManager.TOAST");
-        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, new Intent(), 
+        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, new Intent(),
             PendingIntent.FLAG_ONE_SHOT + PendingIntent.FLAG_UPDATE_CURRENT);
 
         notification.setLatestEventInfo(context, contentTitle, contentText, contentIntent);
