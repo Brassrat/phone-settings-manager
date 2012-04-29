@@ -230,9 +230,9 @@ public class ProfileEdit extends Activity
 
     switch (item.getItemId())
     {
-    case R.id.done:
-      finish();
-      return true;
+//    case R.id.done:
+//      finish();
+//      return true;
 
     case R.id.applySettings:
       if (null != profileId)
