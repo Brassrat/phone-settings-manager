@@ -29,8 +29,7 @@ public final class InCallVolumeAttribute extends SoundAttribute
   {
     super(context, params);
   }
-  
-  
+
   private InCallVolumeAttribute(long attributeId, long aProfileId, int aVolume, boolean aVibrate, String settings)
   {
     super(attributeId, aProfileId, aVolume, aVibrate, settings);
@@ -54,11 +53,10 @@ public final class InCallVolumeAttribute extends SoundAttribute
     return ORDER_AUDIO_VOICE_CALL;
   }
 
-  
   @Override
   public int getSoundAttributeIndex()
   {
     return SOUND_ATTR_VOICE_CALL;
   }
-  
+
 }

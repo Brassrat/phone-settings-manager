@@ -85,7 +85,7 @@ public class AttributeTableLayout implements Listable, Comparable<Listable>
   {
     return attribute.getListOrder();
   }
-  
+
   @Override
   public int compareTo(Listable another)
   {

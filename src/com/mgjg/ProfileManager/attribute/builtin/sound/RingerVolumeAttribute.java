@@ -32,11 +32,11 @@ public final class RingerVolumeAttribute extends SoundAttribute
     this(null, "");
   }
 
-  public RingerVolumeAttribute(Context context,String params)
+  public RingerVolumeAttribute(Context context, String params)
   {
     super(context, params);
   }
-  
+
   private RingerVolumeAttribute(long attributeId, long aProfileId, int aVolume, boolean aVibrate, String settings)
   {
     super(attributeId, aProfileId, aVolume, aVibrate, settings);

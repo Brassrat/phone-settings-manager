@@ -64,7 +64,7 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper
     com.mgjg.ProfileManager.provider.ProfileProvider.onUpgrade(db, oldVersion, newVersion);
     com.mgjg.ProfileManager.provider.ScheduleProvider.onUpgrade(db, oldVersion, newVersion);
     com.mgjg.ProfileManager.provider.AttributeProvider.onUpgrade(db, oldVersion, newVersion);
-    
+
     Log.w(SQLiteDatabaseHelper.class.toString(), "Upgrade completed.");
   }
 

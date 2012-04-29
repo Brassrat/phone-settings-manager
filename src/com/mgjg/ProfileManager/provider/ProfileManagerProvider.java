@@ -53,7 +53,6 @@ public abstract class ProfileManagerProvider<T extends Listable> extends Content
     dbHelper = new SQLiteDatabaseHelper(getContext());
     return (dbHelper == null) ? false : true;
   }
-  
 
   protected static Uri createTableUri(String authority, String table)
   {

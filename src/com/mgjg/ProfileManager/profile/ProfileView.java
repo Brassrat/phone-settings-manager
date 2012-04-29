@@ -72,27 +72,27 @@ public final class ProfileView extends LinearLayout
     TextView name = new TextView(context);
     name.setId(PROFILE_NAME_ID);
 
-    float zz = name.getTextSize();  // change to preference
+    float zz = name.getTextSize(); // change to preference
     name.setPadding(2, 2, 2, 2);
     name.setTextSize(zz);
     name.setGravity(Gravity.LEFT);
     // name.setLayoutParams(paramsFillWrap);
 
-//    TextView blanks = new TextView(context);
-//    blanks.setPadding(2, 2, 2, 2);
-//    blanks.setText("   ");
-//    blanks.setTextSize(zz);
+    // TextView blanks = new TextView(context);
+    // blanks.setPadding(2, 2, 2, 2);
+    // blanks.setText("   ");
+    // blanks.setTextSize(zz);
 
     TextView next = new TextView(context);
     next.setPadding(2, 2, 10, 2);
     next.setId(PROFILE_NEXT_START_TIME_ID);
     next.setTextSize(zz);
-//    next.setGravity(Gravity.RIGHT);
+    // next.setGravity(Gravity.RIGHT);
 
     TableRow profileRow = new TableRow(context);
     profileRow.addView(cb);
     profileRow.addView(name);
-//    profileRow.addView(blanks);
+    // profileRow.addView(blanks);
 
     TableRow.LayoutParams right = new TableRow.LayoutParams(
         TableRow.LayoutParams.FILL_PARENT,

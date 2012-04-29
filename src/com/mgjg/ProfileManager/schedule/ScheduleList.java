@@ -214,8 +214,6 @@ public final class ScheduleList extends ProfileListActivity
 
   }
 
- 
-
   /*
    * (non-Javadoc)
    * 

@@ -76,13 +76,12 @@ public interface ProfileAttribute extends Viewable<ProfileAttribute>, Comparable
   String getToast(Context context);
 
   int getTypeId(); // registered type id
-  
+
   /**
-   * value used to sort attributes in display of current values
-   * TODO - get from registry
+   * value used to sort attributes in display of current values TODO - get from registry
    */
   int getListOrder(); // order for to show in list
-  
+
   /**
    * returns settings for this attribute as a string
    * 

@@ -11,12 +11,12 @@ public class ServiceFactory
     {
       return new WifiBooleanService(context);
     }
-    
+
     if ("airplane".equalsIgnoreCase(serviceName))
     {
       return new AirPlaneBooleanService(context);
     }
-    
+
     if ("mobiledata".equalsIgnoreCase(serviceName))
     {
       return new MobileDataBooleanService(context);

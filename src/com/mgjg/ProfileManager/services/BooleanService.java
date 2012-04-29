@@ -21,7 +21,7 @@ public interface BooleanService
 {
 
   String getServiceName();
-  
+
   boolean isEnabled(Context context);
 
   void setEnabled(Context context, boolean enabled);

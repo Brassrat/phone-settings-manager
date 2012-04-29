@@ -15,10 +15,10 @@
  */
 package com.mgjg.ProfileManager.attribute;
 
-import com.mgjg.ProfileManager.registry.UnknownAttributeException;
-
 import android.content.Context;
 import android.database.Cursor;
+
+import com.mgjg.ProfileManager.registry.UnknownAttributeException;
 
 public interface ProfileAttributeFactory
 {

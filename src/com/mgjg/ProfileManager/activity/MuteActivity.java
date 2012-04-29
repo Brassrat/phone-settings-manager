@@ -68,7 +68,7 @@ public class MuteActivity extends Activity
       }
 
       Util.putBooleanPref(this, R.string.muted, false);
-      Util.putBooleanPref(this, R.string.disableProfiles, false); 
+      Util.putBooleanPref(this, R.string.disableProfiles, false);
     }
     else
     {
@@ -79,7 +79,7 @@ public class MuteActivity extends Activity
       Util.putIntPref(this, R.string.SavedMediaVolume, audio.getStreamVolume(AudioManager.STREAM_MUSIC));
 
       Util.putBooleanPref(this, R.string.muted, true);
-      Util.putBooleanPref(this, R.string.disableProfiles, true); 
+      Util.putBooleanPref(this, R.string.disableProfiles, true);
 
       RingmodeToggle.fixRingMode(audio, 0);
       audio.setStreamVolume(AudioManager.STREAM_SYSTEM, 0, flagsNoUI);

@@ -15,11 +15,11 @@
  */
 package com.mgjg.ProfileManager.attribute;
 
-import com.mgjg.ProfileManager.registry.AttributeRegistry;
-import com.mgjg.ProfileManager.registry.UnknownAttributeException;
-
 import android.content.Context;
 import android.database.Cursor;
+
+import com.mgjg.ProfileManager.registry.AttributeRegistry;
+import com.mgjg.ProfileManager.registry.UnknownAttributeException;
 
 public class ProfileAttributeFactoryImpl implements ProfileAttributeFactory
 {

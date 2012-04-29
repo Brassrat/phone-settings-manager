@@ -126,12 +126,13 @@ public class AttributeRegistry
     // add sub-menu for selectable attributes
     SubMenu attrsMenu = menu.addSubMenu(activity.getString(R.string.AddAttribute));
     // add default menu entries...
-//    menu.add(NONE, R.id.done, NONE, activity.getString(R.string.done));
+    // menu.add(NONE, R.id.done, NONE, activity.getString(R.string.done));
     return attrsMenu;
   }
 
   /**
-   * add sub-menu of 
+   * add sub-menu of
+   * 
    * @param activity
    * @param menu
    * @param lv
@@ -152,7 +153,7 @@ public class AttributeRegistry
     }
     return menuItem;
   }
-  
+
   private boolean isInList(ListView lv, int typeId)
   {
     int xx = lv.getChildCount();

@@ -25,11 +25,11 @@ public final class MediaVolumeAttribute extends SoundAttribute
     this(null, "");
   }
 
-  public MediaVolumeAttribute(Context context,String params)
+  public MediaVolumeAttribute(Context context, String params)
   {
     super(context, params);
   }
-  
+
   private MediaVolumeAttribute(long attributeId, long aProfileId, int aVolume, boolean aVibrate, String settings)
   {
     super(attributeId, aProfileId, aVolume, aVibrate, settings);
@@ -52,8 +52,7 @@ public final class MediaVolumeAttribute extends SoundAttribute
   {
     return ORDER_AUDIO_MUSIC;
   }
-  
-  
+
   @Override
   public int getSoundAttributeIndex()
   {

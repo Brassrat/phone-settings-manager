@@ -57,7 +57,7 @@ public class ScheduleEdit extends Activity
       R.id.day5toggle,
       R.id.day6toggle,
   };
-  
+
   private Long scheduleId;
   private Long profileId = 0L;
   private String profileName;
@@ -237,7 +237,7 @@ public class ScheduleEdit extends Activity
       saveSchedule();
     }
   }
-  
+
   /*
    * (non-Javadoc)
    * 
@@ -277,7 +277,7 @@ public class ScheduleEdit extends Activity
     super.onResume();
     // nothing else to do ... onRestoreInstanceState was sufficient
   }
-  
+
   @Override
   protected void onRestoreInstanceState(Bundle instanceState)
   {
@@ -310,7 +310,7 @@ public class ScheduleEdit extends Activity
       }
       else
       {
-        profileId = 0L;  // this is not good
+        profileId = 0L; // this is not good
         profileCS = "UNKNOWN";
       }
     }
@@ -387,7 +387,7 @@ public class ScheduleEdit extends Activity
   public void onBackPressed()
   {
     setResult(RESULT_CANCELED);
-    canceled=true;
+    canceled = true;
     super.finish();
   }
 }

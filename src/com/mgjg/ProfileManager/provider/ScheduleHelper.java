@@ -49,7 +49,7 @@ public final class ScheduleHelper extends ProfileManagerProviderHelper<ScheduleE
 
   public static final String TABLE_SCHEDULE = "schedules";
   public static final String TABLE_ALIAS_SCHEDULE = "s";
-  
+
   public static final String COLUMN_SCHEDULE_ID = "_id";
   public static final String COLUMN_SCHEDULE_PROFILE_ID = "_profile_id";
   public static final String COLUMN_SCHEDULE_ACTIVE = "_active";
@@ -71,7 +71,7 @@ public final class ScheduleHelper extends ProfileManagerProviderHelper<ScheduleE
   public static final String INTENT_SCHEDULE_PROFILE_NAME = "com.mgjg.ProfileManager.schedule.profile.name";
 
   public static final String DEFAULT_ORDER_SCHEDULE =
-            COLUMN_SCHEDULE_DAY0 + " desc, "
+      COLUMN_SCHEDULE_DAY0 + " desc, "
           + COLUMN_SCHEDULE_DAY1 + " desc, "
           + COLUMN_SCHEDULE_DAY2 + " desc, "
           + COLUMN_SCHEDULE_DAY3 + " desc, "
@@ -84,7 +84,7 @@ public final class ScheduleHelper extends ProfileManagerProviderHelper<ScheduleE
 
   public static int ACTIVE = R.string.active;
   public static int INACTIVE = R.string.inactive;
-  
+
   public static int ACTIVE_COLOR = Color.GREEN;
   public static int INACTIVE_COLOR = Color.RED;
 

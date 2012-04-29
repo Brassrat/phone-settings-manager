@@ -29,7 +29,7 @@ public final class AlarmVolumeAttribute extends SoundAttribute
   {
     super(context, params);
   }
-  
+
   private AlarmVolumeAttribute(long aAttributeId, long aProfileId, int aVolume, boolean aVibrate, String settings)
   {
     super(aAttributeId, aProfileId, aVolume, aVibrate, settings);
@@ -52,11 +52,11 @@ public final class AlarmVolumeAttribute extends SoundAttribute
   {
     return ORDER_AUDIO_ALARM;
   }
-  
+
   @Override
   public int getSoundAttributeIndex()
   {
     return SOUND_ATTR_ALARM;
   }
-  
+
 }

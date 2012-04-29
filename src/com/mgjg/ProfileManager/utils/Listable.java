@@ -28,6 +28,6 @@ public interface Listable extends Providee, Comparable<Listable>
   long getId();
 
   boolean isEnabled();
-  
+
   int getListOrder();
 }

@@ -47,11 +47,11 @@ public class ProfileHelper extends ProfileManagerProviderHelper<Profile>
   public static final String COLUMN_PROFILE_MODE = "_override"; // overrides current settings or not
   public static final String COLUMN_PROFILE_TYPE = "_type";
 
-  public static final String PROFILE_DEFAULT_ORDER = 
-        COLUMN_PROFILE_NAME + " desc, " 
-      + COLUMN_PROFILE_ACTIVE + "," 
-      + COLUMN_PROFILE_MODE + "," 
-      + TABLE_PROFILE + "." + COLUMN_PROFILE_ID;
+  public static final String PROFILE_DEFAULT_ORDER =
+      COLUMN_PROFILE_NAME + " desc, "
+          + COLUMN_PROFILE_ACTIVE + ","
+          + COLUMN_PROFILE_MODE + ","
+          + TABLE_PROFILE + "." + COLUMN_PROFILE_ID;
 
   // names for Intent values
   public static final String INTENT_PROFILE_ID = "com.mgjg.ProfileManager.profile.id";
