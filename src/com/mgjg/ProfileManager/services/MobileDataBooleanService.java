@@ -23,6 +23,7 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
+import android.widget.Toast;
 
 public class MobileDataBooleanService implements BooleanService
 {
@@ -36,7 +37,7 @@ public class MobileDataBooleanService implements BooleanService
   public boolean isEnabled(Context context)
   {
 
-    // Object[] objAndMethod = getObjAndMethod(context, "isMobileDataEnabled");
+    // Object[] objAndMethod = getObjAndMethod(context, "getMobileDataEnabled");
     // if (null != objAndMethod)
     // {
     // try
@@ -74,19 +75,21 @@ public class MobileDataBooleanService implements BooleanService
   {
     final ConnectivityManager conman = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 
-    Field iConnectivityManagerField;
     try
     {
-      iConnectivityManagerField = conman.getClass().getDeclaredField("mService");
+      Field connectivityServiceField = (null == conman) ? null : conman.getClass().getDeclaredField("mService");
 
-      iConnectivityManagerField.setAccessible(true);
-      Object iConnectivityManager = iConnectivityManagerField.get(conman);
-      if (null != iConnectivityManager)
+      if (null != connectivityServiceField)
       {
-        // final Class iConnectivityManagerClass = Class.forName(iConnectivityManager.getClass().getName());
-        final Method mobileDataEnabledMethod = iConnectivityManager.getClass().getDeclaredMethod(methodName, args);
-        mobileDataEnabledMethod.setAccessible(true);
-        return new Object[] { iConnectivityManager, mobileDataEnabledMethod };
+        connectivityServiceField.setAccessible(true);
+        Object iConnectivityManager = connectivityServiceField.get(conman);
+        if (null != iConnectivityManager)
+        {
+          // final Class iConnectivityManagerClass = Class.forName(iConnectivityManager.getClass().getName());
+          final Method methodToCall = iConnectivityManager.getClass().getDeclaredMethod(methodName, args);
+          methodToCall.setAccessible(true);
+          return new Object[] { iConnectivityManager, methodToCall };
+        }
       }
     }
     catch (IllegalArgumentException e)
@@ -127,14 +130,17 @@ public class MobileDataBooleanService implements BooleanService
         }
         catch (IllegalArgumentException e)
         {
+          Toast.makeText(context, "ill Arg", Toast.LENGTH_LONG).show();
           Log.e("com.mgjg.ProfileManager", "unable to enable/disable mobile data: illegal argument, " + e.getMessage());
         }
         catch (IllegalAccessException e)
         {
+          Toast.makeText(context, "ill Acc", Toast.LENGTH_LONG).show();
           Log.e("com.mgjg.ProfileManager", "unable to enable/disable mobile data: illegal access" + e.getMessage());
         }
         catch (InvocationTargetException e)
         {
+          Toast.makeText(context, "inv tgt", Toast.LENGTH_LONG).show();
           Log.e("com.mgjg.ProfileManager", "unable to enable/disable mobile data: invocation, " + e.getMessage());
         }
       }

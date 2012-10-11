@@ -112,7 +112,7 @@ public final class ProfileView extends LinearLayout
   }
 
   /**
-   * @param schedule
+   * @param profile
    */
   public void setFromProfile(Profile profile)
   {
