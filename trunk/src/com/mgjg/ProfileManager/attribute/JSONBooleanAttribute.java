@@ -40,7 +40,7 @@ public class JSONBooleanAttribute extends BooleanAttributeBase
     order = registryData.getInt("order");
 
     String serviceName = registryData.getString("service");
-    service = com.mgjg.ProfileManager.services.ServiceFactory.findBooleanService(context, serviceName);
+    service = getService(context, serviceName);
   }
 
   private JSONBooleanAttribute(BooleanService aService, int aTypeId, String aName, int aOrder, long attributeId, long profileId, int intValue, boolean booleanValue, String settings)
@@ -52,6 +52,11 @@ public class JSONBooleanAttribute extends BooleanAttributeBase
     order = aOrder;
   }
 
+  BooleanService getService(Context context, String serviceName) throws UnknownServiceException
+  {
+    return com.mgjg.ProfileManager.services.ServiceFactory.findBooleanService(context, serviceName);
+  }
+
   @Override
   public JSONBooleanAttribute createInstance(long attributeId, long profileId, int intValue, boolean booleanValue, String settings)
   {
@@ -61,13 +66,16 @@ public class JSONBooleanAttribute extends BooleanAttributeBase
   @Override
   protected boolean isMode(Context context)
   {
-    return service.isEnabled(context);
+    return (null == service) ? false : service.isEnabled(context);
   }
 
   @Override
   protected void setMode(Context context, boolean enabled)
   {
-    service.setEnabled(context, enabled);
+    if (null != service)
+    {
+      service.setEnabled(context, enabled);
+    }
   }
 
   @Override
