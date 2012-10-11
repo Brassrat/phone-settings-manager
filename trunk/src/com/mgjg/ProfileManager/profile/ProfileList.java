@@ -214,6 +214,20 @@ public final class ProfileList extends ProfileListActivity
     return result;
   }
 
+  @Override
+  public boolean onPrepareOptionsMenu(Menu menu)
+  {
+    MenuItem item = menu.findItem(R.id.disable_profiles);
+    if (null != item)
+    {
+      boolean disabled = Util.isBooleanPref(this, R.string.disableProfiles, false);
+      CharSequence menuTitle = this.getText(disabled ? R.string.enable : R.string.disable);
+      item.setTitle(menuTitle);
+      item.setTitleCondensed(menuTitle);
+    }
+    super.onPrepareOptionsMenu(menu);
+    return true;
+  }
   /*
    * (non-Javadoc)
    * 
@@ -228,6 +242,7 @@ public final class ProfileList extends ProfileListActivity
     case R.id.disable_profiles:
       boolean disabled = Util.isBooleanPref(this, R.string.disableProfiles, false);
       Util.putBooleanPref(this, R.string.disableProfiles, !disabled);
+      fillData();
       return true;
 
     case R.id.applySettings:

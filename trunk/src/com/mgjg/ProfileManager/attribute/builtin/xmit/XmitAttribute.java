@@ -28,7 +28,7 @@ import com.mgjg.ProfileManager.registry.AttributeRegistry;
 import com.mgjg.ProfileManager.registry.RegisteredAttribute;
 import com.mgjg.ProfileManager.services.UnknownServiceException;
 
-public class XmitAttribute extends JSONBooleanAttribute
+public final class XmitAttribute extends JSONBooleanAttribute
 {
 
   public XmitAttribute(Context context, String registryDefinition) throws JSONException, UnknownServiceException

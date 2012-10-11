@@ -34,6 +34,7 @@ import android.widget.CheckBox;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.mgjg.ProfileManager.attribute.ProfileAttribute;
 import com.mgjg.ProfileManager.provider.AttributeRegistryProvider;
@@ -75,6 +76,7 @@ public class RegisteredAttribute implements Viewable<RegisteredAttribute>
       Log.e("com.mgjg.ProfileManager", "Unable to create profile attribute '" + name + "' using "
           + className + " because " + e.getMessage());
     }
+    Toast.makeText(context, "Unknown attr class " + className,  Toast.LENGTH_LONG).show();
     throw new IllegalArgumentException("Can not create ProfileAttribute '" + name + "' using '" + className + "'");
   }
 
