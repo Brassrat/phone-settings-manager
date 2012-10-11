@@ -40,6 +40,7 @@ import com.mgjg.ProfileManager.provider.AttributeHelper;
 import com.mgjg.ProfileManager.provider.ProfileHelper;
 import com.mgjg.ProfileManager.provider.ScheduleHelper;
 import com.mgjg.ProfileManager.schedule.ScheduleEntry;
+import com.mgjg.ProfileManager.utils.Util;
 
 /**
  * Profile List
@@ -224,8 +225,9 @@ public final class ProfileList extends ProfileListActivity
 
     switch (item.getItemId())
     {
-    case R.id.newItemButton:
-      newListItem();
+    case R.id.disable_profiles:
+      boolean disabled = Util.isBooleanPref(this, R.string.disableProfiles, false);
+      Util.putBooleanPref(this, R.string.disableProfiles, !disabled);
       return true;
 
     case R.id.applySettings:
