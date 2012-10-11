@@ -2,5 +2,5 @@
 <menu
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/applySettings" android:titleCondensed="Register" android:title="Register Alarms"></item>
-    <item android:id="@+id/newItemButton" android:icon="@android:drawable/ic_menu_add" android:title="@string/newProfile" android:visible="false"></item>
+    <item android:id="@+id/disable_profiles" android:title="@string/disableProfiles" android:titleCondensed="@string/disable"></item>
 </menu>
