@@ -166,7 +166,7 @@ public abstract class ProfileManagerProviderHelper<T extends Listable>
   {
     List<T> attrs = new ArrayList<T>();
 
-    if (cc.moveToFirst())
+    if ((null != cc) && cc.moveToFirst())
     {
       do
       {
