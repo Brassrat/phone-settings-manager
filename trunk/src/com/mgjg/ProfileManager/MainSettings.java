@@ -40,7 +40,7 @@ import com.mgjg.ProfileManager.activity.VibrateSettings;
 import com.mgjg.ProfileManager.attribute.ActiveCount;
 import com.mgjg.ProfileManager.attribute.AttributeUpdatableView;
 import com.mgjg.ProfileManager.attribute.ProfileAttribute;
-import com.mgjg.ProfileManager.profile.ProfileList;
+import com.mgjg.ProfileManager.profile.activity.ProfileList;
 import com.mgjg.ProfileManager.provider.ScheduleHelper;
 import com.mgjg.ProfileManager.registry.AttributeRegistry;
 import com.mgjg.ProfileManager.registry.UnknownAttributeException;
