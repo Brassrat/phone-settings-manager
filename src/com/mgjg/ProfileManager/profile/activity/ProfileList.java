@@ -14,7 +14,7 @@
  * either express or implied. See the License for the specific language 
  * governing permissions and limitations under the License. 
  */
-package com.mgjg.ProfileManager.profile;
+package com.mgjg.ProfileManager.profile.activity;
 
 import static com.mgjg.ProfileManager.provider.ProfileHelper.COLUMN_PROFILE_ACTIVE;
 import static com.mgjg.ProfileManager.provider.ProfileHelper.FILTER_PROFILE_ID;
@@ -34,8 +34,8 @@ import android.view.View;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ListView;
 
-import com.mgjg.ProfileManager.ProfileListActivity;
 import com.mgjg.ProfileManager.R;
+import com.mgjg.ProfileManager.profile.Profile;
 import com.mgjg.ProfileManager.provider.AttributeHelper;
 import com.mgjg.ProfileManager.provider.ProfileHelper;
 import com.mgjg.ProfileManager.provider.ScheduleHelper;

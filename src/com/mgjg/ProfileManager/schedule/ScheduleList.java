@@ -37,8 +37,8 @@ import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.mgjg.ProfileManager.ProfileListActivity;
 import com.mgjg.ProfileManager.R;
+import com.mgjg.ProfileManager.profile.activity.ProfileListActivity;
 import com.mgjg.ProfileManager.provider.ScheduleHelper;
 
 /**

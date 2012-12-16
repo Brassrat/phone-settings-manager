@@ -14,7 +14,7 @@
  * either express or implied. See the License for the specific language 
  * governing permissions and limitations under the License. 
  */
-package com.mgjg.ProfileManager.profile;
+package com.mgjg.ProfileManager.profile.activity;
 
 import static com.mgjg.ProfileManager.provider.AttributeHelper.INTENT_ATTRIBUTE_PROFILE_ID;
 import static com.mgjg.ProfileManager.provider.AttributeHelper.INTENT_ATTRIBUTE_PROFILE_NAME;
@@ -42,6 +42,7 @@ import android.widget.Toast;
 
 import com.mgjg.ProfileManager.R;
 import com.mgjg.ProfileManager.attribute.AttributeList;
+import com.mgjg.ProfileManager.profile.Profile;
 import com.mgjg.ProfileManager.provider.AttributeHelper;
 import com.mgjg.ProfileManager.provider.ProfileHelper;
 import com.mgjg.ProfileManager.schedule.ScheduleList;

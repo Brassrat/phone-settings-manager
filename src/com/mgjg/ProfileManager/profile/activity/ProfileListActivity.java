@@ -1,4 +1,6 @@
-package com.mgjg.ProfileManager;
+package com.mgjg.ProfileManager.profile.activity;
+
+import com.mgjg.ProfileManager.R;
 
 import android.app.AlertDialog;
 import android.app.ListActivity;
