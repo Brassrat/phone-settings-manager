@@ -19,7 +19,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.mgjg.ProfileManager"
     android:versionCode="2"
-    android:versionName="2.0.41">
+    android:versionName="2.0.45">
 
     <uses-sdk android:minSdkVersion="10" />
 
@@ -85,8 +85,8 @@
 
                 <activity android:name=".attribute.AttributeEdit"></activity>
         <activity android:name=".attribute.AttributeList"></activity>
-        <activity android:name=".profile.ProfileList"></activity>
-        <activity android:name=".profile.ProfileEdit"></activity>
+        <activity android:name=".profile.activity.ProfileList"></activity>
+        <activity android:name=".profile.activity.ProfileEdit"></activity>
         <activity android:name=".utils.ToastNotification"></activity>
         
         <!-- Services -->

@@ -25,6 +25,11 @@ import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
+//import android.gesture.Gesture;
+//import android.gesture.GestureLibrary;
+//import android.gesture.GestureOverlayView;
+//import android.gesture.GestureOverlayView.OnGesturePerformedListener;
+//import android.gesture.Prediction;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -47,7 +52,8 @@ import com.mgjg.ProfileManager.registry.UnknownAttributeException;
 import com.mgjg.ProfileManager.utils.AttributeTableLayout;
 import com.mgjg.ProfileManager.utils.Util;
 
-public class MainSettings extends ListActivity
+public class MainSettings extends ListActivity 
+// implements OnGesturePerformedListener
 {
 
   public final static int ACTIVITY_LIST = 0;
@@ -56,10 +62,35 @@ public class MainSettings extends ListActivity
 
   private List<AttributeTableLayout> layouts;
 
+//  private GestureLibrary mLibrary;
+//  mLibrary = GestureLibraries.fromRawResource(this, R.raw.gestures);
+//  if (!mLibrary.load()) {
+//        finish();
+//    }
+//
+//    GestureOverlayView gestures =    (GestureOverlayView)findViewById(R.id.gestures);
+//    gestures.addOnGesturePerformedListener(this);
+    
   public MainSettings()
   {
   }
 
+//  public void onGesturePerformed(GestureOverlayView overlay, Gesture gesture)
+//  {
+//    ArrayList<Prediction> predictions = mLibrary.recognize(gesture);
+//    Log.v("performed","performed");
+//    // We want at least one prediction
+//    if (predictions.size() > 0) {
+//        Prediction prediction = predictions.get(0);
+//        // We want at least some confidence in the result
+//        if (prediction.score > 1.0) {
+//                        if(prediction.name.equalsIgnoreCase("right")){
+//                          //do you thing here//
+//                      }
+//        }
+//    }
+//  }
+  
   /** Called when the activity is first created. */
   @Override
   public void onCreate(Bundle instanceState)
