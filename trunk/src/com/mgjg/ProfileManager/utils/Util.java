@@ -25,6 +25,7 @@ public class Util
 {
 
   public static final String PREFS_NAME = "ProfileManagerPrefs";
+  public static final String LOG_TAG = "com.mgjg.ProfileManager";
 
   /**
    * Queries system settings for the system clock format

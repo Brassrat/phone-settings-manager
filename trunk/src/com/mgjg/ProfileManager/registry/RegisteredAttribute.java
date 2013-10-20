@@ -39,6 +39,7 @@ import android.widget.Toast;
 import com.mgjg.ProfileManager.attribute.ProfileAttribute;
 import com.mgjg.ProfileManager.provider.AttributeRegistryProvider;
 import com.mgjg.ProfileManager.utils.Listable;
+import com.mgjg.ProfileManager.utils.Util;
 import com.mgjg.ProfileManager.utils.Viewable;
 
 public class RegisteredAttribute implements Viewable<RegisteredAttribute>
@@ -73,7 +74,7 @@ public class RegisteredAttribute implements Viewable<RegisteredAttribute>
     }
     catch (Exception e)
     {
-      Log.e("com.mgjg.ProfileManager", "Unable to create profile attribute '" + name + "' using "
+      Log.e(Util.LOG_TAG, "Unable to create profile attribute '" + name + "' using "
           + className + " because " + e.getMessage());
     }
     Toast.makeText(context, "Unknown attr class " + className,  Toast.LENGTH_LONG).show();
@@ -200,7 +201,7 @@ public class RegisteredAttribute implements Viewable<RegisteredAttribute>
   public void register(Context context, AttributeRegistry registry)
   {
     ProfileAttribute pa = createInstance(context);
-    Log.v("com.mgjg.ProfileManager", "register attribute " + pa.getName(context));
+    Log.v(Util.LOG_TAG, "register attribute " + pa.getName(context));
     registry.register(context, pa);
   }
 

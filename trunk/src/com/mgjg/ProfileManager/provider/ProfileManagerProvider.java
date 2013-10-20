@@ -32,6 +32,7 @@ import android.util.Log;
 
 import com.mgjg.ProfileManager.utils.Listable;
 import com.mgjg.ProfileManager.utils.SQLiteDatabaseHelper;
+import com.mgjg.ProfileManager.utils.Util;
 
 public abstract class ProfileManagerProvider<T extends Listable> extends ContentProvider
 {
@@ -217,9 +218,9 @@ public abstract class ProfileManagerProvider<T extends Listable> extends Content
           where.append("(").append(qf[ii]).append(" = ").append((null == selection) ? "?" : mv[ii]).append(")");
         }
         String wh = where.toString();
-        if (Log.isLoggable("com.mgjg.ProfileManager", Log.DEBUG))
+        if (Log.isLoggable(Util.LOG_TAG, Log.DEBUG))
         {
-          Log.d("com.mgjg.ProfileManager", wh);
+          Log.d(Util.LOG_TAG, wh);
         }
         if ((null != selection))
         {
@@ -245,7 +246,7 @@ public abstract class ProfileManagerProvider<T extends Listable> extends Content
       }
       catch (RuntimeException e)
       {
-        Log.e("com.mgjg.ProfileManager", "query failed " + e.getMessage());
+        Log.e(Util.LOG_TAG, "query failed " + e.getMessage());
         throw e;
       }
     }
