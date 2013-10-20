@@ -20,6 +20,7 @@ import java.util.List;
 
 import org.json.JSONException;
 
+import android.R.integer;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -31,32 +32,35 @@ import com.mgjg.ProfileManager.services.UnknownServiceException;
 public final class XmitAttribute extends JSONBooleanAttribute
 {
 
+  public static final String XMIT_ATTRIBUTE_CLASS = "com.mgjg.ProfileManager.attribute.builtin.xmit.XmitAttribute";
+  
   public XmitAttribute(Context context, String registryDefinition) throws JSONException, UnknownServiceException
   {
     super(context, registryDefinition);
   }
 
-  private static String makeRegistryJSON(Context context, String serviceName, int typeId, String name, int order)
+  private static String makeRegistryJSON(String serviceName, int typeId, String name, int order)
   {
     return String.format("{ \"service\" : \"%1$s\", \"id\" : \"%2$d\", \"name\" : \"%3$s\", \"order\" : \"%4$d\"}",
-        serviceName, AttributeRegistry.TYPE_XMIT + typeId, name, order);
+        serviceName, typeId, name, order);
   }
 
+  private static RegisteredAttribute mkRegisteredAttribute(String name, int typex)
+  {
+    final int typeId = AttributeRegistry.TYPE_XMIT + typex;
+    final String params = makeRegistryJSON(name, typeId, name, 10 + typex);
+    return new RegisteredAttribute(0, name, typeId, true, XMIT_ATTRIBUTE_CLASS, params, 10 + typex);
+  }
+  
+  private static final String[] builtins = {"AirPlane", "WiFi", "MobileData"};
+  
   public static List<RegisteredAttribute> addRegistryEntries(SQLiteDatabase db)
   {
-    List<RegisteredAttribute> ras = new ArrayList<RegisteredAttribute>();
-    String params = makeRegistryJSON(null, "AirPlane", 0, "AirPlane", 10);
-    ras.add(new RegisteredAttribute(0, "AirPlane", AttributeRegistry.TYPE_XMIT + 0,
-        true, "com.mgjg.ProfileManager.attribute.builtin.xmit.XmitAttribute", params, 10));
-
-    params = makeRegistryJSON(null, "WiFi", 1, "WiFi", 11);
-    ras.add(new RegisteredAttribute(0, "WiFi", AttributeRegistry.TYPE_XMIT + 1,
-        true, "com.mgjg.ProfileManager.attribute.builtin.xmit.XmitAttribute", params, 11));
-
-    params = makeRegistryJSON(null, "MobileData", 2, "MobileData", 12);
-    ras.add(new RegisteredAttribute(0, "MobileData", AttributeRegistry.TYPE_XMIT + 2,
-        true, "com.mgjg.ProfileManager.attribute.builtin.xmit.XmitAttribute", params, 12));
-
+    final List<RegisteredAttribute> ras = new ArrayList<RegisteredAttribute>();
+    for (int ii = 0; ii < builtins.length; ++ii)
+    {
+      ras.add(mkRegisteredAttribute(builtins[ii],  ii));
+    }
     return ras;
 
   }
