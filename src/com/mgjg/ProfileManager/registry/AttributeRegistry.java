@@ -34,6 +34,7 @@ import com.mgjg.ProfileManager.attribute.ProfileAttribute;
 import com.mgjg.ProfileManager.attribute.ProfileAttributeFactoryImpl;
 import com.mgjg.ProfileManager.provider.AttributeHelper;
 import com.mgjg.ProfileManager.provider.AttributeRegistryHelper;
+import com.mgjg.ProfileManager.utils.Util;
 
 public class AttributeRegistry
 {
@@ -69,7 +70,7 @@ public class AttributeRegistry
       List<RegisteredAttribute> aa = helper.getList(FILTER_ALL_ACTIVE);
       for (RegisteredAttribute ra : aa)
       {
-        Log.v("com.mgjg.ProfileManager", "Processing registered attribute " + ra.getId());
+        Log.v(Util.LOG_TAG, "Processing registered attribute " + ra.getId());
         ra.register(context, registry);
       }
       initialized = true;

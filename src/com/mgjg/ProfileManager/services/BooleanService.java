@@ -19,7 +19,7 @@ import android.content.Context;
 
 public interface BooleanService
 {
-
+  
   String getServiceName();
 
   boolean isEnabled(Context context);

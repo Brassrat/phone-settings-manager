@@ -19,9 +19,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.mgjg.ProfileManager"
     android:versionCode="2"
-    android:versionName="2.0.45">
+    android:versionName="2.0.46">
 
-    <uses-sdk android:minSdkVersion="10" />
+    <uses-sdk android:minSdkVersion="10" android:targetSdkVersion="10" />
 
     <!-- Permissions -->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
@@ -34,7 +34,8 @@
     
     <application
         android:icon="@drawable/profile"
-        android:label="@string/app_name">
+        android:label="@string/app_name"
+        android.allowBackup="true">
 
         <!-- Activities -->
         <activity android:screenOrientation="portrait" android:name=".MainSettings">

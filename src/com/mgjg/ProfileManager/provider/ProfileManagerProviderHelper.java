@@ -27,6 +27,7 @@ import android.util.Log;
 import com.mgjg.ProfileManager.registry.UnknownAttributeException;
 import com.mgjg.ProfileManager.utils.ListAdapter;
 import com.mgjg.ProfileManager.utils.Listable;
+import com.mgjg.ProfileManager.utils.Util;
 
 /**
  * Provides ProfileManager specific operations on the various {@code Listable} objects shown in the GUI that are represented by entries in the database
@@ -154,7 +155,7 @@ public abstract class ProfileManagerProviderHelper<T extends Listable>
         catch (UnknownAttributeException e)
         {
           // skip this
-          Log.e("com.mgjg.ProfileManager", e.getMessage());
+          Log.e(Util.LOG_TAG, e.getMessage());
         }
       } while (c.moveToNext());
     }

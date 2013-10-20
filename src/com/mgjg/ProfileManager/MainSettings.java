@@ -315,7 +315,7 @@ public class MainSettings extends ListActivity
     }
     catch (UnknownAttributeException e)
     {
-      Log.e("com.mgjg.ProfileManager", "Unknown active type: " + e.getType(), e);
+      Log.e(Util.LOG_TAG, "Unknown active type: " + e.getType(), e);
     }
     Collections.sort(layouts);
     setListAdapter(new AttributeUpdateableViewListAdapter(this, layouts));
