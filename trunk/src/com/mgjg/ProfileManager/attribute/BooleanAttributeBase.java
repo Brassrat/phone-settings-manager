@@ -163,14 +163,14 @@ public abstract class BooleanAttributeBase extends AttributeBase
     TableRow row = new TableRow(context);
 
     TableRow.LayoutParams labelParams = new TableRow.LayoutParams(
-        TableRow.LayoutParams.FILL_PARENT,
+        TableRow.LayoutParams.MATCH_PARENT,
         TableRow.LayoutParams.WRAP_CONTENT);
     labelParams.span = 1;
     labelParams.gravity = Gravity.LEFT + Gravity.CENTER_VERTICAL;
     row.addView(label, labelParams);
 
     TableRow.LayoutParams checkParams = new TableRow.LayoutParams(
-        TableRow.LayoutParams.FILL_PARENT,
+        TableRow.LayoutParams.MATCH_PARENT,
         TableRow.LayoutParams.WRAP_CONTENT);
     checkParams.span = 1;
     checkParams.gravity = Gravity.CENTER_HORIZONTAL;
@@ -186,7 +186,7 @@ public abstract class BooleanAttributeBase extends AttributeBase
     TableRow labelRow = new TableRow(context);
 
     layout.addView(labelRow, new ViewGroup.LayoutParams(
-        ViewGroup.LayoutParams.FILL_PARENT,
+        ViewGroup.LayoutParams.MATCH_PARENT,
         ViewGroup.LayoutParams.WRAP_CONTENT));
 
     TextView label = new TextView(context);
@@ -196,7 +196,7 @@ public abstract class BooleanAttributeBase extends AttributeBase
     label.setGravity(Gravity.LEFT + Gravity.CENTER_VERTICAL);
 
     TableRow.LayoutParams singleColumnParams = new TableRow.LayoutParams(
-        TableRow.LayoutParams.FILL_PARENT,
+        TableRow.LayoutParams.MATCH_PARENT,
         TableRow.LayoutParams.WRAP_CONTENT);
     singleColumnParams.span = 1;
 
@@ -234,7 +234,7 @@ public abstract class BooleanAttributeBase extends AttributeBase
     });
 
     TableRow.LayoutParams checkBoxParams = new TableRow.LayoutParams(
-        TableRow.LayoutParams.FILL_PARENT,
+        TableRow.LayoutParams.MATCH_PARENT,
         TableRow.LayoutParams.WRAP_CONTENT);
     checkBoxParams.span = 1;
     checkBoxParams.gravity = Gravity.RIGHT;

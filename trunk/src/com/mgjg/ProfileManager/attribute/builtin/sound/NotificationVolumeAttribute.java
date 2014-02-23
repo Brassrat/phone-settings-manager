@@ -15,8 +15,8 @@
  */
 package com.mgjg.ProfileManager.attribute.builtin.sound;
 
-import static android.media.AudioManager.VIBRATE_SETTING_OFF;
-import static android.media.AudioManager.VIBRATE_SETTING_ON;
+//import static android.media.AudioManager.VIBRATE_SETTING_OFF;
+//import static android.media.AudioManager.VIBRATE_SETTING_ON;
 import android.content.Context;
 import android.media.AudioManager;
 
@@ -63,11 +63,23 @@ public final class NotificationVolumeAttribute extends SoundAttribute
   }
 
   @Override
-  protected void activate(AudioManager audio)
+  protected void activate(Context context, AudioManager audio)
   {
-    audio.setStreamVolume(getAudioStreamId(), getNumber(), SET_VOL_FLAGS);
-    audio.setVibrateSetting(getVibrateType(), (isBoolean() ? VIBRATE_SETTING_ON : VIBRATE_SETTING_OFF));
+    super.activate(context,  audio);
+    //audio.setVibrateSetting(getVibrateType(), (isBoolean() ? VIBRATE_SETTING_ON : VIBRATE_SETTING_OFF));
     // audio.setRingerMode(RINGER_MODE_NORMAL);
+    setVibrate(context);
   }
-
+  
+  protected boolean isVibrateForStream(Context context)
+  {
+//    AudioManager audio = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
+//    return audio.getVibrateSetting(getAudioStreamId()) != AudioManager.VIBRATE_SETTING_OFF; 
+    return SoundAttribute.isVibrateOn(context);
+  }
+  
+  protected void setVibrate(Context context)
+  {
+   //audio.setVibrateSetting(getVibrateType(), (isBoolean() ? VIBRATE_SETTING_ON : VIBRATE_SETTING_OFF));
+  }
 }

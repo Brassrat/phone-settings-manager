@@ -36,7 +36,7 @@ public class BootupService extends Service
   @Override
   public int onStartCommand(Intent intent, int flags, int startId)
   {
-    super.onStart(intent, startId);
+    super.onStartCommand(intent, flags, startId);
 
     AttributeRegistry.init(this);
     ScheduleHelper.init(this);
@@ -74,22 +74,23 @@ public class BootupService extends Service
     Toast.makeText(this, "Profile Manager" + toast, Toast.LENGTH_LONG).show();
     int icon = R.drawable.toast;
     CharSequence tickerText = "Profile Manager";
-    long when = System.currentTimeMillis();
 
-    Notification notification = new Notification(icon, tickerText, when);
-    notification.flags |= Notification.FLAG_AUTO_CANCEL;
-
-    CharSequence contentTitle = "Profile Manager";
-    CharSequence contentText = toast;
     Intent notificationIntent = new Intent(this, ToastNotification.class);
     notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
     notificationIntent.setAction("com.mgjg.ProfileManager.TOAST");
     PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
+    
+    Notification notification = new Notification.Builder(this)
+    .setSmallIcon(icon)
+    .setTicker(tickerText)
+    .setShowWhen(true)
+    .setAutoCancel(true)
+    .setContentTitle("Profile Manager")
+    .setContentText(toast)
+    .setContentIntent(contentIntent)
+    .build();
 
-    notification.setLatestEventInfo(this, contentTitle, contentText, contentIntent);
-
-    String ns = Context.NOTIFICATION_SERVICE;
-    NotificationManager notificationManager = (NotificationManager) getSystemService(ns);
+    NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
     notificationManager.notify(ToastNotification.STARTUP_ID, notification);
 
     stopSelf();

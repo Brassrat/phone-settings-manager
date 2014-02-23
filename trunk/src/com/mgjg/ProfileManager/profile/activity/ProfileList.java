@@ -124,7 +124,7 @@ public final class ProfileList extends ProfileListActivity
   protected void newListItem()
   {
     Intent ii = new Intent(this, ProfileEdit.class)
-        .putExtra(INTENT_PROFILE_ID, 0);
+        .putExtra(INTENT_PROFILE_ID, 0L);
     startActivityForResult(ii, ACTIVITY_CREATE);
     long profileId = ii.getLongExtra(INTENT_PROFILE_ID, 0);
     registerProfile(profileId);

@@ -20,7 +20,6 @@ import java.util.List;
 
 import org.json.JSONException;
 
-import android.R.integer;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -33,7 +32,7 @@ public final class XmitAttribute extends JSONBooleanAttribute
 {
 
   public static final String XMIT_ATTRIBUTE_CLASS = "com.mgjg.ProfileManager.attribute.builtin.xmit.XmitAttribute";
-  
+
   public XmitAttribute(Context context, String registryDefinition) throws JSONException, UnknownServiceException
   {
     super(context, registryDefinition);
@@ -51,15 +50,15 @@ public final class XmitAttribute extends JSONBooleanAttribute
     final String params = makeRegistryJSON(name, typeId, name, 10 + typex);
     return new RegisteredAttribute(0, name, typeId, true, XMIT_ATTRIBUTE_CLASS, params, 10 + typex);
   }
-  
-  private static final String[] builtins = {"AirPlane", "WiFi", "MobileData"};
-  
+
+  private static final String[] builtins = { "AirPlane", "WiFi", "MobileData" };
+
   public static List<RegisteredAttribute> addRegistryEntries(SQLiteDatabase db)
   {
     final List<RegisteredAttribute> ras = new ArrayList<RegisteredAttribute>();
     for (int ii = 0; ii < builtins.length; ++ii)
     {
-      ras.add(mkRegisteredAttribute(builtins[ii],  ii));
+      ras.add(mkRegisteredAttribute(builtins[ii], ii));
     }
     return ras;
 

@@ -39,7 +39,7 @@ public class AttributeUpdateableViewListAdapter extends
 {
 
   public static final LinearLayout.LayoutParams paramsFillWrap = new LinearLayout.LayoutParams(
-      LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT);
+      LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 
   final List<AttributeTableLayout> layouts;
 

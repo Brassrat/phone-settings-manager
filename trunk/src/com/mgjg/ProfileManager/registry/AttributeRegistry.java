@@ -65,7 +65,6 @@ public class AttributeRegistry
     if (!initialized)
     {
       AttributeHelper.setProfileAttributeFactory(ProfileAttributeFactoryImpl.createProfileAttributeFactory(context));
-      // todo read registry data from table, for now just initialize the know builtin attributes
       AttributeRegistryHelper helper = new AttributeRegistryHelper(context);
       List<RegisteredAttribute> aa = helper.getList(FILTER_ALL_ACTIVE);
       for (RegisteredAttribute ra : aa)

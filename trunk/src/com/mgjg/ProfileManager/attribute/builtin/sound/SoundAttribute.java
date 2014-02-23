@@ -22,14 +22,16 @@ import static android.media.AudioManager.FLAG_VIBRATE;
 import static android.media.AudioManager.RINGER_MODE_NORMAL;
 import static android.media.AudioManager.STREAM_NOTIFICATION;
 import static android.media.AudioManager.STREAM_RING;
-import static android.media.AudioManager.VIBRATE_SETTING_OFF;
-import static android.media.AudioManager.VIBRATE_SETTING_ON;
-import static android.media.AudioManager.VIBRATE_TYPE_NOTIFICATION;
-import static android.media.AudioManager.VIBRATE_TYPE_RINGER;
+//import static android.media.AudioManager.VIBRATE_SETTING_OFF;
+//import static android.media.AudioManager.VIBRATE_SETTING_ON;
+//import static android.media.AudioManager.VIBRATE_TYPE_NOTIFICATION;
+//import static android.media.AudioManager.VIBRATE_TYPE_RINGER;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -58,6 +60,7 @@ import com.mgjg.ProfileManager.utils.AttributeTableLayout;
 import com.mgjg.ProfileManager.utils.Listable;
 import com.mgjg.ProfileManager.utils.Util;
 
+@SuppressLint("DefaultLocale")
 public abstract class SoundAttribute extends AttributeBase implements Comparable<Listable>
 {
 
@@ -76,6 +79,29 @@ public abstract class SoundAttribute extends AttributeBase implements Comparable
 
   private static boolean hasShownVolumeCouplingWarning = false;
   private static Boolean isVolumeCoupled = null;
+
+  public static final boolean isVibrateOn(Context context)
+  {
+    String vibOnString = android.provider.Settings.System.getString(context.getContentResolver(), android.provider.Settings.System.VIBRATE_ON);
+    return ("on".equalsIgnoreCase(vibOnString));
+  }
+
+  public static final void setVibrate(int mode)
+  {
+
+    switch (mode)
+    {
+    case AudioManager.RINGER_MODE_NORMAL:
+      // TODO
+      break;
+    case AudioManager.RINGER_MODE_VIBRATE:
+      // TODO
+      break;
+    case AudioManager.RINGER_MODE_SILENT:
+      // TODO
+      break;
+    }
+  }
 
   public static ProfileAttribute[] init(Context context)
   {
@@ -110,18 +136,30 @@ public abstract class SoundAttribute extends AttributeBase implements Comparable
     return audio.getStreamVolume(getAudioStreamId());
   }
 
-  protected final boolean isVibrateForStream(Context context)
+  protected void setVibrate(Context context)
   {
-    AudioManager audio = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
-    return audio.getVibrateSetting(getAudioStreamId()) != AudioManager.VIBRATE_SETTING_OFF;
+    // audio.setVibrateSetting(getVibrateType(), (isBoolean() ? VIBRATE_SETTING_ON : VIBRATE_SETTING_OFF)); 
+    // to be overridden by specific streams
   }
+
+  protected boolean isVibrateForStream(Context context)
+  {
+    return false;
+  }
+
+  // protected final void doVibrate(Context context)
+  // {
+  // Vibrator v = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+  // // Vibrate for 500 milliseconds
+  // v.vibrate(500);
+  // }
 
   /**
    * apply settings to phone via AudioManager, default is to set the volume
    * 
    * @param audio
    */
-  protected void activate(AudioManager audio)
+  protected void activate(Context context, AudioManager audio)
   {
     audio.setStreamVolume(getAudioStreamId(), getNumber(), SET_VOL_FLAGS);
   }
@@ -205,7 +243,7 @@ public abstract class SoundAttribute extends AttributeBase implements Comparable
   @Override
   public String activate(Context context)
   {
-    activate((AudioManager) context.getSystemService(Context.AUDIO_SERVICE));
+    activate(context, (AudioManager) context.getSystemService(Context.AUDIO_SERVICE));
     return getToast(context);
   }
 
@@ -395,14 +433,14 @@ public abstract class SoundAttribute extends AttributeBase implements Comparable
   {
     TableRow volMinMaxRow = new TableRow(context);
     soundLayout.addView(volMinMaxRow, new ViewGroup.LayoutParams(
-        ViewGroup.LayoutParams.FILL_PARENT,
+        ViewGroup.LayoutParams.MATCH_PARENT,
         ViewGroup.LayoutParams.WRAP_CONTENT));
 
     TableRow seekBarRow = new TableRow(context);
     soundLayout.addView(seekBarRow);
 
     // volMinMaxRow.setLayoutParams(new TableRow.LayoutParams(
-    // TableRow.LayoutParams.FILL_PARENT,
+    // TableRow.LayoutParams.MATCH_PARENT,
     // TableRow.LayoutParams.WRAP_CONTENT));
 
     TextView volumeLabelView = new TextView(context);
@@ -410,11 +448,11 @@ public abstract class SoundAttribute extends AttributeBase implements Comparable
     volumeLabelView.setText(getName(context) + ":");
     volumeLabelView.setMinWidth(labelMinWidth());
     // volumeLabelView.setLayoutParams(new TableRow.LayoutParams(
-    // TableRow.LayoutParams.FILL_PARENT,
+    // TableRow.LayoutParams.MATCH_PARENT,
     // TableRow.LayoutParams.WRAP_CONTENT));
 
     TableRow.LayoutParams singleColumnParams = new TableRow.LayoutParams(
-        TableRow.LayoutParams.FILL_PARENT,
+        TableRow.LayoutParams.MATCH_PARENT,
         TableRow.LayoutParams.WRAP_CONTENT);
     singleColumnParams.span = 1;
     volMinMaxRow.addView(volumeLabelView, singleColumnParams);
@@ -538,8 +576,7 @@ public abstract class SoundAttribute extends AttributeBase implements Comparable
         {
           setBoolean(!isBoolean());
           ((CheckBox) v).setChecked(isBoolean());
-          final AudioManager audio = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
-          audio.setVibrateSetting(getVibrateType(), (isBoolean() ? VIBRATE_SETTING_ON : VIBRATE_SETTING_OFF));
+          setVibrate(context);
         }
 
       });
@@ -572,20 +609,21 @@ public abstract class SoundAttribute extends AttributeBase implements Comparable
       minMax.setText(lbl);
     }
 
-    if (isSupportsBoolean())
-    {
-      CheckBox vib = (CheckBox) layout.findViewById(ID_CHECKBOX);
-      if (null != vib)
-      {
-        vib.setChecked(audio.getVibrateSetting(getAudioStreamId()) != AudioManager.VIBRATE_SETTING_OFF);
-      }
-    }
-
     SeekBar bar = (SeekBar) layout.findViewById(ID_SEEK_BAR);
     if (null != bar)
     {
       bar.setProgress(volume);
     }
+
+    if (isSupportsBoolean())
+    {
+      CheckBox vib = (CheckBox) layout.findViewById(ID_CHECKBOX);
+      if (null != vib)
+      {
+        vib.setChecked(isVibrateOn(context));
+      }
+    }
+
   }
 
   /**
@@ -615,8 +653,8 @@ public abstract class SoundAttribute extends AttributeBase implements Comparable
     int ringVol = audio.getStreamVolume(STREAM_RING);
     int notifVol = audio.getStreamVolume(STREAM_NOTIFICATION);
     int ringerMode = audio.getRingerMode();
-    int notifVibType = audio.getVibrateSetting(VIBRATE_TYPE_NOTIFICATION);
-    int ringVibType = audio.getVibrateSetting(VIBRATE_TYPE_RINGER);
+    // NotificationManager notifService = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+    // int notifVibType = audio.getVibrateSetting(VIBRATE_TYPE_NOTIFICATION);
     audio.setRingerMode(RINGER_MODE_NORMAL);
 
     // choose a value different than the current notification volume
@@ -635,8 +673,8 @@ public abstract class SoundAttribute extends AttributeBase implements Comparable
 
     // put everything back to their previous values
     audio.setRingerMode(ringerMode);
-    audio.setVibrateSetting(VIBRATE_TYPE_RINGER, ringVibType);
-    audio.setVibrateSetting(VIBRATE_TYPE_NOTIFICATION, notifVibType);
+    // audio.setVibrateSetting(VIBRATE_TYPE_RINGER, ringVibType);
+    // audio.setVibrateSetting(VIBRATE_TYPE_NOTIFICATION, notifVibType);
     audio.setStreamVolume(STREAM_RING, ringVol, 0);
     audio.setStreamVolume(STREAM_NOTIFICATION, notifVol, 0);
 
@@ -699,6 +737,20 @@ public abstract class SoundAttribute extends AttributeBase implements Comparable
     return typeId[getSoundAttributeIndex()];
   }
 
+  private enum VIBRATE_TYPE
+  {
+    RINGER(1),
+    NOTIFICATION(2),
+    ALARM(3);
+
+    private final int value;
+
+    VIBRATE_TYPE(int value)
+    {
+      this.value = value;
+    }
+  }
+
   private static final int streamId[] = {
       AudioManager.STREAM_SYSTEM,
       AudioManager.STREAM_RING,
@@ -714,9 +766,9 @@ public abstract class SoundAttribute extends AttributeBase implements Comparable
 
   private static final int vibrateType[] = {
       -1,
-      AudioManager.VIBRATE_TYPE_RINGER,
-      -1,
-      AudioManager.VIBRATE_TYPE_NOTIFICATION,
+      VIBRATE_TYPE.RINGER.value,
+      VIBRATE_TYPE.ALARM.value,
+      VIBRATE_TYPE.NOTIFICATION.value,
       -1,
       -1 };
 
@@ -757,9 +809,11 @@ public abstract class SoundAttribute extends AttributeBase implements Comparable
   private final static int soundOrder[] = { ORDER_AUDIO_SYSTEM, ORDER_AUDIO_RING, ORDER_AUDIO_ALARM, ORDER_AUDIO_NOTIFICATION, ORDER_AUDIO_VOICE_CALL, ORDER_AUDIO_MUSIC };
   private final static String soundClass[] = { "System", "Ringer", "Alarm", "Notification", "InCall", "Media" };
 
+  @SuppressLint("DefaultLocale")
   private static String makeRegistryJSON(int typeId, String name, int order)
   {
-    return String.format("{ \"id\" : \"%1$d\", \"name\" : \"%2$s\", \"order\" : \"%3$d\"}", typeId, name, order);
+    Locale locale = Locale.getDefault();
+    return String.format(locale, "{ \"id\" : \"%1$d\", \"name\" : \"%2$s\", \"order\" : \"%3$d\"}", typeId, name, order);
   }
 
   public static List<RegisteredAttribute> addRegistryEntries(SQLiteDatabase db)

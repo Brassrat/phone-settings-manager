@@ -30,6 +30,7 @@ import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.mgjg.ProfileManager.R;
+import com.mgjg.ProfileManager.attribute.builtin.sound.SoundAttribute;
 
 public class VibrateSettings extends Activity
 {
@@ -49,42 +50,50 @@ public class VibrateSettings extends Activity
 
   private void setupButtons(final AudioManager audio)
   {
-    int vibrateRinger = audio.getVibrateSetting(AudioManager.VIBRATE_TYPE_RINGER);
-    int vibrateNotif = audio.getVibrateSetting(AudioManager.VIBRATE_TYPE_NOTIFICATION);
-
     final RadioButton ringerAlways = (RadioButton) findViewById(R.id.ringer_vibrate_when_possible);
     final RadioButton ringerSilent = (RadioButton) findViewById(R.id.ringer_vibrate_when_silent);
     final RadioButton ringerNever = (RadioButton) findViewById(R.id.ringer_vibrate_never);
+
+    switch (audio.getRingerMode())
+    {
+    case AudioManager.RINGER_MODE_VIBRATE:
+      ringerAlways.setChecked(true);
+      break;
+    case AudioManager.RINGER_MODE_NORMAL:
+      ringerSilent.setChecked(true);
+      break;
+    case AudioManager.RINGER_MODE_SILENT:
+      ringerNever.setChecked(true);
+      break;
+    }
+
+    boolean vibrateNotif = SoundAttribute.isVibrateOn(this);
 
     final RadioButton notifAlways = (RadioButton) findViewById(R.id.notif_vibrate_when_possible);
     final RadioButton notifSilent = (RadioButton) findViewById(R.id.notif_vibrate_when_silent);
     final RadioButton notifNever = (RadioButton) findViewById(R.id.notif_vibrate_never);
 
-    switch (vibrateRinger)
+    if (vibrateNotif)
     {
-    case AudioManager.VIBRATE_SETTING_ON:
-      ringerAlways.setChecked(true);
-      break;
-    case AudioManager.VIBRATE_SETTING_ONLY_SILENT:
-      ringerSilent.setChecked(true);
-      break;
-    case AudioManager.VIBRATE_SETTING_OFF:
-      ringerNever.setChecked(true);
-      break;
-    }
-
-    switch (vibrateNotif)
-    {
-    case AudioManager.VIBRATE_SETTING_ON:
       notifAlways.setChecked(true);
-      break;
-    case AudioManager.VIBRATE_SETTING_ONLY_SILENT:
-      notifSilent.setChecked(true);
-      break;
-    case AudioManager.VIBRATE_SETTING_OFF:
-      notifNever.setChecked(true);
-      break;
     }
+    else
+    {
+      notifNever.setChecked(true);
+      notifSilent.setChecked(true);
+    }
+    // switch (vibrateNotif)
+    // {
+    // case AudioManager.RINGER_MODE_VIBRATE:
+    // notifAlways.setChecked(true);
+    // break;
+    // case AudioManager.RINGER_MODE_NORMAL:
+    // notifSilent.setChecked(true);
+    // break;
+    // case AudioManager.RINGER_MODE_SILENT:
+    // notifNever.setChecked(true);
+    // break;
+    // }
 
     ringerAlways.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
@@ -92,7 +101,8 @@ public class VibrateSettings extends Activity
       {
         if (isChecked)
         {
-          audio.setVibrateSetting(AudioManager.VIBRATE_TYPE_RINGER, AudioManager.VIBRATE_SETTING_ON);
+          // audio.setVibrateSetting(AudioManager.VIBRATE_TYPE_RINGER, AudioManager.VIBRATE_SETTING_ON);
+          audio.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
           RingmodeToggle.fixRingMode(audio);
         }
       }
@@ -105,7 +115,8 @@ public class VibrateSettings extends Activity
       {
         if (isChecked)
         {
-          audio.setVibrateSetting(AudioManager.VIBRATE_TYPE_RINGER, AudioManager.VIBRATE_SETTING_ONLY_SILENT);
+          // audio.setVibrateSetting(AudioManager.VIBRATE_TYPE_RINGER, AudioManager.VIBRATE_SETTING_ONLY_SILENT);
+          audio.setRingerMode(AudioManager.RINGER_MODE_VIBRATE);
           RingmodeToggle.fixRingMode(audio);
         }
       }
@@ -118,7 +129,8 @@ public class VibrateSettings extends Activity
       {
         if (isChecked)
         {
-          audio.setVibrateSetting(AudioManager.VIBRATE_TYPE_RINGER, AudioManager.VIBRATE_SETTING_OFF);
+          // audio.setVibrateSetting(AudioManager.VIBRATE_TYPE_RINGER, AudioManager.VIBRATE_SETTING_OFF);
+          audio.setRingerMode(AudioManager.RINGER_MODE_SILENT);
           RingmodeToggle.fixRingMode(audio);
         }
       }
@@ -131,7 +143,8 @@ public class VibrateSettings extends Activity
       {
         if (isChecked)
         {
-          audio.setVibrateSetting(AudioManager.VIBRATE_TYPE_NOTIFICATION, AudioManager.VIBRATE_SETTING_ON);
+          SoundAttribute.setVibrate(AudioManager.RINGER_MODE_NORMAL);
+          // audio.setVibrateSetting(AudioManager.VIBRATE_TYPE_NOTIFICATION, AudioManager.VIBRATE_SETTING_ON);
         }
       }
 
@@ -143,7 +156,8 @@ public class VibrateSettings extends Activity
       {
         if (isChecked)
         {
-          audio.setVibrateSetting(AudioManager.VIBRATE_TYPE_NOTIFICATION, AudioManager.VIBRATE_SETTING_ONLY_SILENT);
+          SoundAttribute.setVibrate(AudioManager.RINGER_MODE_VIBRATE);
+          // audio.setVibrateSetting(AudioManager.VIBRATE_TYPE_NOTIFICATION, AudioManager.VIBRATE_SETTING_ONLY_SILENT);
         }
       }
 
@@ -155,7 +169,8 @@ public class VibrateSettings extends Activity
       {
         if (isChecked)
         {
-          audio.setVibrateSetting(AudioManager.VIBRATE_TYPE_NOTIFICATION, AudioManager.VIBRATE_SETTING_OFF);
+          SoundAttribute.setVibrate(AudioManager.RINGER_MODE_SILENT);
+          // audio.setVibrateSetting(AudioManager.VIBRATE_TYPE_NOTIFICATION, AudioManager.VIBRATE_SETTING_OFF);
         }
       }
 

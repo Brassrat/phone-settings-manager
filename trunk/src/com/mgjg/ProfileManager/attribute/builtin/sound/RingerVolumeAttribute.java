@@ -19,8 +19,6 @@ import static android.media.AudioManager.FLAG_VIBRATE;
 import static android.media.AudioManager.RINGER_MODE_NORMAL;
 import static android.media.AudioManager.RINGER_MODE_SILENT;
 import static android.media.AudioManager.RINGER_MODE_VIBRATE;
-import static android.media.AudioManager.VIBRATE_SETTING_OFF;
-import static android.media.AudioManager.VIBRATE_SETTING_ON;
 import android.content.Context;
 import android.media.AudioManager;
 
@@ -67,10 +65,10 @@ public final class RingerVolumeAttribute extends SoundAttribute
   }
 
   @Override
-  protected void activate(AudioManager audio)
+  protected void activate(Context context, AudioManager audio)
   {
     audio.setStreamVolume(getAudioStreamId(), getNumber(), SET_VOL_FLAGS + (isBoolean() ? FLAG_VIBRATE : 0));
-    audio.setVibrateSetting(getVibrateType(), (isBoolean() ? VIBRATE_SETTING_ON : VIBRATE_SETTING_OFF));
+    //audio.setVibrateSetting(getVibrateType(), (isBoolean() ? VIBRATE_SETTING_ON : VIBRATE_SETTING_OFF));
     if (getNumber() <= 0)
     {
       audio.setRingerMode(isBoolean() ? RINGER_MODE_VIBRATE : RINGER_MODE_SILENT);
@@ -80,5 +78,24 @@ public final class RingerVolumeAttribute extends SoundAttribute
       audio.setRingerMode(RINGER_MODE_NORMAL);
     }
   }
-
+  
+  protected boolean isVibrateForStream(Context context)
+  {
+    AudioManager audio = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
+      final int ringerMode = audio.getRingerMode();
+       if (ringerMode == AudioManager.RINGER_MODE_VIBRATE)
+       {
+         return true;
+       }
+       if (ringerMode == AudioManager.RINGER_MODE_NORMAL)
+       {
+         return isVibrateOn(context);
+       }
+       return false;
+  }
+  
+  protected void setVibrate(Context context)
+  {
+   //audio.setVibrateSetting(getVibrateType(), (isBoolean() ? VIBRATE_SETTING_ON : VIBRATE_SETTING_OFF));
+  }
 }

@@ -29,13 +29,16 @@ public class AirPlaneBooleanService implements BooleanService
   @Override
   public boolean isEnabled(Context context)
   {
-    return Settings.System.getInt(context.getContentResolver(), Settings.System.AIRPLANE_MODE_ON, 0) == 1;
+   // String isonString = Settings.System.getString(context.getContentResolver(), Settings.System.AIRPLANE_MODE_ON);
+    return Settings.System.getInt(context.getContentResolver(), Settings.Global.AIRPLANE_MODE_ON, 0) == 1;
   }
 
   @Override
   public void setEnabled(Context context, boolean enabled)
   {
-    Settings.System.putInt(context.getContentResolver(), Settings.System.AIRPLANE_MODE_ON, enabled ? 1 : 0);
+    // this needs to invoke the settings widget ... 
+    // this is a no-op ... need root permissions, etc.
+    Settings.System.putInt(context.getContentResolver(), Settings.Global.AIRPLANE_MODE_ON, enabled ? 1 : 0);
 
     // Post an intent to reload
     Intent intent = new Intent(Intent.ACTION_AIRPLANE_MODE_CHANGED);
