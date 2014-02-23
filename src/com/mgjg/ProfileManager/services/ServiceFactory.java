@@ -13,7 +13,7 @@ public class ServiceFactory
   {
     if ("wifi".equalsIgnoreCase(serviceName))
     {
-      return new WifiBooleanService(context);
+      return new WiFiBooleanService(context);
     }
 
     if ("airplane".equalsIgnoreCase(serviceName))

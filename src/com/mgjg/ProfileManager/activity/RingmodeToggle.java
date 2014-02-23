@@ -75,7 +75,7 @@ public class RingmodeToggle extends Activity
         if (isChecked)
         {
           audio.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
-          audio.setVibrateSetting(AudioManager.VIBRATE_TYPE_RINGER, AudioManager.VIBRATE_SETTING_ON);
+          //audio.setVibrateSetting(AudioManager.VIBRATE_TYPE_RINGER, AudioManager.VIBRATE_SETTING_ON);
         }
       }
 
@@ -116,13 +116,13 @@ public class RingmodeToggle extends Activity
 
   public static void fixRingMode(AudioManager audio, int vol)
   {
-    int ringerVibrate = audio.getVibrateSetting(AudioManager.VIBRATE_TYPE_RINGER);
+    int ringerVibrate = audio.getRingerMode();
 
-    if (vol == 0 && ringerVibrate != AudioManager.VIBRATE_SETTING_OFF)
+    if (vol == 0 && ringerVibrate != AudioManager.RINGER_MODE_VIBRATE)
     {
       audio.setRingerMode(AudioManager.RINGER_MODE_VIBRATE);
     }
-    else if (vol == 0 && ringerVibrate == AudioManager.VIBRATE_SETTING_OFF)
+    else if (vol == 0 && ringerVibrate == AudioManager.RINGER_MODE_NORMAL)
     {
       audio.setRingerMode(AudioManager.RINGER_MODE_SILENT);
     }

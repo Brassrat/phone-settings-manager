@@ -29,7 +29,7 @@ public final class AttributeView extends LinearLayout
 
   // convenience for addView calls later
   // LinearLayout.LayoutParams paramsWrapBoth = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-  public static final LinearLayout.LayoutParams paramsFillWrap = new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT);
+  public static final LinearLayout.LayoutParams paramsFillWrap = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 
   private final ProfileAttribute attr;
 

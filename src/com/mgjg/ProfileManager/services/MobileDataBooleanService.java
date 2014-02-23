@@ -77,21 +77,39 @@ public class MobileDataBooleanService implements BooleanService
   {
     Object conService = context.getSystemService(Context.CONNECTIVITY_SERVICE);
     Object conMgr = null;
-
+//    final ConnectivityManager conman = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+//    final Class conmanClass = Class.forName(conman.getClass().getName());
+//    final Field iConnectivityManagerField = conmanClass.getDeclaredField("mService");
+//    iConnectivityManagerField.setAccessible(true);
+//    final Object iConnectivityManager = iConnectivityManagerField.get(conman);
+//    final Class iConnectivityManagerClass = Class.forName(iConnectivityManager.getClass().getName());
+//    final Method setMobileDataEnabledMethod = iConnectivityManagerClass.getDeclaredMethod("setMobileDataEnabled", Boolean.TYPE);
+//    setMobileDataEnabledMethod.setAccessible(true);
+//
+//    setMobileDataEnabledMethod.invoke(iConnectivityManager, enabled);
       @SuppressWarnings("rawtypes")
-      Class conManClass = (null != conService) ? conService.getClass() : ConnectivityManager.class;
+      Class conServiceClass = (null != conService) ? conService.getClass() : ConnectivityManager.class;
       try
       {
         @SuppressWarnings("unchecked")
-        Method methodToCall = conManClass.getDeclaredMethod(methodName, boolean.class);
-        if ((null == methodToCall) && (null != conManClass))
+        Method methodToCall = conServiceClass.getDeclaredMethod(methodName, boolean.class);
+        if ((null == methodToCall) && ! (null == conService))
         {
-          final Field connectivityServiceField = conManClass.getDeclaredField("mService");
+          final Field connectivityServiceField = conServiceClass.getDeclaredField("mService");
           if (null != connectivityServiceField)
           {
             connectivityServiceField.setAccessible(true);
             conMgr = connectivityServiceField.get(conService);
+           //final Class conMgrClass = Class.forName(conMgr.getClass().getName());
+            @SuppressWarnings("rawtypes")
+            final Class conMgrClass = conMgr.getClass();
+            @SuppressWarnings("unchecked")
+            Method methodToCallx = conMgrClass.getDeclaredMethod(methodName, boolean.class);
+            methodToCall = methodToCallx;
           }
+        }
+        else {
+          conMgr = conService;
         }
         if ((null != methodToCall) && (null != conMgr))
         {

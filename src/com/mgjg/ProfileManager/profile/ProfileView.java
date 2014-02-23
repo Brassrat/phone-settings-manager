@@ -57,7 +57,7 @@ public final class ProfileView extends LinearLayout
     this.setOrientation(VERTICAL);
 
     // convenience for addView calls later
-    LinearLayout.LayoutParams paramsFillWrap = new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT);
+    LinearLayout.LayoutParams paramsFillWrap = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 
     // add Toggle button to show whether profile is active
     CheckBox cb = new CheckBox(context);
@@ -95,7 +95,7 @@ public final class ProfileView extends LinearLayout
     // profileRow.addView(blanks);
 
     TableRow.LayoutParams right = new TableRow.LayoutParams(
-        TableRow.LayoutParams.FILL_PARENT,
+        TableRow.LayoutParams.MATCH_PARENT,
         TableRow.LayoutParams.WRAP_CONTENT);
     right.gravity = Gravity.RIGHT + Gravity.CENTER_VERTICAL;
 

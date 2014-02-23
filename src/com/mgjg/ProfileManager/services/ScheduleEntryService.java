@@ -118,11 +118,6 @@ public final class ScheduleEntryService extends IntentService
       {
         int icon = R.drawable.toast;
         CharSequence tickerText = "Profile Manager";
-        long when = System.currentTimeMillis();
-
-        Notification notification = new Notification(icon, tickerText, when);
-        notification.flags |= Notification.FLAG_AUTO_CANCEL;
-
         CharSequence contentTitle = "Profile Manager";
         CharSequence contentText = toast;
         Intent notificationIntent = new Intent(this, ToastNotification.class);
@@ -131,7 +126,15 @@ public final class ScheduleEntryService extends IntentService
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0, new Intent(),
             PendingIntent.FLAG_ONE_SHOT + PendingIntent.FLAG_UPDATE_CURRENT);
 
-        notification.setLatestEventInfo(context, contentTitle, contentText, contentIntent);
+        Notification notification = new Notification.Builder(this)
+        .setSmallIcon(icon)
+        .setTicker(tickerText)
+        .setShowWhen(true)
+        .setAutoCancel(true)
+        .setContentTitle(contentTitle)
+        .setContentText(contentText)
+        .setContentIntent(contentIntent)
+        .build();
 
         notificationManager.notify(ToastNotification.TOAST_ID, notification);
       }

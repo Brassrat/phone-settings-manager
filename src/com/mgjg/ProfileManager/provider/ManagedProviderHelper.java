@@ -18,6 +18,7 @@ package com.mgjg.ProfileManager.provider;
 import java.util.List;
 
 import android.app.Activity;
+import android.content.CursorLoader;
 import android.database.Cursor;
 import android.net.Uri;
 
@@ -37,7 +38,7 @@ public abstract class ManagedProviderHelper<T extends Listable>
     return getListManaged(getContentUri(filter, values));
   }
 
-  public List<T> getListManaged(Uri uri)
+  private final List<T> getListManaged(Uri uri)
   {
     return getEntries(getCursorManaged(uri));
   }
@@ -49,9 +50,10 @@ public abstract class ManagedProviderHelper<T extends Listable>
    * @param uri
    * @return
    */
-  public final Cursor getCursorManaged(Uri uri)
+  private final Cursor getCursorManaged(Uri uri)
   {
-    return activity.managedQuery(uri, null, null, null, null);
+    //return activity.managedQuery(uri, null, null, null, null);
+    return new CursorLoader(activity, uri, null, null, null, null).loadInBackground();
   }
 
   public Cursor getCursorManaged(int filter, Object... values)
