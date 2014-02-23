@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="@string/editProfiles" android:titleCondensed="@string/profiles" android:id="@+id/edit_profiles"/>
+
+	<item android:id="@+id/disable_profiles" android:title="@string/disableProfiles" android:titleCondensed="@string/disable"></item><item android:id="@+id/mute" android:title="Mute" android:icon="@drawable/mute" >
+		<menu xmlns:android="http://schemas.android.com/apk/res/android">
+			<item android:id="@+id/just_mute" android:title="Mute/Unmute" />
+			<item android:id="@+id/create_mute_shortcut" android:title="Create Shortcut" />
+		</menu>
+	</item>
+
+	<item android:id="@+id/toggle_ringmode" android:title="Toggle Ringmode" />
+	<item android:id="@+id/vibrate_settings" android:title="Vibrate Settings" />
+	<item android:id="@+id/faq" android:title="F.A.Q."/>
+		
+</menu>

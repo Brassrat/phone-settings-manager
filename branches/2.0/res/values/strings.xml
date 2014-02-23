@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Profile Manager</string>
+    
+    <!-- MainSettings strings -->
+
+    
+    <string name="timer_button">Schedule</string>
+    
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    
+    <!-- Mute -->
+    <string name="muted">muted</string>
+    <string name="SavedSystemVolume">SavedSystemVolume</string>
+    <string name="SavedRingerVolume">SavedRingerVolume</string>
+    <string name="SavedNotifVolume">SavedNotifVolume</string>
+    <string name="SavedMediaVolume">SavedMediaVolume</string>
+    <string name="SavedAlarmVolume">SavedAlarmVolume</string>
+    
+    <!-- Shortcuts -->
+    <string name="use_menu_shortcut">Use the menu to create a shortcut to this screen.</string>
+    
+    <!-- Preferences -->
+    <string name="ShownStartup">ShownStartup</string>
+    <string name="ShownVolumeCouplingWarning">ShownVolumeCouplingWarning</string>
+    <string name="ShowToasts">ShowToasts</string>
+    <string name="ShowStartupNotifications">ShowStartupNotfications</string>
+    <string name="ShowNotifications">ShowNotfications</string>
+
+    <!-- Vibrate Settings -->
+    <string name="notification_vibrate">Notification Settings</string>
+    <string name="ringer_vibrate">Ringer Settings</string>
+    <string name="vibrate_when_possible">Vibrate Whenever Possible</string>
+    <string name="vibrate_when_silent">Vibrate Only When Silent</string>
+    <string name="vibrate_off">Don\'t Vibrate</string>
+    
+    <!-- Ringmode Toggle -->
+    <string name="toggle_text">Set Ring Mode</string>
+    <string name="ring_vibrate">May Ring, May Vibrate</string>
+    <string name="vibrate_only">Vibrate Only</string>
+    <string name="silent">Silent</string>
+    
+    <!-- Attributes -->
+    <string name="newAttributeList">New Attribute List</string>
+    <string name="newAttribute">New Attribute</string>
+    <string name="deleteAttributeList">Delete</string>
+    <string name="deleteAttribute">Delete</string>
+    <string name="editAttributeList">Edit</string>
+    <string name="editAttribute">Edit</string>
+    
+    <!-- Schedules -->
+    <string name="ScheduleListProfile">Schedules for </string>
+    <string name="newSchedule">New Schedule</string>
+    
+    <string name="day0">Sun</string>
+    <string name="day1">Mon</string>
+    <string name="day2">Tue</string>
+    <string name="day3">Wed</string>
+    <string name="day4">Thu</string>
+    <string name="day5">Fri</string>
+    <string name="day6">Sat</string>
+    
+    <string name="toast_SystemVolume">Sys</string>
+    <string name="toast_RingerVolume">Ring</string>
+    <string name="toast_MediaVolume">Media</string>
+    <string name="toast_CallVolume">Call</string>
+    <string name="toast_AlarmVolume">Alarm</string>
+    <string name="toast_NotificationVolume">Notify</string>
+    
+    <string name="startTimeLabel">Start Time:</string>
+    <string name="volumeLabel">Volume:</string>
+    <string name="vibrateLabel">Vibrate:</string>
+    <string name="activeLabel">Active:</string>
+    
+    <string name="savedSchedule">Schedule saved</string><string name="savedAttribute">Attribute saved</string>
+    <string name="mustSetProfileNameBeforeSave">Must set profile name before it can be saved, use back key to cancel</string>
+    <string name="mustSetProfileNameBeforeEditAttributes">Must set profile name before editting attributes</string>
+    <string name="mustSetProfileNameBeforeEditSchedules">Must set profile name before editting schedules</string>
+    
+    <string name="done">Done</string>
+    
+    <string name="ToAddProfile">Use the Menu button to add a profile</string>
+    <string name="AttributeListProfile">Attributes for profile </string>
+    <string name="activeScheduleCount">active schedule</string><string name="activeAttributeCount">active</string>
+    <string name="activeAttributeCountPlural">active</string><string name="activeScheduleCountPlural">active</string>
+    <string name="activeAttributeCountNone">no active</string><string name="activeScheduleCountNone">no active</string>
+    <string name="applySettings">Apply Settings</string>
+    <string name="profileNameLabel">Name:</string>
+    <string name="profileEdit">Edit Profile</string>
+    <string name="newProfile">New Profile</string>
+    <string name="editProfiles">Edit Profiles</string>
+    <string name="profiles">Profiles</string>
+    <string name="savedProfile">profile Saved</string>
+
+    <string name="AddAttribute">Add Attribute</string>
+    <string name="ScheduleForProfile">Schedule For </string>
+    <string name="NoProfile">Schedule For PROFILE</string>
+    <string name="BLANKS"></string>
+    <string name="attr_for_profile">{0} for {1}</string>
+    <string name="edit_attributes">Attributes</string>
+    <string name="edit_schedules">Schedules</string>
+    <string name="MAIN_SCREEN">MAIN SCREEN</string>
+    <string name="ProfileList">Profile List</string>
+    
+    <string name="active_color">green</string>
+    <string name="inactive_color">red</string>
+    <string name="NewSchedule">New Schedule</string>
+    <string name="active">ACTIVE</string>
+    <string name="inactive">INACTIVE</string>
+    <string name="enabled">Enabled</string>
+    <string name="disabled">Disabled</string>
+
+    <string name="disableProfiles">Enable/Disable</string>
+    <string name="edit">Edit</string>
+    <string name="deleteProfile">Delete Profile</string>
+    <string name="deleteSchedule">Delete Schedule</string>
+    <string name="delete">Delete</string>
+    <string name="disable">Disable</string>
+    <string name="enable">Enable</string>
+    <string name="mute">Mute</string>
+    <string name="unmute">Unmute</string>
+    
+    <!--  Builtin Attributes -->
+    <string name="title_system">System Volume</string>
+    <string name="title_media">Media Volume</string>
+    <string name="title_ringer">Ringer Volume</string>
+    <string name="title_phonecall">In-Call Volume</string>
+    <string name="title_alarm">Alarm Volume</string>
+    <string name="title_notif">Notification Volume</string>
+    <string name="title_airplane">AirPlane</string>
+    <string name="title_wifi">Wifi</string>
+    <string name="title_mobiledata">MobileData</string>
+    <string name="AttributesForProfile">Attributes for profile …</string>
+    <string name="type_name">Type Name</string>
+
+    
+</resources>
