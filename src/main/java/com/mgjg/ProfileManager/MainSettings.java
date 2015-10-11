@@ -223,7 +223,7 @@ public class MainSettings extends ListActivity
       return true;
 
     case R.id.faq:
-      Uri uri = Uri.parse("http://code.google.com/p/phone-settings-manager/wiki/FAQ");
+      Uri uri = Uri.parse("http://github.com/Brassrat/phone-settings-manager/wiki/FAQ");
       Intent faq = new Intent(Intent.ACTION_VIEW, uri);
       startActivity(faq);
       return true;

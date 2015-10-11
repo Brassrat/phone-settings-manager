@@ -1,6 +1,5 @@
 package com.mgjg.ProfileManager.utils;
 
-import android.R;
 import android.app.Activity;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -11,17 +10,20 @@ import android.view.View;
 import android.view.View.OnTouchListener;
 import android.widget.EditText;
 
+import com.mgjg.ProfileManager.R;
+
 public class ClearTextX extends Activity
 {
 
   @Override
   protected void onCreate(Bundle instanceState)
   {
+    super.onCreate(instanceState);
     String value = "";// any text you are pre-filling in the EditText
 
     final EditText et = new EditText(this);
     et.setText(value);
-    final Drawable x = getResources().getDrawable(R.drawable.presence_offline);// your x image, this one from standard android images looks pretty good actually
+    final Drawable x = getResources().getDrawable(android.R.drawable.presence_offline);// your x image, this one from standard android images looks pretty good actually
     x.setBounds(0, 0, x.getIntrinsicWidth(), x.getIntrinsicHeight());
     et.setCompoundDrawables(null, null, value.equals("") ? null : x, null);
     et.setOnTouchListener(new OnTouchListener() {

@@ -85,6 +85,7 @@
     <string name="activeScheduleCount">active schedule</string><string name="activeAttributeCount">active</string>
     <string name="activeAttributeCountPlural">active</string><string name="activeScheduleCountPlural">active</string>
     <string name="activeAttributeCountNone">no active</string><string name="activeScheduleCountNone">no active</string>
+    <string name="toggle">toggle</string>
     <string name="applySettings">Apply Settings</string>
     <string name="profileNameLabel">Name:</string>
     <string name="profileEdit">Edit Profile</string>
@@ -133,6 +134,11 @@
     <string name="title_mobiledata">MobileData</string>
     <string name="AttributesForProfile">Attributes for profile …</string>
     <string name="type_name">Type Name</string>
+    <string name="toggle_ringmode">Toggle Ringmode</string>
+    <string name="vibrate_settings">Vibrate Settings</string>
+    <string name="faq">F.A.Q.</string>
+    <string name="create_shortcut">Create Shortcut</string>
+    <string name="mute_unmute">Mute/Unmute</string>
 
-    
+
 </resources>
