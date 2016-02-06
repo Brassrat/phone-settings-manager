@@ -1,22 +1,19 @@
 /**
  * Copyright 2011 Jay Goldman
- * 
- * Licensed under the Apache License, Version 2.0 (the "License"); 
- * you may not use this file except in compliance with the License. 
- * You may obtain a copy of the License at 
- * 
- * http://www.apache.org/licenses/LICENSE-2.0 
- * 
- * Unless required by applicable law or agreed to in writing, 
- * software distributed under the License is distributed 
- * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
- * either express or implied. See the License for the specific language 
- * governing permissions and limitations under the License. 
+ * <p/>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p/>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p/>
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed
+ * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
  */
 package com.mgjg.ProfileManager;
-
-import java.util.Iterator;
-import java.util.List;
 
 import android.content.Context;
 import android.view.View;
@@ -29,9 +26,12 @@ import com.mgjg.ProfileManager.attribute.ProfileAttribute;
 import com.mgjg.ProfileManager.utils.AttributeTableLayout;
 import com.mgjg.ProfileManager.utils.ListAdapter;
 
+import java.util.Iterator;
+import java.util.List;
+
 /**
  * Based on the tutorial from anddev.org at http://www.anddev.org/iconified_textlist_-_the_making_of-t97.html
- * 
+ *
  * @author Mike Partridge/ Jay Goldman
  */
 public class AttributeUpdateableViewListAdapter extends
@@ -47,7 +47,7 @@ public class AttributeUpdateableViewListAdapter extends
    * @param context
    */
   public AttributeUpdateableViewListAdapter(Context context,
-      List<AttributeTableLayout> layouts)
+                                            List<AttributeTableLayout> layouts)
   {
     super(context);
     this.layouts = layouts;
@@ -59,7 +59,7 @@ public class AttributeUpdateableViewListAdapter extends
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see android.widget.Adapter#getView(int, android.view.View, android.view.ViewGroup)
    */
   @Override
@@ -81,10 +81,8 @@ public class AttributeUpdateableViewListAdapter extends
     }
     else
     {
-      Iterator<AttributeTableLayout> i = layouts.iterator();
-      while (i.hasNext())
+      for (AttributeTableLayout atl : layouts)
       {
-        AttributeTableLayout atl = i.next();
         if (atl.getAttribute().equals(attr))
         {
           return atl.getView();

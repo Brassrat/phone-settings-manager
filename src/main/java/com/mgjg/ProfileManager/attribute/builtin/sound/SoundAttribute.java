@@ -1,35 +1,19 @@
 /**
  * Copyright 2011 Jay Goldman
- * 
- * Licensed under the Apache License, Version 2.0 (the "License"); 
- * you may not use this file except in compliance with the License. 
- * You may obtain a copy of the License at 
- * 
- * http://www.apache.org/licenses/LICENSE-2.0 
- * 
- * Unless required by applicable law or agreed to in writing, 
- * software distributed under the License is distributed 
- * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
- * either express or implied. See the License for the specific language 
- * governing permissions and limitations under the License. 
+ * <p/>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p/>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p/>
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed
+ * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
  */
 package com.mgjg.ProfileManager.attribute.builtin.sound;
-
-import static android.media.AudioManager.FLAG_PLAY_SOUND;
-import static android.media.AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE;
-import static android.media.AudioManager.FLAG_SHOW_UI;
-import static android.media.AudioManager.FLAG_VIBRATE;
-import static android.media.AudioManager.RINGER_MODE_NORMAL;
-import static android.media.AudioManager.STREAM_NOTIFICATION;
-import static android.media.AudioManager.STREAM_RING;
-//import static android.media.AudioManager.VIBRATE_SETTING_OFF;
-//import static android.media.AudioManager.VIBRATE_SETTING_ON;
-//import static android.media.AudioManager.VIBRATE_TYPE_NOTIFICATION;
-//import static android.media.AudioManager.VIBRATE_TYPE_RINGER;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -60,6 +44,23 @@ import com.mgjg.ProfileManager.utils.AttributeTableLayout;
 import com.mgjg.ProfileManager.utils.Listable;
 import com.mgjg.ProfileManager.utils.Util;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+
+import static android.media.AudioManager.FLAG_PLAY_SOUND;
+import static android.media.AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE;
+import static android.media.AudioManager.FLAG_SHOW_UI;
+import static android.media.AudioManager.FLAG_VIBRATE;
+import static android.media.AudioManager.RINGER_MODE_NORMAL;
+import static android.media.AudioManager.STREAM_NOTIFICATION;
+import static android.media.AudioManager.STREAM_RING;
+
+//import static android.media.AudioManager.VIBRATE_SETTING_OFF;
+//import static android.media.AudioManager.VIBRATE_SETTING_ON;
+//import static android.media.AudioManager.VIBRATE_TYPE_NOTIFICATION;
+//import static android.media.AudioManager.VIBRATE_TYPE_RINGER;
+
 @SuppressLint("DefaultLocale")
 public abstract class SoundAttribute extends AttributeBase implements Comparable<Listable>
 {
@@ -80,26 +81,26 @@ public abstract class SoundAttribute extends AttributeBase implements Comparable
   private static boolean hasShownVolumeCouplingWarning = false;
   private static Boolean isVolumeCoupled = null;
 
-  public static final boolean isVibrateOn(Context context)
+  public static boolean isVibrateOn(Context context)
   {
     String vibOnString = android.provider.Settings.System.getString(context.getContentResolver(), android.provider.Settings.System.VIBRATE_ON);
     return ("on".equalsIgnoreCase(vibOnString));
   }
 
-  public static final void setVibrate(int mode)
+  public static void setVibrate(int mode)
   {
 
     switch (mode)
     {
-    case AudioManager.RINGER_MODE_NORMAL:
-      // TODO
-      break;
-    case AudioManager.RINGER_MODE_VIBRATE:
-      // TODO
-      break;
-    case AudioManager.RINGER_MODE_SILENT:
-      // TODO
-      break;
+      case AudioManager.RINGER_MODE_NORMAL:
+        // TODO
+        break;
+      case AudioManager.RINGER_MODE_VIBRATE:
+        // TODO
+        break;
+      case AudioManager.RINGER_MODE_SILENT:
+        // TODO
+        break;
     }
   }
 
@@ -108,7 +109,7 @@ public abstract class SoundAttribute extends AttributeBase implements Comparable
 
     hasShownVolumeCouplingWarning = Util.isBooleanPref(context, R.string.ShownVolumeCouplingWarning, false);
     AttributeEdit.setDefaultType(SYSTEM_VOLUME.getTypeId());
-    return new ProfileAttribute[] { SYSTEM_VOLUME, RING_VOLUME, NOTIFICATION_VOLUME, MUSIC_VOLUME, ALARM_VOLUME, VOICE_CALL_VOLUME };
+    return new ProfileAttribute[]{SYSTEM_VOLUME, RING_VOLUME, NOTIFICATION_VOLUME, MUSIC_VOLUME, ALARM_VOLUME, VOICE_CALL_VOLUME};
   }
 
   // created when attribute is viewed
@@ -138,7 +139,7 @@ public abstract class SoundAttribute extends AttributeBase implements Comparable
 
   protected void setVibrate(Context context)
   {
-    // audio.setVibrateSetting(getVibrateType(), (isBoolean() ? VIBRATE_SETTING_ON : VIBRATE_SETTING_OFF)); 
+    // audio.setVibrateSetting(getVibrateType(), (isBoolean() ? VIBRATE_SETTING_ON : VIBRATE_SETTING_OFF));
     // to be overridden by specific streams
   }
 
@@ -156,7 +157,7 @@ public abstract class SoundAttribute extends AttributeBase implements Comparable
 
   /**
    * apply settings to phone via AudioManager, default is to set the volume
-   * 
+   *
    * @param audio
    */
   protected void activate(Context context, AudioManager audio)
@@ -188,8 +189,7 @@ public abstract class SoundAttribute extends AttributeBase implements Comparable
   }
 
   /**
-   * @param volume
-   *          the volume to set
+   * @param volume the volume to set
    * @return
    */
   @Override
@@ -198,7 +198,7 @@ public abstract class SoundAttribute extends AttributeBase implements Comparable
     changeVolumeBar();
   }
 
-  private final void changeVolumeBar()
+  private void changeVolumeBar()
   {
     if ((null != volumeBar) && (volumeBar.getProgress() != getNumber()))
     {
@@ -338,6 +338,11 @@ public abstract class SoundAttribute extends AttributeBase implements Comparable
     viewVibrateText = null;
   }
 
+  private String labelText(Context context)
+  {
+    return getName(context) + ":";
+  }
+
   @Override
   public void addView(Context context, TableLayout tableLayout)
   {
@@ -351,7 +356,7 @@ public abstract class SoundAttribute extends AttributeBase implements Comparable
 
     TextView volumeLabel = new TextView(context);
     volumeLabel.setPadding(2, 7, 2, 2);
-    volumeLabel.setText(getName(context) + ":");
+    volumeLabel.setText(labelText(context));
     volumeLabel.setMinWidth(labelMinWidth());
     volumeRow.addView(volumeLabel);
 
@@ -383,12 +388,12 @@ public abstract class SoundAttribute extends AttributeBase implements Comparable
 
       TextView vibrateLabel = new TextView(context);
       vibrateLabel.setPadding(2, 2, 2, 2);
-      vibrateLabel.setGravity(Gravity.RIGHT);
+      vibrateLabel.setGravity(Gravity.END);
       vibrateLabel.setText(R.string.vibrateLabel);
 
       TableRow.LayoutParams labelParms = new TableRow.LayoutParams();
       labelParms.span = 1;
-      labelParms.gravity = Gravity.RIGHT;
+      labelParms.gravity = Gravity.END;
 
       viewVibrateCheckBox = new CheckBox(context);
       viewVibrateCheckBox.setPadding(2, 2, 2, 2);
@@ -445,7 +450,7 @@ public abstract class SoundAttribute extends AttributeBase implements Comparable
 
     TextView volumeLabelView = new TextView(context);
     volumeLabelView.setPadding(2, 4, 2, 3);
-    volumeLabelView.setText(getName(context) + ":");
+    volumeLabelView.setText(labelText(context));
     volumeLabelView.setMinWidth(labelMinWidth());
     // volumeLabelView.setLayoutParams(new TableRow.LayoutParams(
     // TableRow.LayoutParams.MATCH_PARENT,
@@ -460,7 +465,7 @@ public abstract class SoundAttribute extends AttributeBase implements Comparable
     TextView count = new TextView(context);
     count.setId(ID_COUNT_TEXT);
     count.setPadding(2, 4, 2, 3);
-    count.setText("TBD");
+    count.setText(R.string.tbd);
     volMinMaxRow.addView(count, singleColumnParams);
 
     final AudioManager audio = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
@@ -471,7 +476,7 @@ public abstract class SoundAttribute extends AttributeBase implements Comparable
     minMax.setPadding(2, 4, rightPadding(), 3);
     TableRow.LayoutParams minMaxParms = new TableRow.LayoutParams();
     minMaxParms.span = 1;
-    minMaxParms.gravity = Gravity.RIGHT;
+    minMaxParms.gravity = Gravity.END;
     volMinMaxRow.addView(minMax, minMaxParms);
 
     SeekBar seekBar = new SeekBar(context);
@@ -492,7 +497,8 @@ public abstract class SoundAttribute extends AttributeBase implements Comparable
     seekBarParams.span = 3;
     seekBarRow.addView(seekBar, seekBarParams);
 
-    seekBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
+    seekBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener()
+    {
 
       @Override
       public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser)
@@ -554,7 +560,7 @@ public abstract class SoundAttribute extends AttributeBase implements Comparable
           LayoutParams.WRAP_CONTENT,
           LayoutParams.WRAP_CONTENT);
       vibLayoutParams.span = 2;
-      vibLayoutParams.gravity = Gravity.RIGHT + Gravity.CENTER_VERTICAL;
+      vibLayoutParams.gravity = Gravity.END + Gravity.CENTER_VERTICAL;
       vibrateRow.addView(vibrateLabel, vibLayoutParams);
 
       // <TableRow>
@@ -567,7 +573,7 @@ public abstract class SoundAttribute extends AttributeBase implements Comparable
       CheckBox vibrateCheckBox = new CheckBox(context);
       vibrateCheckBox.setId(ID_CHECKBOX);
       vibrateCheckBox.setPadding(2, 2, rightPadding(), 2);
-      vibrateCheckBox.setGravity(Gravity.RIGHT);
+      vibrateCheckBox.setGravity(Gravity.END);
       vibrateCheckBox.setChecked(isBoolean());
       vibrateCheckBox.setOnClickListener(new View.OnClickListener()
       {
@@ -585,7 +591,7 @@ public abstract class SoundAttribute extends AttributeBase implements Comparable
           LayoutParams.WRAP_CONTENT,
           LayoutParams.WRAP_CONTENT);
       vibParms.span = 1;
-      vibParms.gravity = Gravity.RIGHT;
+      vibParms.gravity = Gravity.END;
       vibParms.rightMargin = rightPadding();
 
       vibrateRow.addView(vibrateCheckBox, vibParms);
@@ -628,7 +634,7 @@ public abstract class SoundAttribute extends AttributeBase implements Comparable
 
   /**
    * temporarily change the ringer volume and check if the notif volume changed with it
-   * 
+   *
    * @return result
    */
   private boolean isRingerNotifVolumeCoupled(Context context)
@@ -696,7 +702,7 @@ public abstract class SoundAttribute extends AttributeBase implements Comparable
       R.string.title_alarm,
       R.string.title_notif,
       R.string.title_phonecall,
-      R.string.title_media };
+      R.string.title_media};
 
   public final int getNameResourceId()
   {
@@ -709,7 +715,7 @@ public abstract class SoundAttribute extends AttributeBase implements Comparable
       R.string.toast_AlarmVolume,
       R.string.toast_NotificationVolume,
       R.string.toast_CallVolume,
-      R.string.toast_MediaVolume };
+      R.string.toast_MediaVolume};
 
   public final int getToastNameResourceId()
   {
@@ -729,7 +735,7 @@ public abstract class SoundAttribute extends AttributeBase implements Comparable
       TYPE_AUDIO_ALARM,
       TYPE_AUDIO_NOTIFICATION,
       TYPE_AUDIO_VOICE_CALL,
-      TYPE_AUDIO_MUSIC };
+      TYPE_AUDIO_MUSIC};
 
   @Override
   public final int getTypeId()
@@ -757,7 +763,7 @@ public abstract class SoundAttribute extends AttributeBase implements Comparable
       AudioManager.STREAM_ALARM,
       AudioManager.STREAM_NOTIFICATION,
       AudioManager.STREAM_VOICE_CALL,
-      AudioManager.STREAM_MUSIC };
+      AudioManager.STREAM_MUSIC};
 
   public final int getAudioStreamId()
   {
@@ -770,11 +776,11 @@ public abstract class SoundAttribute extends AttributeBase implements Comparable
       VIBRATE_TYPE.ALARM.value,
       VIBRATE_TYPE.NOTIFICATION.value,
       -1,
-      -1 };
+      -1};
 
   /**
    * returns AudioManager VIBRATE_TYPE_XXX value appropriate for this Sound Attribute
-   * 
+   *
    * @return
    */
   protected final int getVibrateType()
@@ -804,10 +810,10 @@ public abstract class SoundAttribute extends AttributeBase implements Comparable
     return thisOrder - othOrder;
   }
 
-  private final static String soundName[] = { "System", "Ring", "Alarm", "Notification", "Call", "Media" };
-  private static final int soundIndexes[] = { SOUND_ATTR_SYSTEM, SOUND_ATTR_RING, SOUND_ATTR_ALARM, SOUND_ATTR_NOTIFICATION, SOUND_ATTR_VOICE_CALL, SOUND_ATTR_MUSIC };
-  private final static int soundOrder[] = { ORDER_AUDIO_SYSTEM, ORDER_AUDIO_RING, ORDER_AUDIO_ALARM, ORDER_AUDIO_NOTIFICATION, ORDER_AUDIO_VOICE_CALL, ORDER_AUDIO_MUSIC };
-  private final static String soundClass[] = { "System", "Ringer", "Alarm", "Notification", "InCall", "Media" };
+  private final static String soundName[] = {"System", "Ring", "Alarm", "Notification", "Call", "Media"};
+  private static final int soundIndexes[] = {SOUND_ATTR_SYSTEM, SOUND_ATTR_RING, SOUND_ATTR_ALARM, SOUND_ATTR_NOTIFICATION, SOUND_ATTR_VOICE_CALL, SOUND_ATTR_MUSIC};
+  private final static int soundOrder[] = {ORDER_AUDIO_SYSTEM, ORDER_AUDIO_RING, ORDER_AUDIO_ALARM, ORDER_AUDIO_NOTIFICATION, ORDER_AUDIO_VOICE_CALL, ORDER_AUDIO_MUSIC};
+  private final static String soundClass[] = {"System", "Ringer", "Alarm", "Notification", "InCall", "Media"};
 
   @SuppressLint("DefaultLocale")
   private static String makeRegistryJSON(int typeId, String name, int order)
@@ -818,7 +824,7 @@ public abstract class SoundAttribute extends AttributeBase implements Comparable
 
   public static List<RegisteredAttribute> addRegistryEntries(SQLiteDatabase db)
   {
-    List<RegisteredAttribute> ras = new ArrayList<RegisteredAttribute>();
+    List<RegisteredAttribute> ras = new ArrayList<>();
     for (int xx : soundIndexes)
     {
       String params = makeRegistryJSON(typeId[xx], soundName[xx], soundOrder[xx]);

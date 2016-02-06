@@ -1,24 +1,20 @@
 /**
  * Copyright 2009 Daniel Roozen
  * Copyright 2011 Jay Goldman
- * 
- * Licensed under the Apache License, Version 2.0 (the "License"); 
- * you may not use this file except in compliance with the License. 
- * You may obtain a copy of the License at 
- * 
- * http://www.apache.org/licenses/LICENSE-2.0 
- * 
- * Unless required by applicable law or agreed to in writing, 
- * software distributed under the License is distributed 
- * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
- * either express or implied. See the License for the specific language 
- * governing permissions and limitations under the License. 
+ * <p/>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p/>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p/>
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed
+ * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
  */
 package com.mgjg.ProfileManager.services;
-
-import static com.mgjg.ProfileManager.provider.ScheduleHelper.FILTER_SCHEDULE_ID;
-
-import java.util.List;
 
 import android.app.IntentService;
 import android.app.Notification;
@@ -37,9 +33,13 @@ import com.mgjg.ProfileManager.schedule.ScheduleEntry;
 import com.mgjg.ProfileManager.utils.ToastNotification;
 import com.mgjg.ProfileManager.utils.Util;
 
+import java.util.List;
+
+import static com.mgjg.ProfileManager.provider.ScheduleHelper.FILTER_SCHEDULE_ID;
+
 /**
  * Service that activates all attributes for the profile associated with a schedule entry
- * 
+ *
  * @author droozen/jgoldman
  */
 public final class ScheduleEntryService extends IntentService
@@ -127,14 +127,14 @@ public final class ScheduleEntryService extends IntentService
             PendingIntent.FLAG_ONE_SHOT + PendingIntent.FLAG_UPDATE_CURRENT);
 
         Notification notification = new Notification.Builder(this)
-        .setSmallIcon(icon)
-        .setTicker(tickerText)
-        .setShowWhen(true)
-        .setAutoCancel(true)
-        .setContentTitle(contentTitle)
-        .setContentText(contentText)
-        .setContentIntent(contentIntent)
-        .build();
+            .setSmallIcon(icon)
+            .setTicker(tickerText)
+            .setShowWhen(true)
+            .setAutoCancel(true)
+            .setContentTitle(contentTitle)
+            .setContentText(contentText)
+            .setContentIntent(contentIntent)
+            .build();
 
         notificationManager.notify(ToastNotification.TOAST_ID, notification);
       }

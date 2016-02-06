@@ -1,35 +1,26 @@
 /**
  * Copyright 2009 Daniel Roozen
  * Copyright 2011 Jay Goldman
- * 
- * Licensed under the Apache License, Version 2.0 (the "License"); 
- * you may not use this file except in compliance with the License. 
- * You may obtain a copy of the License at 
- * 
- * http://www.apache.org/licenses/LICENSE-2.0 
- * 
- * Unless required by applicable law or agreed to in writing, 
- * software distributed under the License is distributed 
- * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
- * either express or implied. See the License for the specific language 
- * governing permissions and limitations under the License. 
+ * <p/>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p/>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p/>
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed
+ * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
  */
 package com.mgjg.ProfileManager;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
-//import android.gesture.Gesture;
-//import android.gesture.GestureLibrary;
-//import android.gesture.GestureOverlayView;
-//import android.gesture.GestureOverlayView.OnGesturePerformedListener;
-//import android.gesture.Prediction;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -52,7 +43,17 @@ import com.mgjg.ProfileManager.registry.UnknownAttributeException;
 import com.mgjg.ProfileManager.utils.AttributeTableLayout;
 import com.mgjg.ProfileManager.utils.Util;
 
-public class MainSettings extends ListActivity 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+//import android.gesture.Gesture;
+//import android.gesture.GestureLibrary;
+//import android.gesture.GestureOverlayView;
+//import android.gesture.GestureOverlayView.OnGesturePerformedListener;
+//import android.gesture.Prediction;
+
+public class MainSettings extends ListActivity
 // implements OnGesturePerformedListener
 {
 
@@ -70,7 +71,7 @@ public class MainSettings extends ListActivity
 //
 //    GestureOverlayView gestures =    (GestureOverlayView)findViewById(R.id.gestures);
 //    gestures.addOnGesturePerformedListener(this);
-    
+
   public MainSettings()
   {
   }
@@ -90,8 +91,10 @@ public class MainSettings extends ListActivity
 //        }
 //    }
 //  }
-  
-  /** Called when the activity is first created. */
+
+  /**
+   * Called when the activity is first created.
+   */
   @Override
   public void onCreate(Bundle instanceState)
   {
@@ -191,59 +194,59 @@ public class MainSettings extends ListActivity
 
     switch (item.getItemId())
     {
-    case R.id.just_mute:
-      Intent mute = new Intent(this, MuteActivity.class);
-      startActivityForResult(mute, ACTIVITY_MUTE);
-      return true;
+      case R.id.just_mute:
+        Intent mute = new Intent(this, MuteActivity.class);
+        startActivityForResult(mute, ACTIVITY_MUTE);
+        return true;
 
-    case R.id.create_mute_shortcut:
-      Intent shortcut = new Intent(Intent.ACTION_MAIN);
-      shortcut.setClassName(this, MuteActivity.class.getName());
+      case R.id.create_mute_shortcut:
+        Intent shortcut = new Intent(Intent.ACTION_MAIN);
+        shortcut.setClassName(this, MuteActivity.class.getName());
 
-      Parcelable iconResource = Intent.ShortcutIconResource.fromContext(this, R.drawable.mute);
-      Intent ii = new Intent()
-          .putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcut)
-          .putExtra(Intent.EXTRA_SHORTCUT_NAME, "Mute/Unmute")
-          .putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE, iconResource)
-          .setAction("com.android.launcher.action.INSTALL_SHORTCUT");
-      sendBroadcast(ii);
+        Parcelable iconResource = Intent.ShortcutIconResource.fromContext(this, R.drawable.mute);
+        Intent ii = new Intent()
+            .putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcut)
+            .putExtra(Intent.EXTRA_SHORTCUT_NAME, "Mute/Unmute")
+            .putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE, iconResource)
+            .setAction("com.android.launcher.action.INSTALL_SHORTCUT");
+        sendBroadcast(ii);
 
-      // Inform the user that the shortcut has been created
-      Toast.makeText(this, "Shortcut Created", Toast.LENGTH_SHORT).show();
-      return true;
+        // Inform the user that the shortcut has been created
+        Toast.makeText(this, "Shortcut Created", Toast.LENGTH_SHORT).show();
+        return true;
 
-    case R.id.vibrate_settings:
-      Intent vibrate = new Intent(this, VibrateSettings.class);
-      startActivity(vibrate);
-      return true;
+      case R.id.vibrate_settings:
+        Intent vibrate = new Intent(this, VibrateSettings.class);
+        startActivity(vibrate);
+        return true;
 
-    case R.id.toggle_ringmode:
-      Intent ring = new Intent(this, RingmodeToggle.class);
-      startActivityForResult(ring, ACTIVITY_RINGMODE);
-      return true;
+      case R.id.toggle_ringmode:
+        Intent ring = new Intent(this, RingmodeToggle.class);
+        startActivityForResult(ring, ACTIVITY_RINGMODE);
+        return true;
 
-    case R.id.faq:
-      Uri uri = Uri.parse("http://github.com/Brassrat/phone-settings-manager/wiki/FAQ");
-      Intent faq = new Intent(Intent.ACTION_VIEW, uri);
-      startActivity(faq);
-      return true;
+      case R.id.faq:
+        Uri uri = Uri.parse("http://github.com/Brassrat/phone-settings-manager/wiki/FAQ");
+        Intent faq = new Intent(Intent.ACTION_VIEW, uri);
+        startActivity(faq);
+        return true;
 
-    case R.id.edit_profiles:
-      Intent edit = new Intent(this, ProfileList.class);
-      startActivityForResult(edit, ACTIVITY_LIST);
-      return true;
+      case R.id.edit_profiles:
+        Intent edit = new Intent(this, ProfileList.class);
+        startActivityForResult(edit, ACTIVITY_LIST);
+        return true;
 
-    case R.id.disable_profiles:
-      boolean disabled = Util.isBooleanPref(this, R.string.disableProfiles, false);
-      Util.putBooleanPref(this, R.string.disableProfiles, !disabled);
-      return true;
+      case R.id.disable_profiles:
+        boolean disabled = Util.isBooleanPref(this, R.string.disableProfiles, false);
+        Util.putBooleanPref(this, R.string.disableProfiles, !disabled);
+        return true;
     }
     return super.onOptionsItemSelected(item);
   }
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see android.app.Activity#onActivityResult(int, int, android.content.Intent)
    */
   @Override
@@ -295,14 +298,13 @@ public class MainSettings extends ListActivity
       layouts.add(new AttributeTableLayout(pa, new AttributeUpdatableView(context, pa, layouts)));
     }
     // order layouts ...
-    return;
   }
 
   public void createView()
   {
     AttributeRegistry.init(this);
-    layouts = new ArrayList<AttributeTableLayout>();
-    List<Integer> activeTypes = new ArrayList<Integer>();
+    layouts = new ArrayList<>();
+    List<Integer> activeTypes = new ArrayList<>();
     // treat all registered attributes as active
     // TODO - change to get active list from registry
     for (Integer type : AttributeRegistry.getInstance().registeredAttributes())

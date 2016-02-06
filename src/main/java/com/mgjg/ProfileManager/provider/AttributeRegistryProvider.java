@@ -1,38 +1,19 @@
 /**
  * Copyright 2012 Jay Goldman
- * 
- * Licensed under the Apache License, Version 2.0 (the "License"); 
- * you may not use this file except in compliance with the License. 
- * You may obtain a copy of the License at 
- * 
- * http://www.apache.org/licenses/LICENSE-2.0 
- * 
- * Unless required by applicable law or agreed to in writing, 
- * software distributed under the License is distributed 
- * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
- * either express or implied. See the License for the specific language 
- * governing permissions and limitations under the License. 
+ * <p/>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p/>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p/>
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed
+ * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
  */
 package com.mgjg.ProfileManager.provider;
-
-import static com.mgjg.ProfileManager.provider.AttributeRegistryHelper.COLUMN_REGISTRY_ACTIVE;
-import static com.mgjg.ProfileManager.provider.AttributeRegistryHelper.COLUMN_REGISTRY_CLASS;
-import static com.mgjg.ProfileManager.provider.AttributeRegistryHelper.COLUMN_REGISTRY_ID;
-import static com.mgjg.ProfileManager.provider.AttributeRegistryHelper.COLUMN_REGISTRY_NAME;
-import static com.mgjg.ProfileManager.provider.AttributeRegistryHelper.COLUMN_REGISTRY_ORDER;
-import static com.mgjg.ProfileManager.provider.AttributeRegistryHelper.COLUMN_REGISTRY_PARAM;
-import static com.mgjg.ProfileManager.provider.AttributeRegistryHelper.COLUMN_REGISTRY_TYPE;
-import static com.mgjg.ProfileManager.provider.AttributeRegistryHelper.FILTER_REGISTRY_ID;
-import static com.mgjg.ProfileManager.provider.AttributeRegistryHelper.FILTER_REGISTRY_NAME;
-import static com.mgjg.ProfileManager.provider.AttributeRegistryHelper.FILTER_REGISTRY_TYPE;
-import static com.mgjg.ProfileManager.provider.AttributeRegistryHelper.REGISTRY_DEFAULT_ORDER;
-import static com.mgjg.ProfileManager.provider.AttributeRegistryHelper.TABLE_REGISTRY;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 
 import android.content.ContentValues;
 import android.content.UriMatcher;
@@ -47,9 +28,28 @@ import com.mgjg.ProfileManager.attribute.builtin.xmit.XmitAttribute;
 import com.mgjg.ProfileManager.profile.Profile;
 import com.mgjg.ProfileManager.registry.RegisteredAttribute;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import static com.mgjg.ProfileManager.provider.AttributeRegistryHelper.COLUMN_REGISTRY_ACTIVE;
+import static com.mgjg.ProfileManager.provider.AttributeRegistryHelper.COLUMN_REGISTRY_CLASS;
+import static com.mgjg.ProfileManager.provider.AttributeRegistryHelper.COLUMN_REGISTRY_ID;
+import static com.mgjg.ProfileManager.provider.AttributeRegistryHelper.COLUMN_REGISTRY_NAME;
+import static com.mgjg.ProfileManager.provider.AttributeRegistryHelper.COLUMN_REGISTRY_ORDER;
+import static com.mgjg.ProfileManager.provider.AttributeRegistryHelper.COLUMN_REGISTRY_PARAM;
+import static com.mgjg.ProfileManager.provider.AttributeRegistryHelper.COLUMN_REGISTRY_TYPE;
+import static com.mgjg.ProfileManager.provider.AttributeRegistryHelper.FILTER_REGISTRY_ID;
+import static com.mgjg.ProfileManager.provider.AttributeRegistryHelper.FILTER_REGISTRY_NAME;
+import static com.mgjg.ProfileManager.provider.AttributeRegistryHelper.FILTER_REGISTRY_TYPE;
+import static com.mgjg.ProfileManager.provider.AttributeRegistryHelper.REGISTRY_DEFAULT_ORDER;
+import static com.mgjg.ProfileManager.provider.AttributeRegistryHelper.TABLE_REGISTRY;
+
 /**
  * Abstracts access to profile manager attribute registry data in SQLite db
- * 
+ *
  * @author Jay Goldman
  */
 public class AttributeRegistryProvider extends ProfileManagerProvider<Profile>
@@ -90,7 +90,7 @@ public class AttributeRegistryProvider extends ProfileManagerProvider<Profile>
     sUriMatcher.addURI(AUTHORITY, TABLE_REGISTRY + "/type/#", FILTER_REGISTRY_TYPE);
     sUriMatcher.addURI(AUTHORITY, TABLE_REGISTRY + "/active", FILTER_ALL_ACTIVE);
 
-    sGoalProjectionMap = new HashMap<String, String>();
+    sGoalProjectionMap = new HashMap<>();
     sGoalProjectionMap.put(COLUMN_REGISTRY_ID, TABLE_REGISTRY + "." + COLUMN_REGISTRY_ID);
     sGoalProjectionMap.put(COLUMN_REGISTRY_NAME, COLUMN_REGISTRY_NAME);
     sGoalProjectionMap.put(COLUMN_REGISTRY_ACTIVE, TABLE_REGISTRY + "." + COLUMN_REGISTRY_ACTIVE);
@@ -120,7 +120,7 @@ public class AttributeRegistryProvider extends ProfileManagerProvider<Profile>
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see android.content.ContentProvider#getType(android.net.Uri)
    */
   @Override
@@ -128,16 +128,16 @@ public class AttributeRegistryProvider extends ProfileManagerProvider<Profile>
   {
     switch (matchedCode)
     {
-    case FILTER_REGISTRY_ID:
-      return "vnd.android.cursor.item/" + AUTHORITY;
-    case FILTER_REGISTRY_NAME:
-      return "vnd.android.cursor.item/" + AUTHORITY + ".name";
-    case FILTER_REGISTRY_TYPE:
-      return "vnd.android.cursor.dir/" + AUTHORITY + ".type";
-    case FILTER_ALL_ACTIVE:
-      return "vnd.android.cursor.dir/" + AUTHORITY + ".active";
-    default:
-      throw new IllegalArgumentException("Unknown Filter code " + matchedCode);
+      case FILTER_REGISTRY_ID:
+        return "vnd.android.cursor.item/" + AUTHORITY;
+      case FILTER_REGISTRY_NAME:
+        return "vnd.android.cursor.item/" + AUTHORITY + ".name";
+      case FILTER_REGISTRY_TYPE:
+        return "vnd.android.cursor.dir/" + AUTHORITY + ".type";
+      case FILTER_ALL_ACTIVE:
+        return "vnd.android.cursor.dir/" + AUTHORITY + ".active";
+      default:
+        throw new IllegalArgumentException("Unknown Filter code " + matchedCode);
     }
   }
 
@@ -169,12 +169,12 @@ public class AttributeRegistryProvider extends ProfileManagerProvider<Profile>
     switch (matchedCode)
     {
 
-    case FILTER_REGISTRY_ID:
-      return new String[] { COLUMN_REGISTRY_ID };
+      case FILTER_REGISTRY_ID:
+        return new String[]{COLUMN_REGISTRY_ID};
 
-    default:
-      // should never get here if app is coded correctly
-      throw new IllegalArgumentException("Invalid Filter " + matchedCode);
+      default:
+        // should never get here if app is coded correctly
+        throw new IllegalArgumentException("Invalid Filter " + matchedCode);
     }
   }
 
@@ -184,21 +184,21 @@ public class AttributeRegistryProvider extends ProfileManagerProvider<Profile>
     switch (matchedCode)
     {
 
-    case FILTER_REGISTRY_ID:
-      return new String[] { uri.getPathSegments().get(1) };
+      case FILTER_REGISTRY_ID:
+        return new String[]{uri.getPathSegments().get(1)};
 
-    case FILTER_REGISTRY_NAME:
-      return new String[] { uri.getPathSegments().get(2) };
+      case FILTER_REGISTRY_NAME:
+        return new String[]{uri.getPathSegments().get(2)};
 
-    case FILTER_REGISTRY_TYPE:
-      String type = uri.getPathSegments().get(2);
-      return new String[] { type };
+      case FILTER_REGISTRY_TYPE:
+        String type = uri.getPathSegments().get(2);
+        return new String[]{type};
 
-    case FILTER_ALL_ACTIVE:
-      return new String[] { "1" };
+      case FILTER_ALL_ACTIVE:
+        return new String[]{"1"};
 
-    default:
-      throw new IllegalArgumentException("Unknown URI " + uri);
+      default:
+        throw new IllegalArgumentException("Unknown URI " + uri);
     }
   }
 
@@ -207,8 +207,8 @@ public class AttributeRegistryProvider extends ProfileManagerProvider<Profile>
   {
     switch (matchedCode)
     {
-    case FILTER_ALL_ACTIVE:
-      return COLUMN_REGISTRY_TYPE;
+      case FILTER_ALL_ACTIVE:
+        return COLUMN_REGISTRY_TYPE;
     }
     return REGISTRY_DEFAULT_ORDER;
   }
@@ -222,27 +222,27 @@ public class AttributeRegistryProvider extends ProfileManagerProvider<Profile>
     switch (matchedCode)
     {
 
-    case FILTER_REGISTRY_TYPE:
-      return new String[] { COLUMN_REGISTRY_TYPE };
+      case FILTER_REGISTRY_TYPE:
+        return new String[]{COLUMN_REGISTRY_TYPE};
 
-    case FILTER_REGISTRY_ID:
-      return new String[] { COLUMN_REGISTRY_ID };
+      case FILTER_REGISTRY_ID:
+        return new String[]{COLUMN_REGISTRY_ID};
 
-    case FILTER_REGISTRY_NAME:
-      return new String[] { COLUMN_REGISTRY_NAME };
+      case FILTER_REGISTRY_NAME:
+        return new String[]{COLUMN_REGISTRY_NAME};
 
-    case FILTER_ALL_ACTIVE:
-      return new String[] { COLUMN_REGISTRY_ACTIVE };
+      case FILTER_ALL_ACTIVE:
+        return new String[]{COLUMN_REGISTRY_ACTIVE};
 
-    default:
-      throw new IllegalArgumentException("Unknown Filter " + matchedCode);
+      default:
+        throw new IllegalArgumentException("Unknown Filter " + matchedCode);
     }
   }
 
   public static void createTable(SQLiteDatabase db) throws SQLException
   {
     db.execSQL(TABLE_REGISTRY_CREATE);
-    onUpgrade(db,  0, 1);
+    onUpgrade(db, 0, 1);
 //    List<RegisteredAttribute> ras = XmitAttribute.addRegistryEntries(db);
 //    ras.addAll(SoundAttribute.addRegistryEntries(db));
 //    for (RegisteredAttribute ra : ras)
@@ -285,11 +285,12 @@ public class AttributeRegistryProvider extends ProfileManagerProvider<Profile>
           }
           if (c.moveToFirst())
           {
-            List<RegisteredAttribute> dbras = new ArrayList<RegisteredAttribute>();
+            List<RegisteredAttribute> dbras = new ArrayList<>();
             do
             {
               dbras.add(AttributeRegistryHelper.create(c));
-            } while (c.moveToNext());
+            }
+            while (c.moveToNext());
 
             for (RegisteredAttribute dbra : dbras)
             {
@@ -303,7 +304,7 @@ public class AttributeRegistryProvider extends ProfileManagerProvider<Profile>
                   if (values.size() > 0)
                   {
                     @SuppressWarnings("unused")
-                    int ct = db.update(TABLE_REGISTRY, values, COLUMN_REGISTRY_ID + "=?", new String[] { String.valueOf(dbra.getId()) });
+                    int ct = db.update(TABLE_REGISTRY, values, COLUMN_REGISTRY_ID + "=?", new String[]{String.valueOf(dbra.getId())});
                   }
                   it.remove();
                   break;

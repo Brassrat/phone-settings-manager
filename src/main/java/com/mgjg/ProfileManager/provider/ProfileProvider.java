@@ -1,20 +1,31 @@
 /**
  * Copyright 2009 Mike Partridge
  * Copyright 2011 Jay Goldman
- * 
- * Licensed under the Apache License, Version 2.0 (the "License"); 
- * you may not use this file except in compliance with the License. 
- * You may obtain a copy of the License at 
- * 
- * http://www.apache.org/licenses/LICENSE-2.0 
- * 
- * Unless required by applicable law or agreed to in writing, 
- * software distributed under the License is distributed 
- * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
- * either express or implied. See the License for the specific language 
- * governing permissions and limitations under the License. 
+ * <p/>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p/>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p/>
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed
+ * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
  */
 package com.mgjg.ProfileManager.provider;
+
+import android.content.ContentValues;
+import android.content.UriMatcher;
+import android.database.SQLException;
+import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
+
+import com.mgjg.ProfileManager.profile.Profile;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static com.mgjg.ProfileManager.provider.ProfileHelper.COLUMN_PROFILE_ACTIVE;
 import static com.mgjg.ProfileManager.provider.ProfileHelper.COLUMN_PROFILE_ID;
@@ -28,20 +39,9 @@ import static com.mgjg.ProfileManager.provider.ProfileHelper.FILTER_PROFILE_TYPE
 import static com.mgjg.ProfileManager.provider.ProfileHelper.PROFILE_DEFAULT_ORDER;
 import static com.mgjg.ProfileManager.provider.ProfileHelper.TABLE_PROFILE;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import android.content.ContentValues;
-import android.content.UriMatcher;
-import android.database.SQLException;
-import android.database.sqlite.SQLiteDatabase;
-import android.net.Uri;
-
-import com.mgjg.ProfileManager.profile.Profile;
-
 /**
  * Abstracts access to profile data in SQLite db
- * 
+ *
  * @author Mike Partridge / Jay Goldman
  */
 public class ProfileProvider extends ProfileManagerProvider<Profile>
@@ -81,7 +81,7 @@ public class ProfileProvider extends ProfileManagerProvider<Profile>
     sUriMatcher.addURI(AUTHORITY, TABLE_PROFILE + "/mode/#", FILTER_PROFILE_MODE);
     sUriMatcher.addURI(AUTHORITY, TABLE_PROFILE + "/active", FILTER_ALL_ACTIVE);
 
-    sGoalProjectionMap = new HashMap<String, String>();
+    sGoalProjectionMap = new HashMap<>();
     sGoalProjectionMap.put(COLUMN_PROFILE_ID, TABLE_PROFILE + "." + COLUMN_PROFILE_ID);
     sGoalProjectionMap.put(COLUMN_PROFILE_NAME, COLUMN_PROFILE_NAME);
     sGoalProjectionMap.put(COLUMN_PROFILE_ACTIVE, TABLE_PROFILE + "." + COLUMN_PROFILE_ACTIVE);
@@ -109,7 +109,7 @@ public class ProfileProvider extends ProfileManagerProvider<Profile>
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see android.content.ContentProvider#getType(android.net.Uri)
    */
   @Override
@@ -117,18 +117,18 @@ public class ProfileProvider extends ProfileManagerProvider<Profile>
   {
     switch (matchedCode)
     {
-    case FILTER_PROFILE_ID:
-      return "vnd.android.cursor.item/" + AUTHORITY;
-    case FILTER_PROFILE_NAME:
-      return "vnd.android.cursor.item/" + AUTHORITY + ".name";
-    case FILTER_PROFILE_TYPE:
-      return "vnd.android.cursor.dir/" + AUTHORITY + ".type";
-    case FILTER_PROFILE_MODE:
-      return "vnd.android.cursor.dir/" + AUTHORITY + ".mode";
-    case FILTER_ALL_ACTIVE:
-      return "vnd.android.cursor.dir/" + AUTHORITY + ".active";
-    default:
-      throw new IllegalArgumentException("Unknown Filter code " + matchedCode);
+      case FILTER_PROFILE_ID:
+        return "vnd.android.cursor.item/" + AUTHORITY;
+      case FILTER_PROFILE_NAME:
+        return "vnd.android.cursor.item/" + AUTHORITY + ".name";
+      case FILTER_PROFILE_TYPE:
+        return "vnd.android.cursor.dir/" + AUTHORITY + ".type";
+      case FILTER_PROFILE_MODE:
+        return "vnd.android.cursor.dir/" + AUTHORITY + ".mode";
+      case FILTER_ALL_ACTIVE:
+        return "vnd.android.cursor.dir/" + AUTHORITY + ".active";
+      default:
+        throw new IllegalArgumentException("Unknown Filter code " + matchedCode);
     }
   }
 
@@ -160,12 +160,12 @@ public class ProfileProvider extends ProfileManagerProvider<Profile>
     switch (matchedCode)
     {
 
-    case FILTER_PROFILE_ID:
-      return new String[] { COLUMN_PROFILE_ID };
+      case FILTER_PROFILE_ID:
+        return new String[]{COLUMN_PROFILE_ID};
 
-    default:
-      // should never get here if app is coded correctly
-      throw new IllegalArgumentException("Invalid Filter " + matchedCode);
+      default:
+        // should never get here if app is coded correctly
+        throw new IllegalArgumentException("Invalid Filter " + matchedCode);
     }
   }
 
@@ -175,24 +175,24 @@ public class ProfileProvider extends ProfileManagerProvider<Profile>
     switch (matchedCode)
     {
 
-    case FILTER_PROFILE_ID:
-      return new String[] { uri.getPathSegments().get(1) };
+      case FILTER_PROFILE_ID:
+        return new String[]{uri.getPathSegments().get(1)};
 
-    case FILTER_PROFILE_NAME:
-      return new String[] { uri.getPathSegments().get(2) };
+      case FILTER_PROFILE_NAME:
+        return new String[]{uri.getPathSegments().get(2)};
 
-    case FILTER_PROFILE_TYPE:
-      String type = uri.getPathSegments().get(2);
-      return new String[] { type }; // String.valueOf(SoundAttribute.mapMimeTypeToSoundType(mimeType))
+      case FILTER_PROFILE_TYPE:
+        String type = uri.getPathSegments().get(2);
+        return new String[]{type}; // String.valueOf(SoundAttribute.mapMimeTypeToSoundType(mimeType))
 
-    case FILTER_PROFILE_MODE:
-      return new String[] { uri.getPathSegments().get(2) };
+      case FILTER_PROFILE_MODE:
+        return new String[]{uri.getPathSegments().get(2)};
 
-    case FILTER_ALL_ACTIVE:
-      return new String[] { "1" };
+      case FILTER_ALL_ACTIVE:
+        return new String[]{"1"};
 
-    default:
-      throw new IllegalArgumentException("Unknown URI " + uri);
+      default:
+        throw new IllegalArgumentException("Unknown URI " + uri);
     }
   }
 
@@ -201,8 +201,8 @@ public class ProfileProvider extends ProfileManagerProvider<Profile>
   {
     switch (matchedCode)
     {
-    case FILTER_ALL_ACTIVE:
-      return COLUMN_PROFILE_TYPE;
+      case FILTER_ALL_ACTIVE:
+        return COLUMN_PROFILE_TYPE;
     }
     return PROFILE_DEFAULT_ORDER;
   }
@@ -216,23 +216,23 @@ public class ProfileProvider extends ProfileManagerProvider<Profile>
     switch (matchedCode)
     {
 
-    case FILTER_PROFILE_TYPE:
-      return new String[] { COLUMN_PROFILE_TYPE };
+      case FILTER_PROFILE_TYPE:
+        return new String[]{COLUMN_PROFILE_TYPE};
 
-    case FILTER_PROFILE_ID:
-      return new String[] { COLUMN_PROFILE_ID };
+      case FILTER_PROFILE_ID:
+        return new String[]{COLUMN_PROFILE_ID};
 
-    case FILTER_PROFILE_NAME:
-      return new String[] { COLUMN_PROFILE_NAME };
+      case FILTER_PROFILE_NAME:
+        return new String[]{COLUMN_PROFILE_NAME};
 
-    case FILTER_PROFILE_MODE:
-      return new String[] { COLUMN_PROFILE_MODE };
+      case FILTER_PROFILE_MODE:
+        return new String[]{COLUMN_PROFILE_MODE};
 
-    case FILTER_ALL_ACTIVE:
-      return new String[] { COLUMN_PROFILE_ACTIVE };
+      case FILTER_ALL_ACTIVE:
+        return new String[]{COLUMN_PROFILE_ACTIVE};
 
-    default:
-      throw new IllegalArgumentException("Unknown Filter " + matchedCode);
+      default:
+        throw new IllegalArgumentException("Unknown Filter " + matchedCode);
     }
   }
 

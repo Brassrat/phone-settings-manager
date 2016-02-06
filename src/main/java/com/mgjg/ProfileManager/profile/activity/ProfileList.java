@@ -1,27 +1,20 @@
 /**
  * Copyright 2009 Mike Partridge
  * Copyright 2011 Jay Goldman
- * 
- * Licensed under the Apache License, Version 2.0 (the "License"); 
- * you may not use this file except in compliance with the License. 
- * You may obtain a copy of the License at 
- * 
- * http://www.apache.org/licenses/LICENSE-2.0 
- * 
- * Unless required by applicable law or agreed to in writing, 
- * software distributed under the License is distributed 
- * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
- * either express or implied. See the License for the specific language 
- * governing permissions and limitations under the License. 
+ * <p/>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p/>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p/>
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed
+ * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
  */
 package com.mgjg.ProfileManager.profile.activity;
-
-import static com.mgjg.ProfileManager.provider.ProfileHelper.COLUMN_PROFILE_ACTIVE;
-import static com.mgjg.ProfileManager.provider.ProfileHelper.FILTER_PROFILE_ID;
-import static com.mgjg.ProfileManager.provider.ProfileHelper.INTENT_PROFILE_ID;
-import static com.mgjg.ProfileManager.provider.ScheduleHelper.FILTER_SCHEDULE_PROFILE_ID;
-
-import java.util.List;
 
 import android.content.ContentValues;
 import android.content.Intent;
@@ -42,9 +35,16 @@ import com.mgjg.ProfileManager.provider.ScheduleHelper;
 import com.mgjg.ProfileManager.schedule.ScheduleEntry;
 import com.mgjg.ProfileManager.utils.Util;
 
+import java.util.List;
+
+import static com.mgjg.ProfileManager.provider.ProfileHelper.COLUMN_PROFILE_ACTIVE;
+import static com.mgjg.ProfileManager.provider.ProfileHelper.FILTER_PROFILE_ID;
+import static com.mgjg.ProfileManager.provider.ProfileHelper.INTENT_PROFILE_ID;
+import static com.mgjg.ProfileManager.provider.ScheduleHelper.FILTER_SCHEDULE_PROFILE_ID;
+
 /**
  * Profile List
- * 
+ *
  * @author Jay Goldman
  */
 public final class ProfileList extends ProfileListActivity
@@ -54,7 +54,7 @@ public final class ProfileList extends ProfileListActivity
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see android.app.Activity#onCreate(android.os.Bundle)
    */
   @Override
@@ -79,7 +79,7 @@ public final class ProfileList extends ProfileListActivity
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see android.app.ListActivity#onListItemClick(android.widget.ListView, android.view.View, int, long)
    */
   @Override
@@ -133,7 +133,7 @@ public final class ProfileList extends ProfileListActivity
   @Override
   protected boolean itemIsActive(AdapterContextMenuInfo menuInfo)
   {
-    int position = ((AdapterContextMenuInfo) menuInfo).position;
+    int position = menuInfo.position;
     Profile pp = (Profile) getListView().getItemAtPosition(position);
     return pp.isActive();
   }
@@ -165,12 +165,12 @@ public final class ProfileList extends ProfileListActivity
   @Override
   public void onCreateContextMenu(ContextMenu menu, View vv, ContextMenuInfo menuInfo)
   {
-    onCreateContextMenu(R.menu.profilelist_context, menu, vv, (AdapterContextMenuInfo) menuInfo);
+    onCreateContextMenu(R.menu.profilelist_context, menu, vv, menuInfo);
   }
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see android.app.Activity#onContextItemSelected(android.view.MenuItem)
    */
   @Override
@@ -179,22 +179,22 @@ public final class ProfileList extends ProfileListActivity
     AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
     switch (item.getItemId())
     {
-    case R.id.edit:
-      editProfile(info.id);
-      return true;
+      case R.id.edit:
+        editProfile(info.id);
+        return true;
 
-    case R.id.delete:
-      Profile pp = (Profile) getListView().getItemAtPosition(info.position);
-      deleteConfirmed("Profile " + pp.getName(), info);
-      return true;
+      case R.id.delete:
+        Profile pp = (Profile) getListView().getItemAtPosition(info.position);
+        deleteConfirmed("Profile " + pp.getName(), info);
+        return true;
 
-    case R.id.toggle:
-      toggleProfile(info.id);
-      return true;
+      case R.id.toggle:
+        toggleProfile(info.id);
+        return true;
 
-    case R.id.applySettings:
-      AttributeHelper.activate(this, info.id);
-      return true;
+      case R.id.applySettings:
+        AttributeHelper.activate(this, info.id);
+        return true;
 
     }
 
@@ -203,7 +203,7 @@ public final class ProfileList extends ProfileListActivity
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see android.app.Activity#onCreateOptionsMenu(android.view.Menu)
    */
   @Override
@@ -228,9 +228,10 @@ public final class ProfileList extends ProfileListActivity
     super.onPrepareOptionsMenu(menu);
     return true;
   }
+
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see android.app.Activity#onOptionsItemSelected(android.view.MenuItem)
    */
   @Override
@@ -239,15 +240,15 @@ public final class ProfileList extends ProfileListActivity
 
     switch (item.getItemId())
     {
-    case R.id.disable_profiles:
-      boolean disabled = Util.isBooleanPref(this, R.string.disableProfiles, false);
-      Util.putBooleanPref(this, R.string.disableProfiles, !disabled);
-      fillData();
-      return true;
+      case R.id.disable_profiles:
+        boolean disabled = Util.isBooleanPref(this, R.string.disableProfiles, false);
+        Util.putBooleanPref(this, R.string.disableProfiles, !disabled);
+        fillData();
+        return true;
 
-    case R.id.applySettings:
-      new ScheduleHelper(this).registerAlarm();
-      return true;
+      case R.id.applySettings:
+        new ScheduleHelper(this).registerAlarm();
+        return true;
     }
 
     return super.onOptionsItemSelected(item);
@@ -255,7 +256,7 @@ public final class ProfileList extends ProfileListActivity
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see android.app.Activity#onSaveInstanceState(android.os.Bundle)
    */
   @Override
@@ -266,7 +267,7 @@ public final class ProfileList extends ProfileListActivity
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see android.app.Activity#onActivityResult(int, int, android.content.Intent)
    */
   @Override
@@ -289,8 +290,6 @@ public final class ProfileList extends ProfileListActivity
   private void toggleProfile(long profileId)
   {
 
-    boolean active = true;
-
     ProfileHelper helper = new ProfileHelper(this);
     List<Profile> profiles = helper.getList(FILTER_PROFILE_ID, profileId);
 
@@ -300,7 +299,7 @@ public final class ProfileList extends ProfileListActivity
     if (!profiles.isEmpty())
     {
       Profile profile = profiles.get(0);
-      active = !profile.isActive();
+      final boolean active = !profile.isActive();
 
       ContentValues values = new ContentValues();
 

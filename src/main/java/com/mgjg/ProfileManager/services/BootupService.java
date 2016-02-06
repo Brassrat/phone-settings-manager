@@ -1,17 +1,17 @@
 /**
  * Copyright 2009 Daniel Roozen
- * 
- * Licensed under the Apache License, Version 2.0 (the "License"); 
- * you may not use this file except in compliance with the License. 
- * You may obtain a copy of the License at 
- * 
- * http://www.apache.org/licenses/LICENSE-2.0 
- * 
- * Unless required by applicable law or agreed to in writing, 
- * software distributed under the License is distributed 
- * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
- * either express or implied. See the License for the specific language 
- * governing permissions and limitations under the License. 
+ * <p/>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p/>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p/>
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed
+ * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
  */
 package com.mgjg.ProfileManager.services;
 
@@ -79,16 +79,16 @@ public class BootupService extends Service
     notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
     notificationIntent.setAction("com.mgjg.ProfileManager.TOAST");
     PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
-    
+
     Notification notification = new Notification.Builder(this)
-    .setSmallIcon(icon)
-    .setTicker(tickerText)
-    .setShowWhen(true)
-    .setAutoCancel(true)
-    .setContentTitle("Profile Manager")
-    .setContentText(toast)
-    .setContentIntent(contentIntent)
-    .build();
+        .setSmallIcon(icon)
+        .setTicker(tickerText)
+        .setShowWhen(true)
+        .setAutoCancel(true)
+        .setContentTitle("Profile Manager")
+        .setContentText(toast)
+        .setContentIntent(contentIntent)
+        .build();
 
     NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
     notificationManager.notify(ToastNotification.STARTUP_ID, notification);

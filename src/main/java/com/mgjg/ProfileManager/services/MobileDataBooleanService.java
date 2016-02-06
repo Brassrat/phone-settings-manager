@@ -1,31 +1,31 @@
 /**
  * Copyright 2011 Jay Goldman
- * 
- * Licensed under the Apache License, Version 2.0 (the "License"); 
- * you may not use this file except in compliance with the License. 
- * You may obtain a copy of the License at 
- * 
- * http://www.apache.org/licenses/LICENSE-2.0 
- * 
- * Unless required by applicable law or agreed to in writing, 
- * software distributed under the License is distributed 
- * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
- * either express or implied. See the License for the specific language 
- * governing permissions and limitations under the License. 
+ * <p/>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p/>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p/>
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed
+ * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
  */
 package com.mgjg.ProfileManager.services;
-
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-
-import com.mgjg.ProfileManager.utils.Util;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
 import android.widget.Toast;
+
+import com.mgjg.ProfileManager.utils.Util;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 public class MobileDataBooleanService implements BooleanService
 {
@@ -70,7 +70,7 @@ public class MobileDataBooleanService implements BooleanService
     {
       info = conman.getNetworkInfo(android.net.ConnectivityManager.TYPE_MOBILE);
     }
-    return (null != info) ? info.isAvailable() : false;
+    return (null != info) && info.isAvailable();
   }
 
   private Object[] getObjAndMethod(Context context, String methodName, Class<?>... args)
@@ -87,56 +87,57 @@ public class MobileDataBooleanService implements BooleanService
 //    setMobileDataEnabledMethod.setAccessible(true);
 //
 //    setMobileDataEnabledMethod.invoke(iConnectivityManager, enabled);
-      @SuppressWarnings("rawtypes")
-      Class conServiceClass = (null != conService) ? conService.getClass() : ConnectivityManager.class;
-      try
+    @SuppressWarnings("rawtypes")
+    Class conServiceClass = (null != conService) ? conService.getClass() : ConnectivityManager.class;
+    try
+    {
+      @SuppressWarnings("unchecked")
+      Method methodToCall = conServiceClass.getDeclaredMethod(methodName, boolean.class);
+      if ((null == methodToCall) && !(null == conService))
       {
-        @SuppressWarnings("unchecked")
-        Method methodToCall = conServiceClass.getDeclaredMethod(methodName, boolean.class);
-        if ((null == methodToCall) && ! (null == conService))
+        final Field connectivityServiceField = conServiceClass.getDeclaredField("mService");
+        if (null != connectivityServiceField)
         {
-          final Field connectivityServiceField = conServiceClass.getDeclaredField("mService");
-          if (null != connectivityServiceField)
-          {
-            connectivityServiceField.setAccessible(true);
-            conMgr = connectivityServiceField.get(conService);
-           //final Class conMgrClass = Class.forName(conMgr.getClass().getName());
-            @SuppressWarnings("rawtypes")
-            final Class conMgrClass = conMgr.getClass();
-            @SuppressWarnings("unchecked")
-            Method methodToCallx = conMgrClass.getDeclaredMethod(methodName, boolean.class);
-            methodToCall = methodToCallx;
-          }
-        }
-        else {
-          conMgr = conService;
-        }
-        if ((null != methodToCall) && (null != conMgr))
-        {
-          methodToCall.setAccessible(true);
-          return new Object[] { conMgr, methodToCall };
+          connectivityServiceField.setAccessible(true);
+          conMgr = connectivityServiceField.get(conService);
+          //final Class conMgrClass = Class.forName(conMgr.getClass().getName());
+          @SuppressWarnings("rawtypes")
+          final Class conMgrClass = conMgr.getClass();
+          @SuppressWarnings("unchecked")
+          Method methodToCallx = conMgrClass.getDeclaredMethod(methodName, boolean.class);
+          methodToCall = methodToCallx;
         }
       }
-      catch (IllegalArgumentException e)
+      else
       {
-        Log.e(Util.LOG_TAG, "unable to enable/disable mobile data: illegal argument, " + e.getMessage());
+        conMgr = conService;
       }
-      catch (IllegalAccessException e)
+      if ((null != methodToCall) && (null != conMgr))
       {
-        Log.e(Util.LOG_TAG, "unable to enable/disable mobile data: illegal access" + e.getMessage());
+        methodToCall.setAccessible(true);
+        return new Object[]{conMgr, methodToCall};
       }
-      catch (SecurityException e)
-      {
-        Log.e(Util.LOG_TAG, "unable to enable/disable mobile data: security, " + e.getMessage());
-      }
-      catch (NoSuchFieldException e)
-      {
-        Log.e(Util.LOG_TAG, "unable to enable/disable mobile data: no such field, " + e.getMessage());
-      }
-      catch (NoSuchMethodException e)
-      {
-        Log.e(Util.LOG_TAG, "unable to enable/disable mobile data: no such method, " + e.getMessage());
-      }
+    }
+    catch (IllegalArgumentException e)
+    {
+      Log.e(Util.LOG_TAG, "unable to enable/disable mobile data: illegal argument, " + e.getMessage());
+    }
+    catch (IllegalAccessException e)
+    {
+      Log.e(Util.LOG_TAG, "unable to enable/disable mobile data: illegal access" + e.getMessage());
+    }
+    catch (SecurityException e)
+    {
+      Log.e(Util.LOG_TAG, "unable to enable/disable mobile data: security, " + e.getMessage());
+    }
+    catch (NoSuchFieldException e)
+    {
+      Log.e(Util.LOG_TAG, "unable to enable/disable mobile data: no such field, " + e.getMessage());
+    }
+    catch (NoSuchMethodException e)
+    {
+      Log.e(Util.LOG_TAG, "unable to enable/disable mobile data: no such method, " + e.getMessage());
+    }
 
     return null;
   }

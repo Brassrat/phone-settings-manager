@@ -1,7 +1,5 @@
 package com.mgjg.ProfileManager.profile.activity;
 
-import com.mgjg.ProfileManager.R;
-
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.DialogInterface;
@@ -13,6 +11,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.Button;
+
+import com.mgjg.ProfileManager.R;
 
 public abstract class ProfileListActivity extends ListActivity
 {
@@ -33,7 +33,8 @@ public abstract class ProfileListActivity extends ListActivity
     Button add = (Button) findViewById(R.id.newItemButton);
     if (null != add)
     {
-      add.setOnClickListener(new View.OnClickListener() {
+      add.setOnClickListener(new View.OnClickListener()
+      {
         @Override
         public void onClick(View view)
         {
@@ -44,7 +45,8 @@ public abstract class ProfileListActivity extends ListActivity
     Button done = (Button) findViewById(R.id.doneButton);
     if (null != done)
     {
-      done.setOnClickListener(new View.OnClickListener() {
+      done.setOnClickListener(new View.OnClickListener()
+      {
         @Override
         public void onClick(View view)
         {
@@ -80,7 +82,8 @@ public abstract class ProfileListActivity extends ListActivity
   {
     AlertDialog alertDialog = new AlertDialog.Builder(this).create();
     alertDialog.setTitle("Delete " + what);
-    alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
+    alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener()
+    {
       public void onClick(DialogInterface dialog, int which)
       {
         deleteUnconfirmed(info);
@@ -105,7 +108,7 @@ public abstract class ProfileListActivity extends ListActivity
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see android.app.Activity#onActivityResult(int, int, android.content.Intent)
    */
   @Override
@@ -124,7 +127,7 @@ public abstract class ProfileListActivity extends ListActivity
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see android.app.Activity#onPause()
    */
   @Override
@@ -135,7 +138,7 @@ public abstract class ProfileListActivity extends ListActivity
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see android.app.Activity#onResume()
    */
   @Override

@@ -1,29 +1,19 @@
 /**
  * Copyright 2011 Jay Goldman
- * 
- * Licensed under the Apache License, Version 2.0 (the "License"); 
- * you may not use this file except in compliance with the License. 
- * You may obtain a copy of the License at 
- * 
- * http://www.apache.org/licenses/LICENSE-2.0 
- * 
- * Unless required by applicable law or agreed to in writing, 
- * software distributed under the License is distributed 
- * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
- * either express or implied. See the License for the specific language 
- * governing permissions and limitations under the License. 
+ * <p/>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p/>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p/>
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed
+ * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
  */
 package com.mgjg.ProfileManager.registry;
-
-import static com.mgjg.ProfileManager.provider.AttributeRegistryHelper.COLUMN_REGISTRY_ACTIVE;
-import static com.mgjg.ProfileManager.provider.AttributeRegistryHelper.COLUMN_REGISTRY_CLASS;
-import static com.mgjg.ProfileManager.provider.AttributeRegistryHelper.COLUMN_REGISTRY_ID;
-import static com.mgjg.ProfileManager.provider.AttributeRegistryHelper.COLUMN_REGISTRY_NAME;
-import static com.mgjg.ProfileManager.provider.AttributeRegistryHelper.COLUMN_REGISTRY_ORDER;
-import static com.mgjg.ProfileManager.provider.AttributeRegistryHelper.COLUMN_REGISTRY_PARAM;
-import static com.mgjg.ProfileManager.provider.AttributeRegistryHelper.COLUMN_REGISTRY_TYPE;
-
-import java.lang.reflect.Constructor;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -41,6 +31,16 @@ import com.mgjg.ProfileManager.provider.AttributeRegistryProvider;
 import com.mgjg.ProfileManager.utils.Listable;
 import com.mgjg.ProfileManager.utils.Util;
 import com.mgjg.ProfileManager.utils.Viewable;
+
+import java.lang.reflect.Constructor;
+
+import static com.mgjg.ProfileManager.provider.AttributeRegistryHelper.COLUMN_REGISTRY_ACTIVE;
+import static com.mgjg.ProfileManager.provider.AttributeRegistryHelper.COLUMN_REGISTRY_CLASS;
+import static com.mgjg.ProfileManager.provider.AttributeRegistryHelper.COLUMN_REGISTRY_ID;
+import static com.mgjg.ProfileManager.provider.AttributeRegistryHelper.COLUMN_REGISTRY_NAME;
+import static com.mgjg.ProfileManager.provider.AttributeRegistryHelper.COLUMN_REGISTRY_ORDER;
+import static com.mgjg.ProfileManager.provider.AttributeRegistryHelper.COLUMN_REGISTRY_PARAM;
+import static com.mgjg.ProfileManager.provider.AttributeRegistryHelper.COLUMN_REGISTRY_TYPE;
 
 public class RegisteredAttribute implements Viewable<RegisteredAttribute>
 {
@@ -77,7 +77,7 @@ public class RegisteredAttribute implements Viewable<RegisteredAttribute>
       Log.e(Util.LOG_TAG, "Unable to create profile attribute '" + name + "' using "
           + className + " because " + e.getMessage());
     }
-    Toast.makeText(context, "Unknown attr class " + className,  Toast.LENGTH_LONG).show();
+    Toast.makeText(context, "Unknown attr class " + className, Toast.LENGTH_LONG).show();
     throw new IllegalArgumentException("Can not create ProfileAttribute '" + name + "' using '" + className + "'");
   }
 
@@ -142,6 +142,11 @@ public class RegisteredAttribute implements Viewable<RegisteredAttribute>
     return active;
   }
 
+  private String labelText()
+  {
+    return "name" + ":"; // TODO getXXX(context)
+  }
+
   @Override
   public void addView(Context context, TableLayout tableLayout)
   {
@@ -149,7 +154,7 @@ public class RegisteredAttribute implements Viewable<RegisteredAttribute>
     TableRow row = new TableRow(context);
     TextView rowLabel = new TextView(context);
     rowLabel.setPadding(2, 7, 2, 2);
-    rowLabel.setText("name" + ":"); // TODO getXXX(context)
+    rowLabel.setText(labelText());
     row.addView(rowLabel);
 
     CheckBox activeCheckBox = new CheckBox(context);

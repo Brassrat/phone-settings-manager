@@ -1,20 +1,34 @@
 /**
  * Copyright 2009 Mike Partridge
  * Copyright 2011 Jay Goldman
- * 
- * Licensed under the Apache License, Version 2.0 (the "License"); 
- * you may not use this file except in compliance with the License. 
- * You may obtain a copy of the License at 
- * 
- * http://www.apache.org/licenses/LICENSE-2.0 
- * 
- * Unless required by applicable law or agreed to in writing, 
- * software distributed under the License is distributed 
- * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
- * either express or implied. See the License for the specific language 
- * governing permissions and limitations under the License. 
+ * <p/>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p/>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p/>
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed
+ * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
  */
 package com.mgjg.ProfileManager.schedule;
+
+import android.content.ContentValues;
+import android.content.Context;
+
+import com.mgjg.ProfileManager.R;
+import com.mgjg.ProfileManager.attribute.ProfileAttribute;
+import com.mgjg.ProfileManager.provider.AttributeHelper;
+import com.mgjg.ProfileManager.provider.ScheduleHelper;
+import com.mgjg.ProfileManager.utils.Listable;
+
+import java.util.Calendar;
+import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import static com.mgjg.ProfileManager.provider.AttributeHelper.FILTER_ATTRIBUTE_PROFILE_ACTIVE;
 import static com.mgjg.ProfileManager.provider.ScheduleHelper.COLUMN_SCHEDULE_ACTIVE;
@@ -36,29 +50,15 @@ import static java.util.Calendar.THURSDAY;
 import static java.util.Calendar.TUESDAY;
 import static java.util.Calendar.WEDNESDAY;
 
-import java.util.Calendar;
-import java.util.List;
-import java.util.Locale;
-import java.util.TimeZone;
-
-import android.content.ContentValues;
-import android.content.Context;
-
-import com.mgjg.ProfileManager.R;
-import com.mgjg.ProfileManager.attribute.ProfileAttribute;
-import com.mgjg.ProfileManager.provider.AttributeHelper;
-import com.mgjg.ProfileManager.provider.ScheduleHelper;
-import com.mgjg.ProfileManager.utils.Listable;
-
 /**
  * In-memory representation of a schedule
- * 
+ *
  * @author Mike Partridge/Jay Goldman
  */
 public final class ScheduleEntry implements Listable
 {
 
-  public static final Integer[] DAYS_OF_WEEK = new Integer[] { SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY };
+  public static final Integer[] DAYS_OF_WEEK = new Integer[]{SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY};
 
   private static CharSequence[] DAY_NAMES = null;
 
@@ -66,7 +66,7 @@ public final class ScheduleEntry implements Listable
   {
     if (null == DAY_NAMES)
     {
-      DAY_NAMES = new CharSequence[] {
+      DAY_NAMES = new CharSequence[]{
           context.getText(R.string.day0),
           context.getText(R.string.day1),
           context.getText(R.string.day2),
@@ -80,21 +80,21 @@ public final class ScheduleEntry implements Listable
 
   /**
    * returns a ScheduleEntry with nothing enabled
-   * 
+   *
    * @return
    */
-  public static final ScheduleEntry defaultSchedule(long profileId)
+  public static ScheduleEntry defaultSchedule(long profileId)
   {
     return new ScheduleEntry(0, profileId, false, false, false, false, false, false, false, 0, 0, false);
   }
 
   /**
    * returns a ScheduleEntry enabled for all days at the specified time (HH:MM)
-   * 
+   *
    * @param timeStart
    * @return
    */
-  public static final ScheduleEntry defaultSchedule(long profileId, String timeStart)
+  public static ScheduleEntry defaultSchedule(long profileId, String timeStart)
   {
     return new ScheduleEntry(0, profileId, true, true, true, true, true, true, false,
         Integer.parseInt(timeStart.substring(0, timeStart.indexOf(":"))),
@@ -124,13 +124,13 @@ public final class ScheduleEntry implements Listable
    * @param startTime
    */
   public ScheduleEntry(long id, long profileId,
-      boolean day0, boolean day1, boolean day2, boolean day3, boolean day4, boolean day5,
-      boolean day6, int startHour, int startMinute,
-      boolean active)
+                       boolean day0, boolean day1, boolean day2, boolean day3, boolean day4, boolean day5,
+                       boolean day6, int startHour, int startMinute,
+                       boolean active)
   {
     this.id = id;
     this.profileId = profileId;
-    activeDays = new boolean[] { day0, day1, day2, day3, day4, day5, day6 };
+    activeDays = new boolean[]{day0, day1, day2, day3, day4, day5, day6};
     this.startHour = startHour;
     this.startMinute = startMinute;
     this.active = active;
@@ -203,7 +203,7 @@ public final class ScheduleEntry implements Listable
 
   /**
    * Required for use in a ListAdapter; indicates that this is selectable and clickable
-   * 
+   *
    * @return the mEnabled
    */
   @Override
@@ -223,9 +223,7 @@ public final class ScheduleEntry implements Listable
   }
 
   /**
-   * 
-   * @param day
-   *          day number 0 - 6
+   * @param day day number 0 - 6
    * @return
    */
   public CharSequence getActiveDayName(int day)
@@ -235,7 +233,7 @@ public final class ScheduleEntry implements Listable
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see java.lang.Object#equals(java.lang.Object)
    */
   @Override
@@ -257,8 +255,8 @@ public final class ScheduleEntry implements Listable
               activeDays[5] == s.activeDays[5] &&
               activeDays[6] == s.activeDays[6] &&
               getStartHour() == s.getStartHour() &&
-          getStartMinute() == s.getStartMinute()
-          );
+              getStartMinute() == s.getStartMinute()
+      );
     }
     return result;
   }
@@ -327,23 +325,16 @@ public final class ScheduleEntry implements Listable
 
   private boolean isEarlier(int earliestDayx, int earliestHour, int earliestMinute, int dayx)
   {
-    if (dayx < earliestDayx)
+    if (dayx == earliestDayx)
     {
-      return true;
+      final int hr = getStartHour();
+      if (hr == earliestHour)
+      {
+        return (getStartMinute() < earliestMinute);
+      }
+      return (hr < earliestHour);
     }
-    if (dayx > earliestDayx)
-    {
-      return false;
-    }
-    if (getStartHour() < earliestHour)
-    {
-      return true;
-    }
-    if (getStartHour() > earliestHour)
-    {
-      return false;
-    }
-    return (getStartMinute() < earliestMinute);
+    return (dayx < earliestDayx);
   }
 
   public static String nextActive(Context context, List<ScheduleEntry> schedules)

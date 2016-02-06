@@ -1,24 +1,22 @@
 /**
  * Copyright 2011 Jay Goldman
- * 
- * Licensed under the Apache License, Version 2.0 (the "License"); 
- * you may not use this file except in compliance with the License. 
- * You may obtain a copy of the License at 
- * 
- * http://www.apache.org/licenses/LICENSE-2.0 
- * 
- * Unless required by applicable law or agreed to in writing, 
- * software distributed under the License is distributed 
- * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
- * either express or implied. See the License for the specific language 
- * governing permissions and limitations under the License. 
+ * <p/>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p/>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p/>
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed
+ * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
  */
 package com.mgjg.ProfileManager.provider;
 
-import java.text.MessageFormat;
-import java.util.Map;
-
 import android.content.ContentProvider;
+import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.UriMatcher;
@@ -34,6 +32,9 @@ import com.mgjg.ProfileManager.utils.Listable;
 import com.mgjg.ProfileManager.utils.SQLiteDatabaseHelper;
 import com.mgjg.ProfileManager.utils.Util;
 
+import java.text.MessageFormat;
+import java.util.Map;
+
 public abstract class ProfileManagerProvider<T extends Listable> extends ContentProvider
 {
 
@@ -45,14 +46,23 @@ public abstract class ProfileManagerProvider<T extends Listable> extends Content
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see android.content.ContentProvider#onCreate()
    */
   @Override
   public final boolean onCreate()
   {
-    dbHelper = new SQLiteDatabaseHelper(getContext());
-    return (dbHelper == null) ? false : true;
+    boolean result = true;
+    try
+    {
+      dbHelper = new SQLiteDatabaseHelper(getContext());
+    }
+    catch (Exception e)
+    {
+      Log.e("PM", "No DB: " + e.getMessage());
+      result = false;
+    }
+    return result;
   }
 
   protected static Uri createTableUri(String authority, String table)
@@ -62,17 +72,15 @@ public abstract class ProfileManagerProvider<T extends Listable> extends Content
 
   /**
    * checks that the specified initial values are valid for this content
-   * 
+   *
    * @param initialValues
-   * 
-   * @throws IllegalArgumentException
-   *           if specified values are not valid
+   * @throws IllegalArgumentException if specified values are not valid
    */
   protected abstract void checkInitialValues(ContentValues initialValues);
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see android.content.ContentProvider#insert(android.net.Uri, android.content.ContentValues)
    */
   @Override
@@ -95,17 +103,14 @@ public abstract class ProfileManagerProvider<T extends Listable> extends Content
     long rowId = db.insert(table, null, initialValues);
     if (rowId > 0)
     {
-      Uri noteUri = ContentUris.withAppendedId(getContentUri(), rowId);
-      getContext().getContentResolver().notifyChange(noteUri, null);
-      return noteUri;
+      return notify(ContentUris.withAppendedId(getContentUri(), rowId));
     }
-
     throw new SQLException("Failed to insert row into " + table);
   }
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see android.content.ContentProvider#delete(android.net.Uri, java.lang.String, java.lang.String[])
    */
   @Override
@@ -128,12 +133,12 @@ public abstract class ProfileManagerProvider<T extends Listable> extends Content
       if (uf.length != whereArgs.length)
       {
         String msg = MessageFormat.format("{2}: Number of update fields ({0}) does not match number of values ({1})",
-            new Object[] { uf.length, whereArgs.length, uri });
+            uf.length, whereArgs.length, uri);
         throw new IllegalArgumentException(msg);
       }
       int count = dbHelper.getWritableDatabase().delete(getTable(matchedCode), whereClause.toString(), whereArgs);
       mayUpgrade = false;
-      getContext().getContentResolver().notifyChange(uri, null);
+      notify(uri);
       return count;
     }
     throw new IllegalArgumentException("Invalid URI " + uri);
@@ -141,7 +146,7 @@ public abstract class ProfileManagerProvider<T extends Listable> extends Content
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see android.content.ContentProvider#update(android.net.Uri, android.content.ContentValues, java.lang.String, java.lang.String[])
    */
   @Override
@@ -164,20 +169,33 @@ public abstract class ProfileManagerProvider<T extends Listable> extends Content
       if (uf.length != whereArgs.length)
       {
         String msg = MessageFormat.format("{2}: Number of update fields ({0}) does not match number of values ({1})",
-            new Object[] { uf.length, whereArgs.length, uri });
+            uf.length, whereArgs.length, uri);
         throw new IllegalArgumentException(msg);
       }
       int count = dbHelper.getWritableDatabase().update(getTable(matchedCode), values, whereClause.toString(), whereArgs);
       mayUpgrade = false;
-      getContext().getContentResolver().notifyChange(uri, null);
+      notify(uri);
       return count;
     }
     throw new IllegalArgumentException("Invalid URI " + uri);
   }
 
+  private Uri notify(Uri uri)
+  {
+    if (null != getContext())
+    {
+      ContentResolver resolver = getContext().getContentResolver();
+      if (null != resolver)
+      {
+        resolver.notifyChange(uri, null);
+      }
+    }
+    return uri;
+  }
+
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see android.content.ContentProvider#query(android.net.Uri, java.lang.String[], java.lang.String, java.lang.String[], java.lang.String)
    */
   @Override
@@ -203,7 +221,7 @@ public abstract class ProfileManagerProvider<T extends Listable> extends Content
         if (qf.length != mv.length)
         {
           String msg = MessageFormat.format("{2}: Number of query fields ({0}) does not match number of values ({1})",
-              new Object[] { qf.length, mv.length, uri });
+              qf.length, mv.length, uri);
           throw new IllegalArgumentException(msg);
         }
 
@@ -241,7 +259,10 @@ public abstract class ProfileManagerProvider<T extends Listable> extends Content
           dbHelper.getWritableDatabase();
         }
         Cursor c = qb.query(dbHelper.getReadableDatabase(), projection, selection, selectionArgs, null, null, orderBy); // Tell the cursor what uri to watch, so it knows when its source data changes
-        c.setNotificationUri(getContext().getContentResolver(), uri);
+        if (null != getContext())
+        {
+          c.setNotificationUri(getContext().getContentResolver(), uri);
+        }
         return c;
       }
       catch (RuntimeException e)
@@ -262,7 +283,7 @@ public abstract class ProfileManagerProvider<T extends Listable> extends Content
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see android.content.ContentProvider#getType(android.net.Uri)
    */
   @Override
@@ -279,10 +300,9 @@ public abstract class ProfileManagerProvider<T extends Listable> extends Content
 
   /**
    * returns value from Uri path segments for specified uri match code, mapped to the appropriate database value
-   * 
+   *
    * @param matchedCode
-   * @param index
-   *          which variable segment to return data for, 1-based
+   * @param index       which variable segment to return data for, 1-based
    * @return value from Uri path segments for specified uri match code
    */
   protected abstract String[] getMatchedValue(Uri uri, int matchedCode);

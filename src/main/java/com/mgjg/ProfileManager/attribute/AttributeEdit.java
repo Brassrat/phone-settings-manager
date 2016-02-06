@@ -1,29 +1,20 @@
 /**
  * Copyright 2009 Mike Partridge
  * Copyright 2011 Jay Goldman
- * 
- * Licensed under the Apache License, Version 2.0 (the "License"); 
- * you may not use this file except in compliance with the License. 
- * You may obtain a copy of the License at 
- * 
- * http://www.apache.org/licenses/LICENSE-2.0 
- * 
- * Unless required by applicable law or agreed to in writing, 
- * software distributed under the License is distributed 
- * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
- * either express or implied. See the License for the specific language 
- * governing permissions and limitations under the License. 
+ * <p/>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p/>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p/>
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed
+ * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
  */
 package com.mgjg.ProfileManager.attribute;
-
-import static com.mgjg.ProfileManager.provider.AttributeHelper.FILTER_ATTRIBUTE_ID;
-import static com.mgjg.ProfileManager.provider.AttributeHelper.FILTER_ATTRIBUTE_PROFILE_TYPE;
-import static com.mgjg.ProfileManager.provider.AttributeHelper.INTENT_ATTRIBUTE_ID;
-import static com.mgjg.ProfileManager.provider.AttributeHelper.INTENT_ATTRIBUTE_PROFILE_ID;
-import static com.mgjg.ProfileManager.provider.AttributeHelper.INTENT_ATTRIBUTE_PROFILE_NAME;
-import static com.mgjg.ProfileManager.provider.AttributeHelper.INTENT_ATTRIBUTE_TYPE;
-
-import java.util.List;
 
 import android.app.Activity;
 import android.content.ContentValues;
@@ -39,9 +30,18 @@ import com.mgjg.ProfileManager.R;
 import com.mgjg.ProfileManager.provider.AttributeHelper;
 import com.mgjg.ProfileManager.registry.UnknownAttributeException;
 
+import java.util.List;
+
+import static com.mgjg.ProfileManager.provider.AttributeHelper.FILTER_ATTRIBUTE_ID;
+import static com.mgjg.ProfileManager.provider.AttributeHelper.FILTER_ATTRIBUTE_PROFILE_TYPE;
+import static com.mgjg.ProfileManager.provider.AttributeHelper.INTENT_ATTRIBUTE_ID;
+import static com.mgjg.ProfileManager.provider.AttributeHelper.INTENT_ATTRIBUTE_PROFILE_ID;
+import static com.mgjg.ProfileManager.provider.AttributeHelper.INTENT_ATTRIBUTE_PROFILE_NAME;
+import static com.mgjg.ProfileManager.provider.AttributeHelper.INTENT_ATTRIBUTE_TYPE;
+
 /**
  * Attribute List Edit screen
- * 
+ *
  * @author Jay Goldman
  */
 public class AttributeEdit extends Activity
@@ -67,7 +67,7 @@ public class AttributeEdit extends Activity
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see android.app.Activity#onCreate(android.os.Bundle)
    */
   @Override
@@ -82,7 +82,7 @@ public class AttributeEdit extends Activity
       /*
        * check the saved state for attribute id, then check the bundle passed through the Intent
        */
-      attributeId = instanceState != null ? instanceState.getLong(INTENT_ATTRIBUTE_ID) : 0L;
+      attributeId = (instanceState != null) ? instanceState.getLong(INTENT_ATTRIBUTE_ID) : 0L;
       if (attributeId < 1)
       {
         attributeId = getIntent().getLongExtra(INTENT_ATTRIBUTE_ID, 0);
@@ -94,7 +94,7 @@ public class AttributeEdit extends Activity
         CharSequence profileCS = getIntent().getCharSequenceExtra(INTENT_ATTRIBUTE_PROFILE_NAME);
         profileName = (null == profileCS) ? null : profileCS.toString();
       }
-      else
+      else if (null != instanceState)
       {
         profileId = instanceState.getLong(INTENT_ATTRIBUTE_PROFILE_ID);
         profileName = instanceState.getString(INTENT_ATTRIBUTE_PROFILE_NAME);
@@ -115,7 +115,8 @@ public class AttributeEdit extends Activity
       Button done = (Button) findViewById(R.id.doneButton);
       if (null != done)
       {
-        done.setOnClickListener(new OnClickListener() {
+        done.setOnClickListener(new OnClickListener()
+        {
 
           @Override
           public void onClick(View v)
@@ -128,7 +129,8 @@ public class AttributeEdit extends Activity
       Button cancel = (Button) findViewById(R.id.cancelButton);
       if (null != cancel)
       {
-        cancel.setOnClickListener(new OnClickListener() {
+        cancel.setOnClickListener(new OnClickListener()
+        {
 
           @Override
           public void onClick(View v)
@@ -171,7 +173,7 @@ public class AttributeEdit extends Activity
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see android.app.Activity#onPause()
    */
   @Override
@@ -190,7 +192,7 @@ public class AttributeEdit extends Activity
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see android.app.Activity#onResume()
    */
   @Override
@@ -215,7 +217,7 @@ public class AttributeEdit extends Activity
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see android.app.Activity#onSaveInstanceState(android.os.Bundle)
    */
   @Override
@@ -268,7 +270,7 @@ public class AttributeEdit extends Activity
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see android.app.Activity#finish()
    */
   @Override

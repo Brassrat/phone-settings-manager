@@ -1,29 +1,19 @@
 /**
  * Copyright 2011 Jay Goldman
- * 
- * Licensed under the Apache License, Version 2.0 (the "License"); 
- * you may not use this file except in compliance with the License. 
- * You may obtain a copy of the License at 
- * 
- * http://www.apache.org/licenses/LICENSE-2.0 
- * 
- * Unless required by applicable law or agreed to in writing, 
- * software distributed under the License is distributed 
- * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
- * either express or implied. See the License for the specific language 
- * governing permissions and limitations under the License. 
+ * <p/>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p/>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p/>
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed
+ * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
  */
 package com.mgjg.ProfileManager.attribute;
-
-import static com.mgjg.ProfileManager.provider.AttributeHelper.COLUMN_ATTRIBUTE_BOOL_VALUE;
-import static com.mgjg.ProfileManager.provider.AttributeHelper.COLUMN_ATTRIBUTE_ID;
-import static com.mgjg.ProfileManager.provider.AttributeHelper.COLUMN_ATTRIBUTE_INT_VALUE;
-import static com.mgjg.ProfileManager.provider.AttributeHelper.COLUMN_ATTRIBUTE_PROFILE_ID;
-import static com.mgjg.ProfileManager.provider.AttributeHelper.COLUMN_ATTRIBUTE_SETTING;
-import static com.mgjg.ProfileManager.provider.AttributeHelper.COLUMN_ATTRIBUTE_TYPE;
-
-import java.text.MessageFormat;
-import java.util.List;
 
 import android.app.Activity;
 import android.content.ContentValues;
@@ -38,6 +28,16 @@ import com.mgjg.ProfileManager.R;
 import com.mgjg.ProfileManager.registry.UnknownAttributeException;
 import com.mgjg.ProfileManager.utils.AttributeTableLayout;
 import com.mgjg.ProfileManager.utils.Listable;
+
+import java.text.MessageFormat;
+import java.util.List;
+
+import static com.mgjg.ProfileManager.provider.AttributeHelper.COLUMN_ATTRIBUTE_BOOL_VALUE;
+import static com.mgjg.ProfileManager.provider.AttributeHelper.COLUMN_ATTRIBUTE_ID;
+import static com.mgjg.ProfileManager.provider.AttributeHelper.COLUMN_ATTRIBUTE_INT_VALUE;
+import static com.mgjg.ProfileManager.provider.AttributeHelper.COLUMN_ATTRIBUTE_PROFILE_ID;
+import static com.mgjg.ProfileManager.provider.AttributeHelper.COLUMN_ATTRIBUTE_SETTING;
+import static com.mgjg.ProfileManager.provider.AttributeHelper.COLUMN_ATTRIBUTE_TYPE;
 
 public abstract class AttributeBase implements ProfileAttribute
 {
@@ -142,7 +142,7 @@ public abstract class AttributeBase implements ProfileAttribute
     // do nothing
   }
 
-  private final void setNumberValue(int intValue)
+  private void setNumberValue(int intValue)
   {
     this.intValue = isSupportsNumber() ? intValue : 0;
     onNumberChange();
@@ -157,7 +157,7 @@ public abstract class AttributeBase implements ProfileAttribute
   @Override
   public final boolean isBoolean()
   {
-    return isSupportsBoolean() ? booleanValue : false;
+    return isSupportsBoolean() && booleanValue;
   }
 
   protected final void setBoolean(boolean booleanValue)
@@ -180,7 +180,7 @@ public abstract class AttributeBase implements ProfileAttribute
 
   protected final void setBooleanValue(boolean booleanValue)
   {
-    this.booleanValue = isSupportsBoolean() ? booleanValue : false;
+    this.booleanValue = isSupportsBoolean() && booleanValue;
     onBooleanChange();
   }
 
@@ -201,7 +201,7 @@ public abstract class AttributeBase implements ProfileAttribute
 
   /**
    * Required for use in a ListAdapter; indicates that this is selectable and clickable
-   * 
+   *
    * @return the mEnabled
    */
   @Override
@@ -253,7 +253,7 @@ public abstract class AttributeBase implements ProfileAttribute
     // not implemented
   }
 
-  private final synchronized String getLabelFmt(Activity aa)
+  private synchronized String getLabelFmt(Activity aa)
   {
     if (null == labelFmt)
     {
@@ -272,9 +272,14 @@ public abstract class AttributeBase implements ProfileAttribute
 
     TextView attrLabel = (TextView) aa.findViewById(R.id.AttributeName);
     attrLabel.setPadding(2, 7, 2, 2);
-    attrLabel.setText(name + ":");
+    attrLabel.setText(labelText(name));
 
     populateGui(aa);
+  }
+
+  private String labelText(String name)
+  {
+    return name + ":";
   }
 
   protected void updateViews(Context context, List<AttributeTableLayout> layouts)

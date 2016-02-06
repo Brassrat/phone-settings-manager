@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/newItemButton"
-        android:title="@string/newSchedule" 
-        android:icon="@android:drawable/ic_menu_add" android:visible="false"/>
+        android:title="@string/newSchedule"
+        android:icon="@android:drawable/ic_menu_add"
+        android:visible="false"/>
 </menu>

@@ -1,24 +1,14 @@
 /**
  * Copyright 2011 Jay Goldman
- * 
+ * <p/>
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
- * 
+ * <p/>
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ * <p/>
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific
  * language governing permissions and limitations under the License.
  */
 package com.mgjg.ProfileManager.registry;
-
-import static android.view.Menu.NONE;
-import static com.mgjg.ProfileManager.provider.AttributeHelper.COLUMN_ATTRIBUTE_TYPE;
-import static com.mgjg.ProfileManager.provider.ProfileManagerProvider.FILTER_ALL_ACTIVE;
-
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import android.app.Activity;
 import android.content.Context;
@@ -36,6 +26,16 @@ import com.mgjg.ProfileManager.provider.AttributeHelper;
 import com.mgjg.ProfileManager.provider.AttributeRegistryHelper;
 import com.mgjg.ProfileManager.utils.Util;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import static android.view.Menu.NONE;
+import static com.mgjg.ProfileManager.provider.AttributeHelper.COLUMN_ATTRIBUTE_TYPE;
+import static com.mgjg.ProfileManager.provider.ProfileManagerProvider.FILTER_ALL_ACTIVE;
+
 public class AttributeRegistry
 {
 
@@ -43,8 +43,8 @@ public class AttributeRegistry
   public final static int TYPE_AUDIO = 1000; /* reserved 1000 - 1009 */
   public final static int TYPE_XMIT = 1020; /* reserved 1020 - 1029 */
 
-  private final Map<Integer, ProfileAttribute> RegisteredAttributesByType = new HashMap<Integer, ProfileAttribute>();
-  private final Map<String, ProfileAttribute> RegisteredAttributesByName = new HashMap<String, ProfileAttribute>();
+  private final Map<Integer, ProfileAttribute> RegisteredAttributesByType = new HashMap<>();
+  private final Map<String, ProfileAttribute> RegisteredAttributesByName = new HashMap<>();
   // private final Map<Integer, Integer> RegisteredAttributesByNewId = new HashMap<Integer, Integer>();
 
   private final static AttributeRegistry registry = new AttributeRegistry();
@@ -84,7 +84,7 @@ public class AttributeRegistry
 
   public synchronized Set<Integer> registeredAttributes()
   {
-    return new HashSet<Integer>(RegisteredAttributesByType.keySet());
+    return new HashSet<>(RegisteredAttributesByType.keySet());
   }
 
   public synchronized int getType(String attributeName) throws UnknownAttributeException
@@ -132,7 +132,7 @@ public class AttributeRegistry
 
   /**
    * add sub-menu of
-   * 
+   *
    * @param activity
    * @param menu
    * @param lv

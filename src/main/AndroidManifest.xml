@@ -21,9 +21,8 @@
     android:versionCode="2"
     android:versionName="3.0.1">
 
-    <uses-sdk android:minSdkVersion="19" 
-              android:targetSdkVersion="19" 
-              android:maxSdkVersion="22"/>
+    <uses-sdk
+        android:maxSdkVersion="22"/>
 
     <!-- Permissions -->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
@@ -34,7 +33,7 @@
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.VIBRATE"/>
-    
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/profile"
@@ -42,9 +41,9 @@
 
         <!-- Activities -->
         <activity
-          android:name=".MainSettings"
-          android:screenOrientation="portrait">
-         <intent-filter>
+            android:name=".MainSettings"
+            android:screenOrientation="portrait">
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
@@ -75,7 +74,7 @@
                 <action android:name="android.intent.action.MAIN"/>
             </intent-filter>
         </activity>
-        
+
         <activity android:name=".activity.VibrateSettings">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -85,15 +84,15 @@
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
-        
+
         <activity android:name=".schedule.ScheduleList"/>
-        <activity android:name=".schedule.ScheduleEdit"/>      
+        <activity android:name=".schedule.ScheduleEdit"/>
         <activity android:name=".attribute.AttributeEdit"/>
         <activity android:name=".attribute.AttributeList"/>
         <activity android:name=".profile.activity.ProfileList"/>
         <activity android:name=".profile.activity.ProfileEdit"/>
         <activity android:name=".utils.ToastNotification"/>
-        
+
         <!-- Services -->
         <service android:name=".services.ScheduleEntryService"/>
         <service android:name=".services.BootupService"/>
@@ -103,18 +102,18 @@
 
         <!-- Providers -->
         <provider
-          android:name=".provider.ScheduleProvider"
-          android:authorities="com.mgjg.ProfileManager.provider.ScheduleProvider"
+            android:name=".provider.ScheduleProvider"
+            android:authorities="com.mgjg.ProfileManager.provider.ScheduleProvider"
             android:exported="false"/>
         <provider
             android:name=".provider.AttributeProvider"
             android:authorities="com.mgjg.ProfileManager.provider.AttributeProvider"
             android:exported="false"/>
-        <provider 
+        <provider
             android:name=".provider.ProfileProvider"
             android:authorities="com.mgjg.ProfileManager.provider.ProfileProvider"
             android:exported="false"/>
-          <provider
+        <provider
             android:name=".provider.AttributeRegistryProvider"
             android:authorities="com.mgjg.ProfileManager.provider.AttributeRegistryProvider"
             android:exported="false"/>

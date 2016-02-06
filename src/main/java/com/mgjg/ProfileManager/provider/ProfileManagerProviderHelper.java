@@ -1,22 +1,19 @@
 /**
  * Copyright 2011 Jay Goldman
- * 
- * Licensed under the Apache License, Version 2.0 (the "License"); 
- * you may not use this file except in compliance with the License. 
- * You may obtain a copy of the License at 
- * 
- * http://www.apache.org/licenses/LICENSE-2.0 
- * 
- * Unless required by applicable law or agreed to in writing, 
- * software distributed under the License is distributed 
- * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
- * either express or implied. See the License for the specific language 
- * governing permissions and limitations under the License. 
+ * <p/>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p/>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p/>
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed
+ * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
  */
 package com.mgjg.ProfileManager.provider;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -29,9 +26,12 @@ import com.mgjg.ProfileManager.utils.ListAdapter;
 import com.mgjg.ProfileManager.utils.Listable;
 import com.mgjg.ProfileManager.utils.Util;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Provides ProfileManager specific operations on the various {@code Listable} objects shown in the GUI that are represented by entries in the database
- * 
+ *
  * @param <T>
  */
 public abstract class ProfileManagerProviderHelper<T extends Listable>
@@ -71,7 +71,7 @@ public abstract class ProfileManagerProviderHelper<T extends Listable>
 
   /**
    * retrieves the record Id from a Uri
-   * 
+   *
    * @param noteUri
    * @return
    */
@@ -82,7 +82,7 @@ public abstract class ProfileManagerProviderHelper<T extends Listable>
 
   /**
    * update specified entry with id extracted from specified Uri
-   * 
+   *
    * @param entry
    * @param noteUri
    * @return
@@ -134,11 +134,9 @@ public abstract class ProfileManagerProviderHelper<T extends Listable>
 
   /**
    * fill list using query cursor
-   * 
-   * @param la
-   *          {@code ListAdapter}
-   * @param c
-   *          {@code Cursor}
+   *
+   * @param la {@code ListAdapter}
+   * @param c  {@code Cursor}
    * @return the input {@code ListAdapter} to allow chaining of calls
    */
   public ListAdapter<T> fillListAdapter(ListAdapter<T> la, Cursor c)
@@ -157,7 +155,8 @@ public abstract class ProfileManagerProviderHelper<T extends Listable>
           // skip this
           Log.e(Util.LOG_TAG, e.getMessage());
         }
-      } while (c.moveToNext());
+      }
+      while (c.moveToNext());
     }
     la.sort();
     return la;
@@ -165,7 +164,7 @@ public abstract class ProfileManagerProviderHelper<T extends Listable>
 
   protected List<T> getEntries(Cursor cc)
   {
-    List<T> attrs = new ArrayList<T>();
+    List<T> attrs = new ArrayList<>();
 
     if ((null != cc) && cc.moveToFirst())
     {
@@ -179,7 +178,8 @@ public abstract class ProfileManagerProviderHelper<T extends Listable>
         {
           // ignore ???
         }
-      } while (cc.moveToNext());
+      }
+      while (cc.moveToNext());
     }
     return attrs;
   }

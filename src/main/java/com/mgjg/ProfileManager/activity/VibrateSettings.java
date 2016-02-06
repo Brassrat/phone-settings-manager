@@ -1,17 +1,17 @@
 /**
  * Copyright 2009 Daniel Roozen
- * 
- * Licensed under the Apache License, Version 2.0 (the "License"); 
- * you may not use this file except in compliance with the License. 
- * You may obtain a copy of the License at 
- * 
- * http://www.apache.org/licenses/LICENSE-2.0 
- * 
- * Unless required by applicable law or agreed to in writing, 
- * software distributed under the License is distributed 
- * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
- * either express or implied. See the License for the specific language 
- * governing permissions and limitations under the License. 
+ * <p/>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p/>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p/>
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed
+ * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
  */
 package com.mgjg.ProfileManager.activity;
 
@@ -35,7 +35,9 @@ import com.mgjg.ProfileManager.attribute.builtin.sound.SoundAttribute;
 public class VibrateSettings extends Activity
 {
 
-  /** Called when the activity is first created. */
+  /**
+   * Called when the activity is first created.
+   */
   @Override
   public void onCreate(Bundle instanceState)
   {
@@ -56,15 +58,15 @@ public class VibrateSettings extends Activity
 
     switch (audio.getRingerMode())
     {
-    case AudioManager.RINGER_MODE_VIBRATE:
-      ringerAlways.setChecked(true);
-      break;
-    case AudioManager.RINGER_MODE_NORMAL:
-      ringerSilent.setChecked(true);
-      break;
-    case AudioManager.RINGER_MODE_SILENT:
-      ringerNever.setChecked(true);
-      break;
+      case AudioManager.RINGER_MODE_VIBRATE:
+        ringerAlways.setChecked(true);
+        break;
+      case AudioManager.RINGER_MODE_NORMAL:
+        ringerSilent.setChecked(true);
+        break;
+      case AudioManager.RINGER_MODE_SILENT:
+        ringerNever.setChecked(true);
+        break;
     }
 
     boolean vibrateNotif = SoundAttribute.isVibrateOn(this);
@@ -95,7 +97,8 @@ public class VibrateSettings extends Activity
     // break;
     // }
 
-    ringerAlways.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+    ringerAlways.setOnCheckedChangeListener(new OnCheckedChangeListener()
+    {
 
       public void onCheckedChanged(CompoundButton button, boolean isChecked)
       {
@@ -109,7 +112,8 @@ public class VibrateSettings extends Activity
 
     });
 
-    ringerSilent.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+    ringerSilent.setOnCheckedChangeListener(new OnCheckedChangeListener()
+    {
 
       public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
       {
@@ -123,7 +127,8 @@ public class VibrateSettings extends Activity
 
     });
 
-    ringerNever.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+    ringerNever.setOnCheckedChangeListener(new OnCheckedChangeListener()
+    {
 
       public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
       {
@@ -137,7 +142,8 @@ public class VibrateSettings extends Activity
 
     });
 
-    notifAlways.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+    notifAlways.setOnCheckedChangeListener(new OnCheckedChangeListener()
+    {
 
       public void onCheckedChanged(CompoundButton button, boolean isChecked)
       {
@@ -150,7 +156,8 @@ public class VibrateSettings extends Activity
 
     });
 
-    notifSilent.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+    notifSilent.setOnCheckedChangeListener(new OnCheckedChangeListener()
+    {
 
       public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
       {
@@ -163,7 +170,8 @@ public class VibrateSettings extends Activity
 
     });
 
-    notifNever.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+    notifNever.setOnCheckedChangeListener(new OnCheckedChangeListener()
+    {
 
       public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
       {
@@ -191,22 +199,22 @@ public class VibrateSettings extends Activity
   {
     switch (item.getItemId())
     {
-    case R.id.create_shortcut:
-      Intent shortcutIntent = new Intent(Intent.ACTION_MAIN);
-      shortcutIntent.setClassName(this, this.getClass().getName());
+      case R.id.create_shortcut:
+        Intent shortcutIntent = new Intent(Intent.ACTION_MAIN);
+        shortcutIntent.setClassName(this, this.getClass().getName());
 
-      Intent intent = new Intent();
-      intent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent);
-      intent.putExtra(Intent.EXTRA_SHORTCUT_NAME, "Vibration Settings");
-      Parcelable iconResource = Intent.ShortcutIconResource.fromContext(this, R.drawable.sound_icon);
-      intent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE, iconResource);
+        Intent intent = new Intent();
+        intent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent);
+        intent.putExtra(Intent.EXTRA_SHORTCUT_NAME, "Vibration Settings");
+        Parcelable iconResource = Intent.ShortcutIconResource.fromContext(this, R.drawable.sound_icon);
+        intent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE, iconResource);
 
-      intent.setAction("com.android.launcher.action.INSTALL_SHORTCUT");
-      sendBroadcast(intent);
+        intent.setAction("com.android.launcher.action.INSTALL_SHORTCUT");
+        sendBroadcast(intent);
 
-      // Inform the user that the shortcut has been created
-      Toast.makeText(this, "Shortcut Created", Toast.LENGTH_SHORT).show();
-      return true;
+        // Inform the user that the shortcut has been created
+        Toast.makeText(this, "Shortcut Created", Toast.LENGTH_SHORT).show();
+        return true;
     }
     return super.onOptionsItemSelected(item);
   }

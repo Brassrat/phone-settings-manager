@@ -1,18 +1,18 @@
 /**
  * Copyright 2009 Mike Partridge
  * Copyright 2011 Jay Goldman
- * 
- * Licensed under the Apache License, Version 2.0 (the "License"); 
- * you may not use this file except in compliance with the License. 
- * You may obtain a copy of the License at 
- * 
- * http://www.apache.org/licenses/LICENSE-2.0 
- * 
- * Unless required by applicable law or agreed to in writing, 
- * software distributed under the License is distributed 
- * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
- * either express or implied. See the License for the specific language 
- * governing permissions and limitations under the License. 
+ * <p/>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p/>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p/>
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed
+ * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
  */
 package com.mgjg.ProfileManager.schedule;
 
@@ -29,20 +29,33 @@ import com.mgjg.ProfileManager.provider.ScheduleHelper;
 
 /**
  * Defines layout for Schedule list items
- * 
+ *
  * @author Mike Partridge/Jay Goldman
  */
 public final class ScheduleView extends LinearLayout
 {
 
-  private final int DAY_ID = 1000;
-  private final int ACTIVE_ID = 1010;
-  private final int TIME_ID = 1011;
+  private static final int DAY_ID = 1000; // actually DAY_ID + day is used
+  private static final int ACTIVE_ID = 1010;
+  private static final int TIME_ID = 1011;
 
   /**
+   * used by ide tools, should never be used in runtime code
    * @param context
-   * @param schedule
    */
+  public ScheduleView (Context context)
+  {
+    super(context);
+    if (!isInEditMode())
+    {
+      throw new UnsupportedOperationException("Can not construct ScheduleView without ScheudleEntry");
+    }
+  }
+
+    /**
+     * @param context
+     * @param schedule
+     */
   public ScheduleView(Context context, ScheduleEntry schedule)
   {
     super(context);
@@ -62,7 +75,7 @@ public final class ScheduleView extends LinearLayout
 
     LinearLayout daysLayout = new LinearLayout(context);
     daysLayout.setOrientation(HORIZONTAL);
-    daysLayout.setGravity(Gravity.RIGHT);
+    daysLayout.setGravity(Gravity.END);
 
     daysLayout.addView(makeDayView(context, schedule, 0), paramsWrapBoth);
     daysLayout.addView(makeDayView(context, schedule, 1), paramsWrapBoth);

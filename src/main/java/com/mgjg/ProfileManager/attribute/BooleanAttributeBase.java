@@ -1,21 +1,19 @@
 /**
  * Copyright 2011 Jay Goldman
- * 
- * Licensed under the Apache License, Version 2.0 (the "License"); 
- * you may not use this file except in compliance with the License. 
- * You may obtain a copy of the License at 
- * 
- * http://www.apache.org/licenses/LICENSE-2.0 
- * 
- * Unless required by applicable law or agreed to in writing, 
- * software distributed under the License is distributed 
- * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
- * either express or implied. See the License for the specific language 
- * governing permissions and limitations under the License. 
+ * <p/>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p/>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p/>
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed
+ * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
  */
 package com.mgjg.ProfileManager.attribute;
-
-import java.util.List;
 
 import android.app.Activity;
 import android.content.BroadcastReceiver;
@@ -32,6 +30,8 @@ import android.widget.TextView;
 
 import com.mgjg.ProfileManager.R;
 import com.mgjg.ProfileManager.utils.AttributeTableLayout;
+
+import java.util.List;
 
 public abstract class BooleanAttributeBase extends AttributeBase
 {
@@ -136,10 +136,15 @@ public abstract class BooleanAttributeBase extends AttributeBase
     if (null == createCheckBox)
     {
       createCheckBox = (CheckBox) aa.findViewById(R.id.vibrateCheckbox);
-      createCheckBox.setVisibility(isSupportsBoolean() ? View.VISIBLE : View.GONE);
+      createCheckBox.setVisibility(View.VISIBLE);
     }
     createCheckBox.setChecked(isBoolean());
 
+  }
+
+  private String labelText(Context context)
+  {
+    return getName(context) + ":";
   }
 
   @Override
@@ -147,9 +152,9 @@ public abstract class BooleanAttributeBase extends AttributeBase
   {
     TextView label = new TextView(context);
     label.setPadding(2, 2, 2, 2);
-    label.setText(getName(context) + ":");
+    label.setText(labelText(context));
     label.setMinWidth(labelMinWidth());
-    label.setGravity(Gravity.LEFT + Gravity.CENTER_VERTICAL);
+    label.setGravity(Gravity.START + Gravity.CENTER_VERTICAL);
 
     viewCheckBox = new CheckBox(context);
     viewCheckBox.setPadding(2, 2, 2, 2);
@@ -166,7 +171,7 @@ public abstract class BooleanAttributeBase extends AttributeBase
         TableRow.LayoutParams.MATCH_PARENT,
         TableRow.LayoutParams.WRAP_CONTENT);
     labelParams.span = 1;
-    labelParams.gravity = Gravity.LEFT + Gravity.CENTER_VERTICAL;
+    labelParams.gravity = Gravity.START + Gravity.CENTER_VERTICAL;
     row.addView(label, labelParams);
 
     TableRow.LayoutParams checkParams = new TableRow.LayoutParams(
@@ -191,9 +196,9 @@ public abstract class BooleanAttributeBase extends AttributeBase
 
     TextView label = new TextView(context);
     label.setPadding(2, 4, 2, 3);
-    label.setText(getName(context) + ":");
+    label.setText(labelText(context));
     label.setMinWidth(labelMinWidth());
-    label.setGravity(Gravity.LEFT + Gravity.CENTER_VERTICAL);
+    label.setGravity(Gravity.START + Gravity.CENTER_VERTICAL);
 
     TableRow.LayoutParams singleColumnParams = new TableRow.LayoutParams(
         TableRow.LayoutParams.MATCH_PARENT,
@@ -205,8 +210,8 @@ public abstract class BooleanAttributeBase extends AttributeBase
     TextView count = new TextView(context);
     count.setId(ID_COUNT_TEXT);
     count.setPadding(2, 4, 2, 3);
-    count.setGravity(Gravity.LEFT + Gravity.CENTER_VERTICAL);
-    count.setText("TBD");
+    count.setGravity(Gravity.START + Gravity.CENTER_VERTICAL);
+    count.setText(R.string.tbd);
     labelRow.addView(count, singleColumnParams);
 
     // <TableRow>
@@ -219,7 +224,7 @@ public abstract class BooleanAttributeBase extends AttributeBase
     CheckBox checkBox = new CheckBox(context);
     checkBox.setId(ID_CHECKBOX);
     checkBox.setPadding(2, 4, rightPadding(), 3);
-    checkBox.setGravity(Gravity.RIGHT);
+    checkBox.setGravity(Gravity.END);
     checkBox.setChecked(isBoolean());
     checkBox.setOnClickListener(new View.OnClickListener()
     {
@@ -237,7 +242,7 @@ public abstract class BooleanAttributeBase extends AttributeBase
         TableRow.LayoutParams.MATCH_PARENT,
         TableRow.LayoutParams.WRAP_CONTENT);
     checkBoxParams.span = 1;
-    checkBoxParams.gravity = Gravity.RIGHT;
+    checkBoxParams.gravity = Gravity.END;
     checkBoxParams.rightMargin = rightPadding();
 
     labelRow.addView(checkBox, checkBoxParams);

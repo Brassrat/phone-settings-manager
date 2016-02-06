@@ -1,27 +1,19 @@
 /**
  * Copyright 2009 Mike Partridge/ Jay Goldman
- * 
- * Licensed under the Apache License, Version 2.0 (the "License"); 
- * you may not use this file except in compliance with the License. 
- * You may obtain a copy of the License at 
- * 
- * http://www.apache.org/licenses/LICENSE-2.0 
- * 
- * Unless required by applicable law or agreed to in writing, 
- * software distributed under the License is distributed 
- * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
- * either express or implied. See the License for the specific language 
- * governing permissions and limitations under the License. 
+ * <p/>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p/>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p/>
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed
+ * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
  */
 package com.mgjg.ProfileManager.schedule;
-
-import static com.mgjg.ProfileManager.provider.ScheduleHelper.FILTER_SCHEDULE_ID;
-import static com.mgjg.ProfileManager.provider.ScheduleHelper.INTENT_SCHEDULE_ID;
-import static com.mgjg.ProfileManager.provider.ScheduleHelper.INTENT_SCHEDULE_PROFILE_ID;
-import static com.mgjg.ProfileManager.provider.ScheduleHelper.INTENT_SCHEDULE_PROFILE_NAME;
-
-import java.text.MessageFormat;
-import java.util.List;
 
 import android.app.Activity;
 import android.content.ContentValues;
@@ -40,15 +32,23 @@ import com.mgjg.ProfileManager.R;
 import com.mgjg.ProfileManager.provider.ScheduleHelper;
 import com.mgjg.ProfileManager.utils.Util;
 
+import java.text.MessageFormat;
+import java.util.List;
+
+import static com.mgjg.ProfileManager.provider.ScheduleHelper.FILTER_SCHEDULE_ID;
+import static com.mgjg.ProfileManager.provider.ScheduleHelper.INTENT_SCHEDULE_ID;
+import static com.mgjg.ProfileManager.provider.ScheduleHelper.INTENT_SCHEDULE_PROFILE_ID;
+import static com.mgjg.ProfileManager.provider.ScheduleHelper.INTENT_SCHEDULE_PROFILE_NAME;
+
 /**
  * Schedule Edit screen
- * 
+ *
  * @author Mike Partridge
  */
 public class ScheduleEdit extends Activity
 {
 
-  private static final int[] DAY_IDS = new int[] {
+  private static final int[] DAY_IDS = new int[]{
       R.id.day0toggle,
       R.id.day1toggle,
       R.id.day2toggle,
@@ -69,7 +69,7 @@ public class ScheduleEdit extends Activity
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see android.app.Activity#onCreate(android.os.Bundle)
    */
   @Override
@@ -97,7 +97,8 @@ public class ScheduleEdit extends Activity
     Button done = (Button) findViewById(R.id.doneButton);
     if (null != done)
     {
-      done.setOnClickListener(new OnClickListener() {
+      done.setOnClickListener(new OnClickListener()
+      {
 
         @Override
         public void onClick(View v)
@@ -110,7 +111,8 @@ public class ScheduleEdit extends Activity
     Button cancel = (Button) findViewById(R.id.cancelButton);
     if (null != cancel)
     {
-      cancel.setOnClickListener(new OnClickListener() {
+      cancel.setOnClickListener(new OnClickListener()
+      {
 
         @Override
         public void onClick(View v)
@@ -127,7 +129,7 @@ public class ScheduleEdit extends Activity
 
   private static String labelFmt;
 
-  private final synchronized String getLabelFmt(Activity aa)
+  private synchronized String getLabelFmt(Activity aa)
   {
     if (null == labelFmt)
     {
@@ -221,7 +223,7 @@ public class ScheduleEdit extends Activity
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see android.app.Activity#onPause()
    */
   @Override
@@ -240,7 +242,7 @@ public class ScheduleEdit extends Activity
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see android.app.Activity#onSaveInstanceState(android.os.Bundle)
    */
   @Override
@@ -268,7 +270,7 @@ public class ScheduleEdit extends Activity
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see android.app.Activity#onResume()
    */
   @Override
@@ -301,7 +303,7 @@ public class ScheduleEdit extends Activity
       if (null != ii)
       {
         scheduleId = ii.getLongExtra(INTENT_SCHEDULE_ID, 0);
-        if ((null != scheduleId) && (scheduleId < 1))
+        if (scheduleId < 1)
         {
           scheduleId = null;
         }
@@ -332,7 +334,7 @@ public class ScheduleEdit extends Activity
       ToggleButton dayx = (ToggleButton) findViewById(DAY_IDS[day]);
       if (null != dayx)
       {
-        schedule.setActiveDay(day, (null != dayx) ? dayx.isChecked() : false);
+        schedule.setActiveDay(day, dayx.isChecked());
       }
     }
     TimePicker startTime = (TimePicker) findViewById(R.id.startTime);
@@ -368,7 +370,7 @@ public class ScheduleEdit extends Activity
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see android.app.Activity#finish()
    */
   @Override

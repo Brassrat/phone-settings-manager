@@ -1,17 +1,17 @@
 /**
  * Copyright 2009 Daniel Roozen
- * 
- * Licensed under the Apache License, Version 2.0 (the "License"); 
- * you may not use this file except in compliance with the License. 
- * You may obtain a copy of the License at 
- * 
- * http://www.apache.org/licenses/LICENSE-2.0 
- * 
- * Unless required by applicable law or agreed to in writing, 
- * software distributed under the License is distributed 
- * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
- * either express or implied. See the License for the specific language 
- * governing permissions and limitations under the License. 
+ * <p/>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p/>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p/>
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed
+ * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
  */
 package com.mgjg.ProfileManager.utils;
 
@@ -29,7 +29,7 @@ public class Util
 
   /**
    * Queries system settings for the system clock format
-   * 
+   *
    * @return boolean
    */
   public static boolean is24HourClock(ContentResolver contentResolver)
@@ -51,9 +51,9 @@ public class Util
 
   /**
    * get a Boolean out of SharedPreferences
-   * 
+   *
    * @param context
-   * @param name
+   * @param resId
    * @param def
    * @return
    */
@@ -65,9 +65,9 @@ public class Util
 
   /**
    * put a Boolean into SharedPreferences
-   * 
+   *
    * @param context
-   * @param name
+   * @param resId
    * @param value
    */
   public static void putBooleanPref(Context context, int resId, boolean value)
@@ -75,14 +75,14 @@ public class Util
     SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
     SharedPreferences.Editor editor = prefs.edit();
     editor.putBoolean(context.getString(resId), value);
-    editor.commit();
+    editor.apply();
   }
 
   /**
    * get a Boolean out of SharedPreferences
-   * 
+   *
    * @param context
-   * @param name
+   * @param resId
    * @param def
    * @return
    */
@@ -94,9 +94,9 @@ public class Util
 
   /**
    * put a Boolean into SharedPreferences
-   * 
+   *
    * @param context
-   * @param name
+   * @param resId
    * @param value
    */
   public static void putIntPref(Context context, int resId, int value)
@@ -104,7 +104,7 @@ public class Util
     SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
     SharedPreferences.Editor editor = prefs.edit();
     editor.putInt(context.getString(resId), value);
-    editor.commit();
+    editor.apply();
   }
 
 }

@@ -1,10 +1,10 @@
 package com.mgjg.ProfileManager.services;
 
-import com.mgjg.ProfileManager.utils.Util;
-
 import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
+
+import com.mgjg.ProfileManager.utils.Util;
 
 public class ServiceFactory
 {
@@ -27,7 +27,7 @@ public class ServiceFactory
     }
 
     Log.e(Util.LOG_TAG, "Unknown service " + serviceName);
-    Toast.makeText(context, "Unknown service " + serviceName,  Toast.LENGTH_LONG).show();
+    Toast.makeText(context, "Unknown service " + serviceName, Toast.LENGTH_LONG).show();
     throw new UnknownServiceException(serviceName);
   }
 

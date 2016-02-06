@@ -1,21 +1,19 @@
 /**
  * Copyright 2011 Jay Goldman
- * 
- * Licensed under the Apache License, Version 2.0 (the "License"); 
- * you may not use this file except in compliance with the License. 
- * You may obtain a copy of the License at 
- * 
- * http://www.apache.org/licenses/LICENSE-2.0 
- * 
- * Unless required by applicable law or agreed to in writing, 
- * software distributed under the License is distributed 
- * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
- * either express or implied. See the License for the specific language 
- * governing permissions and limitations under the License. 
+ * <p/>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p/>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p/>
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed
+ * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
  */
 package com.mgjg.ProfileManager.attribute;
-
-import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
@@ -27,12 +25,13 @@ import com.mgjg.ProfileManager.utils.AttributeTableLayout;
 import com.mgjg.ProfileManager.utils.Listable;
 import com.mgjg.ProfileManager.utils.Viewable;
 
+import java.util.List;
+
 /**
  * the in-memory representation of an attribute. Attributes are system values (such as ring volume) that can be managed by the profile manager. Some attributes can be associated with values that a user can manually change - where possible the
  * attribute will be notified of this change.
- * 
+ *
  * @author Jay Goldman
- * 
  */
 public interface ProfileAttribute extends Viewable<ProfileAttribute>, Comparable<Listable>
 {
@@ -44,7 +43,7 @@ public interface ProfileAttribute extends Viewable<ProfileAttribute>, Comparable
 
   /**
    * create profile attribute from database entry
-   * 
+   *
    * @param aa
    * @param c
    * @return
@@ -54,17 +53,12 @@ public interface ProfileAttribute extends Viewable<ProfileAttribute>, Comparable
 
   /**
    * create a profile attribute from specified values.
-   * 
-   * @param attributeId
-   *          Database Id of attribute record in db (or 0 for template)
-   * @param profileIdDatabase
-   *          Id of profile record which owns this attribute in db (or 0 for template)
-   * @param intValue
-   *          integer value state for this attribute, such as volume value
-   * @param booleanValue
-   *          boolean value state for this attribute, such as vibration enabled
-   * @param settings
-   *          TODO JSON description of state of attribute
+   *
+   * @param attributeId       Database Id of attribute record in db (or 0 for template)
+   * @param profileIdDatabase Id of profile record which owns this attribute in db (or 0 for template)
+   * @param intValue          integer value state for this attribute, such as volume value
+   * @param booleanValue      boolean value state for this attribute, such as vibration enabled
+   * @param settings          TODO JSON description of state of attribute
    * @return
    */
   ProfileAttribute createInstance(long attributeId, long profileId, int intValue, boolean booleanValue, String settings);
@@ -84,7 +78,7 @@ public interface ProfileAttribute extends Viewable<ProfileAttribute>, Comparable
 
   /**
    * returns settings for this attribute as a string
-   * 
+   *
    * @return
    */
   String getSettings();
@@ -103,16 +97,17 @@ public interface ProfileAttribute extends Viewable<ProfileAttribute>, Comparable
   boolean isBoolean();
 
   // API for static description of attribute
+
   /**
    * This attribute can override a user-settable value
-   * 
+   *
    * @return
    */
   boolean isOverrider();
 
   /**
    * This attribute can be enabled
-   * 
+   *
    * @return
    */
   boolean isActivatable();
@@ -124,7 +119,7 @@ public interface ProfileAttribute extends Viewable<ProfileAttribute>, Comparable
 
   /**
    * This attribute can be disabled
-   * 
+   *
    * @return
    */
   boolean isDeactivatable();
@@ -135,6 +130,7 @@ public interface ProfileAttribute extends Viewable<ProfileAttribute>, Comparable
   void deactivate();
 
   // API for dynamic behavior
+
   /**
    * invoked when there is a system event that might indicate that the system value associated with this attribute has been changed (by other than the ProfileManager itself).
    */
@@ -147,14 +143,14 @@ public interface ProfileAttribute extends Viewable<ProfileAttribute>, Comparable
 
   /**
    * indicates if current state of GUI fields matches values in attribute
-   * 
+   *
    * @return <code>true</code> if GUI fields differ from attribute values
    */
   boolean isModified();
 
   /**
    * called when starting Activity which creates or edits an attribute
-   * 
+   *
    * @param aa
    * @param profileName
    */
@@ -181,7 +177,7 @@ public interface ProfileAttribute extends Viewable<ProfileAttribute>, Comparable
 
   /**
    * create view objects for this attribute and add them to the <code>TableLayout</code>
-   * 
+   *
    * @param context
    * @param tableLayout
    */
@@ -199,7 +195,7 @@ public interface ProfileAttribute extends Viewable<ProfileAttribute>, Comparable
 
   /**
    * copy values from specified attribute to this one, updating view objects
-   * 
+   *
    * @param attr
    */
   @Override

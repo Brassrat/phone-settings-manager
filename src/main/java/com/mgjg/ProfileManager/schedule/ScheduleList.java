@@ -1,29 +1,20 @@
 /**
  * Copyright 2009 Mike Partridge
  * Copyright 2011 Jay Goldman
- * 
- * Licensed under the Apache License, Version 2.0 (the "License"); 
- * you may not use this file except in compliance with the License. 
- * You may obtain a copy of the License at 
- * 
- * http://www.apache.org/licenses/LICENSE-2.0 
- * 
- * Unless required by applicable law or agreed to in writing, 
- * software distributed under the License is distributed 
- * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
- * either express or implied. See the License for the specific language 
- * governing permissions and limitations under the License. 
+ * <p/>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p/>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p/>
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed
+ * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
  */
 package com.mgjg.ProfileManager.schedule;
-
-import static com.mgjg.ProfileManager.provider.ScheduleHelper.COLUMN_SCHEDULE_ACTIVE;
-import static com.mgjg.ProfileManager.provider.ScheduleHelper.FILTER_SCHEDULE_ID;
-import static com.mgjg.ProfileManager.provider.ScheduleHelper.FILTER_SCHEDULE_PROFILE_ID;
-import static com.mgjg.ProfileManager.provider.ScheduleHelper.INTENT_SCHEDULE_ID;
-import static com.mgjg.ProfileManager.provider.ScheduleHelper.INTENT_SCHEDULE_PROFILE_ID;
-import static com.mgjg.ProfileManager.provider.ScheduleHelper.INTENT_SCHEDULE_PROFILE_NAME;
-
-import java.util.List;
 
 import android.content.ContentValues;
 import android.content.Intent;
@@ -41,9 +32,18 @@ import com.mgjg.ProfileManager.R;
 import com.mgjg.ProfileManager.profile.activity.ProfileListActivity;
 import com.mgjg.ProfileManager.provider.ScheduleHelper;
 
+import java.util.List;
+
+import static com.mgjg.ProfileManager.provider.ScheduleHelper.COLUMN_SCHEDULE_ACTIVE;
+import static com.mgjg.ProfileManager.provider.ScheduleHelper.FILTER_SCHEDULE_ID;
+import static com.mgjg.ProfileManager.provider.ScheduleHelper.FILTER_SCHEDULE_PROFILE_ID;
+import static com.mgjg.ProfileManager.provider.ScheduleHelper.INTENT_SCHEDULE_ID;
+import static com.mgjg.ProfileManager.provider.ScheduleHelper.INTENT_SCHEDULE_PROFILE_ID;
+import static com.mgjg.ProfileManager.provider.ScheduleHelper.INTENT_SCHEDULE_PROFILE_NAME;
+
 /**
  * Schedule List
- * 
+ *
  * @author Mike Partridge
  */
 public final class ScheduleList extends ProfileListActivity
@@ -54,7 +54,7 @@ public final class ScheduleList extends ProfileListActivity
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see android.app.Activity#onCreate(android.os.Bundle)
    */
   @Override
@@ -85,7 +85,12 @@ public final class ScheduleList extends ProfileListActivity
     setContentView(R.layout.schedule_list);
 
     TextView header = (TextView) findViewById(R.id.ScheduleForProfile);
-    header.setText(getText(R.string.ScheduleListProfile) + " " + profileName);
+    header.setText(headerText());
+  }
+
+  private String headerText()
+  {
+    return getText(R.string.ScheduleListProfile) + " " + profileName;
   }
 
   /**
@@ -100,7 +105,7 @@ public final class ScheduleList extends ProfileListActivity
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see android.app.ListActivity#onListItemClick(android.widget.ListView, android.view.View, int, long)
    */
   @Override
@@ -120,7 +125,7 @@ public final class ScheduleList extends ProfileListActivity
 
   protected boolean itemIsActive(AdapterContextMenuInfo menuInfo)
   {
-    int position = ((AdapterContextMenuInfo) menuInfo).position;
+    int position = menuInfo.position;
     ScheduleEntry sched = (ScheduleEntry) getListView().getItemAtPosition(position);
     return sched.isActive();
   }
@@ -132,18 +137,18 @@ public final class ScheduleList extends ProfileListActivity
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see android.app.Activity#onCreateContextMenu(android.view.ContextMenu, android.view.View, android.view.ContextMenu.ContextMenuInfo)
    */
   @Override
   public void onCreateContextMenu(ContextMenu menu, View vv, ContextMenuInfo menuInfo)
   {
-    onCreateContextMenu(R.menu.schedulelist_context, menu, vv, (AdapterContextMenuInfo) menuInfo);
+    onCreateContextMenu(R.menu.schedulelist_context, menu, vv, menuInfo);
   }
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see android.app.Activity#onContextItemSelected(android.view.MenuItem)
    */
   @Override
@@ -152,31 +157,31 @@ public final class ScheduleList extends ProfileListActivity
     AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
     switch (item.getItemId())
     {
-    case R.id.edit:
-      editSchedule(info.id);
-      break;
+      case R.id.edit:
+        editSchedule(info.id);
+        break;
 
-    case R.id.delete:
-      deleteConfirmed("Schedule ", info);
-      break;
+      case R.id.delete:
+        deleteConfirmed("Schedule ", info);
+        break;
 
-    case R.id.toggle:
-      toggleSchedule(info.id);
-      break;
+      case R.id.toggle:
+        toggleSchedule(info.id);
+        break;
 
-    case R.id.applySettings:
-      new ScheduleHelper(this).setAlarm(info.id, true);
-      break;
+      case R.id.applySettings:
+        new ScheduleHelper(this).setAlarm(info.id, true);
+        break;
 
-    default:
-      return super.onContextItemSelected(item);
+      default:
+        return super.onContextItemSelected(item);
     }
     return true;
   }
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see android.app.Activity#onCreateOptionsMenu(android.view.Menu)
    */
   @Override
@@ -189,7 +194,7 @@ public final class ScheduleList extends ProfileListActivity
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see android.app.Activity#onOptionsItemSelected(android.view.MenuItem)
    */
   @Override
@@ -198,17 +203,17 @@ public final class ScheduleList extends ProfileListActivity
 
     switch (item.getItemId())
     {
-    case R.id.newItemButton:
-      newListItem();
-      break;
+      case R.id.newItemButton:
+        newListItem();
+        break;
 
-    // todo add setting all alarms for a profile
-    // case R.id.applySettings:
-    // new ScheduleHelper(this).setAlarm();
-    // break;
+      // todo add setting all alarms for a profile
+      // case R.id.applySettings:
+      // new ScheduleHelper(this).setAlarm();
+      // break;
 
-    default:
-      return super.onOptionsItemSelected(item);
+      default:
+        return super.onOptionsItemSelected(item);
     }
     return true;
 
@@ -216,7 +221,7 @@ public final class ScheduleList extends ProfileListActivity
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see android.app.Activity#onSaveInstanceState(android.os.Bundle)
    */
   @Override

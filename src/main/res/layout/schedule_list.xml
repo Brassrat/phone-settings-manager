@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/sched_list_root"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:gravity="center"
-    android:orientation="vertical" >
+                android:id="@+id/sched_list_root"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:gravity="center"
+                android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/sched_buttons"
@@ -13,16 +13,16 @@
         android:layout_alignParentBottom="true"
         android:gravity="center"
         android:orientation="horizontal"
-        android:weightSum="10" >
+        android:weightSum="10">
 
         <Button
             android:id="@+id/newItemButton"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="4"
-            android:drawableLeft="@drawable/add"
+            android:drawableStart="@drawable/add"
             android:gravity="center"
-            android:text="@string/newSchedule" />
+            android:text="@string/newSchedule"/>
 
         <Button
             android:id="@+id/doneButton"
@@ -30,7 +30,7 @@
             android:layout_height="match_parent"
             android:layout_weight="4"
             android:gravity="center"
-            android:text="@string/done" />
+            android:text="@string/done"/>
     </LinearLayout>
 
     <LinearLayout
@@ -39,7 +39,7 @@
         android:layout_above="@id/sched_buttons"
         android:layout_alignParentTop="true"
         android:layout_margin="3dp"
-        android:orientation="vertical" >
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/ScheduleForProfile"
@@ -49,14 +49,14 @@
             android:gravity="center_horizontal"
             android:text="@string/ScheduleForProfile"
             android:textColor="#ff000000"
-            android:textSize="14.0sp" />
+            android:textSize="14.0sp"/>
 
         <ListView
             android:id="@+id/android:list"
             android:layout_width="fill_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:fillViewport="true" />
+            android:fillViewport="true"/>
     </LinearLayout>
 
 </RelativeLayout>

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/profile_list_root"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical" >
+                android:id="@+id/profile_list_root"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/profile_buttons"
@@ -12,16 +12,16 @@
         android:layout_alignParentBottom="true"
         android:gravity="center"
         android:orientation="horizontal"
-        android:weightSum="10" >
+        android:weightSum="10">
 
         <Button
             android:id="@+id/newItemButton"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="4"
-            android:drawableLeft="@drawable/add"
+            android:drawableStart="@drawable/add"
             android:gravity="center"
-            android:text="@string/newProfile" />
+            android:text="@string/newProfile"/>
     </LinearLayout>
 
     <LinearLayout
@@ -30,7 +30,7 @@
         android:layout_above="@id/profile_buttons"
         android:layout_alignParentTop="true"
         android:layout_margin="3dp"
-        android:orientation="vertical" >
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/profile_list"
@@ -40,14 +40,14 @@
             android:gravity="center_horizontal"
             android:text="@string/ProfileList"
             android:textColor="#ff000000"
-            android:textSize="12.0sp" />
+            android:textSize="12.0sp"/>
 
         <ListView
             android:id="@+id/android:list"
             android:layout_width="fill_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:fillViewport="true" />
+            android:fillViewport="true"/>
     </LinearLayout>
 
 </RelativeLayout>

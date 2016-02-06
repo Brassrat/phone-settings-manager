@@ -1,22 +1,20 @@
 /**
  * Copyright 2009 Mike Partridge
  * Copyright 2011 Jay Goldman
- * 
- * Licensed under the Apache License, Version 2.0 (the "License"); 
- * you may not use this file except in compliance with the License. 
- * You may obtain a copy of the License at 
- * 
- * http://www.apache.org/licenses/LICENSE-2.0 
- * 
- * Unless required by applicable law or agreed to in writing, 
- * software distributed under the License is distributed 
- * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
- * either express or implied. See the License for the specific language 
- * governing permissions and limitations under the License. 
+ * <p/>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p/>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p/>
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed
+ * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
  */
 package com.mgjg.ProfileManager.profile;
-
-import java.util.List;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -32,9 +30,11 @@ import com.mgjg.ProfileManager.provider.ScheduleHelper;
 import com.mgjg.ProfileManager.schedule.ScheduleEntry;
 import com.mgjg.ProfileManager.utils.Util;
 
+import java.util.List;
+
 /**
  * Defines layout for Profile list items
- * 
+ *
  * @author Mike Partridge / Jay Goldman
  */
 public final class ProfileView extends LinearLayout
@@ -47,8 +47,21 @@ public final class ProfileView extends LinearLayout
   private static final int PROFILE_NEXT_START_TIME_ID = 1002;
 
   /**
+   * used by ide tools, should never be used in runtime code
    * @param context
-   * @param schedule
+   */
+  public ProfileView(Context context)
+  {
+    super(context);
+    if (!isInEditMode())
+    {
+      throw new UnsupportedOperationException("Can not construct ProfileView without Profile");
+    }
+  }
+
+  /**
+   * @param context
+   * @param profile
    */
   public ProfileView(Context context, Profile profile)
   {
@@ -75,7 +88,7 @@ public final class ProfileView extends LinearLayout
     float zz = name.getTextSize(); // change to preference
     name.setPadding(2, 2, 2, 2);
     name.setTextSize(zz);
-    name.setGravity(Gravity.LEFT);
+    name.setGravity(Gravity.START);
     // name.setLayoutParams(paramsFillWrap);
 
     // TextView blanks = new TextView(context);
@@ -97,7 +110,7 @@ public final class ProfileView extends LinearLayout
     TableRow.LayoutParams right = new TableRow.LayoutParams(
         TableRow.LayoutParams.MATCH_PARENT,
         TableRow.LayoutParams.WRAP_CONTENT);
-    right.gravity = Gravity.RIGHT + Gravity.CENTER_VERTICAL;
+    right.gravity = Gravity.END + Gravity.CENTER_VERTICAL;
 
     profileRow.addView(next, right);
 

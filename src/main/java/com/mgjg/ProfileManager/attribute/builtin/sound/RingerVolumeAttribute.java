@@ -1,26 +1,27 @@
 /**
  * Copyright 2011 Jay Goldman
- * 
- * Licensed under the Apache License, Version 2.0 (the "License"); 
- * you may not use this file except in compliance with the License. 
- * You may obtain a copy of the License at 
- * 
- * http://www.apache.org/licenses/LICENSE-2.0 
- * 
- * Unless required by applicable law or agreed to in writing, 
- * software distributed under the License is distributed 
- * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
- * either express or implied. See the License for the specific language 
- * governing permissions and limitations under the License. 
+ * <p/>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p/>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p/>
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed
+ * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
  */
 package com.mgjg.ProfileManager.attribute.builtin.sound;
+
+import android.content.Context;
+import android.media.AudioManager;
 
 import static android.media.AudioManager.FLAG_VIBRATE;
 import static android.media.AudioManager.RINGER_MODE_NORMAL;
 import static android.media.AudioManager.RINGER_MODE_SILENT;
 import static android.media.AudioManager.RINGER_MODE_VIBRATE;
-import android.content.Context;
-import android.media.AudioManager;
 
 public final class RingerVolumeAttribute extends SoundAttribute
 {
@@ -78,24 +79,20 @@ public final class RingerVolumeAttribute extends SoundAttribute
       audio.setRingerMode(RINGER_MODE_NORMAL);
     }
   }
-  
+
   protected boolean isVibrateForStream(Context context)
   {
     AudioManager audio = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
-      final int ringerMode = audio.getRingerMode();
-       if (ringerMode == AudioManager.RINGER_MODE_VIBRATE)
-       {
-         return true;
-       }
-       if (ringerMode == AudioManager.RINGER_MODE_NORMAL)
-       {
-         return isVibrateOn(context);
-       }
-       return false;
+    final int ringerMode = audio.getRingerMode();
+    if (ringerMode == AudioManager.RINGER_MODE_VIBRATE)
+    {
+      return true;
+    }
+    return (ringerMode == AudioManager.RINGER_MODE_NORMAL) && isVibrateOn(context);
   }
-  
+
   protected void setVibrate(Context context)
   {
-   //audio.setVibrateSetting(getVibrateType(), (isBoolean() ? VIBRATE_SETTING_ON : VIBRATE_SETTING_OFF));
+    //audio.setVibrateSetting(getVibrateType(), (isBoolean() ? VIBRATE_SETTING_ON : VIBRATE_SETTING_OFF));
   }
 }

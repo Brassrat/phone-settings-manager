@@ -1,18 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:title="@string/editProfiles" android:titleCondensed="@string/profiles" android:id="@+id/edit_profiles"/>
+    <item
+        android:title="@string/editProfiles"
+        android:titleCondensed="@string/profiles"
+        android:id="@+id/edit_profiles"/>
 
-	<item android:id="@+id/disable_profiles" android:title="@string/disableProfiles" android:titleCondensed="@string/disable"></item>
-	<item android:id="@+id/mute" android:title="Mute" android:icon="@drawable/mute" >
-		<menu xmlns:android="http://schemas.android.com/apk/res/android">
-			<item android:id="@+id/just_mute" android:title="@string/mute_unmute" />
-			<item android:id="@+id/create_mute_shortcut" android:title="@string/create_shortcut" />
-		</menu>
-	</item>
+    <item
+        android:id="@+id/disable_profiles"
+        android:title="@string/disableProfiles"
+        android:titleCondensed="@string/disable"/>
+    <item
+        android:id="@+id/mute"
+        android:title="@string/muteTitle"
+        android:icon="@drawable/mute">
+        <menu xmlns:android="http://schemas.android.com/apk/res/android">
+            <item
+                android:id="@+id/just_mute"
+                android:title="@string/mute_unmute"/>
+            <item
+                android:id="@+id/create_mute_shortcut"
+                android:title="@string/create_shortcut"/>
+        </menu>
+    </item>
 
-	<item android:id="@+id/toggle_ringmode" android:title="@string/toggle_ringmode" />
-	<item android:id="@+id/vibrate_settings" android:title="@string/vibrate_settings" />
-	<item android:id="@+id/faq" android:title="@string/faq"/>
-		
+    <item
+        android:id="@+id/toggle_ringmode"
+        android:title="@string/toggle_ringmode"/>
+    <item
+        android:id="@+id/vibrate_settings"
+        android:title="@string/vibrate_settings"/>
+    <item
+        android:id="@+id/faq"
+        android:title="@string/faq"/>
+
 </menu>

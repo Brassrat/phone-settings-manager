@@ -10,8 +10,6 @@ import android.view.View;
 import android.view.View.OnTouchListener;
 import android.widget.EditText;
 
-import com.mgjg.ProfileManager.R;
-
 public class ClearTextX extends Activity
 {
 
@@ -23,47 +21,53 @@ public class ClearTextX extends Activity
 
     final EditText et = new EditText(this);
     et.setText(value);
-    final Drawable x = getResources().getDrawable(android.R.drawable.presence_offline);// your x image, this one from standard android images looks pretty good actually
-    x.setBounds(0, 0, x.getIntrinsicWidth(), x.getIntrinsicHeight());
-    et.setCompoundDrawables(null, null, value.equals("") ? null : x, null);
-    et.setOnTouchListener(new OnTouchListener() {
-      @Override
-      public boolean onTouch(View v, MotionEvent event)
+    // your x image, this one from standard android images looks pretty good actually
+    final Drawable x = getResources().getDrawable(android.R.drawable.presence_offline);
+    if (null != x)
+    {
+      x.setBounds(0, 0, x.getIntrinsicWidth(), x.getIntrinsicHeight());
+      et.setCompoundDrawables(null, null, value.equals("") ? null : x, null);
+      et.setOnTouchListener(new OnTouchListener()
       {
-        if (et.getCompoundDrawables()[2] == null)
+        @Override
+        public boolean onTouch(View v, MotionEvent event)
         {
+          if (et.getCompoundDrawables()[2] == null)
+          {
+            return false;
+          }
+          if (event.getAction() != MotionEvent.ACTION_UP)
+          {
+            return false;
+          }
+          if (event.getX() > et.getWidth() - et.getPaddingRight() - x.getIntrinsicWidth())
+          {
+            et.setText("");
+            et.setCompoundDrawables(null, null, null, null);
+          }
           return false;
         }
-        if (event.getAction() != MotionEvent.ACTION_UP)
+
+      });
+      et.addTextChangedListener(new TextWatcher()
+      {
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count)
         {
-          return false;
+          et.setCompoundDrawables(null, null, et.getText().toString().equals("") ? null : x, null);
         }
-        if (event.getX() > et.getWidth() - et.getPaddingRight() - x.getIntrinsicWidth())
+
+        @Override
+        public void afterTextChanged(Editable arg0)
         {
-          et.setText("");
-          et.setCompoundDrawables(null, null, null, null);
         }
-        return false;
-      }
 
-    });
-    et.addTextChangedListener(new TextWatcher() {
-      @Override
-      public void onTextChanged(CharSequence s, int start, int before, int count)
-      {
-        et.setCompoundDrawables(null, null, et.getText().toString().equals("") ? null : x, null);
-      }
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after)
+        {
+        }
+      });
 
-      @Override
-      public void afterTextChanged(Editable arg0)
-      {
-      }
-
-      @Override
-      public void beforeTextChanged(CharSequence s, int start, int count, int after)
-      {
-      }
-    });
-
+    }
   }
 }

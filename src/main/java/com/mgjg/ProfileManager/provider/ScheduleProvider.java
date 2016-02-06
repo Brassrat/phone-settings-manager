@@ -1,20 +1,31 @@
 /**
  * Copyright 2009 Mike Partridge
  * Copyright 2011 Jay Goldman
- * 
- * Licensed under the Apache License, Version 2.0 (the "License"); 
- * you may not use this file except in compliance with the License. 
- * You may obtain a copy of the License at 
- * 
- * http://www.apache.org/licenses/LICENSE-2.0 
- * 
- * Unless required by applicable law or agreed to in writing, 
- * software distributed under the License is distributed 
- * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
- * either express or implied. See the License for the specific language 
- * governing permissions and limitations under the License. 
+ * <p/>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p/>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p/>
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed
+ * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
  */
 package com.mgjg.ProfileManager.provider;
+
+import android.content.ContentValues;
+import android.content.UriMatcher;
+import android.database.SQLException;
+import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
+
+import com.mgjg.ProfileManager.schedule.ScheduleEntry;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static com.mgjg.ProfileManager.provider.ProfileHelper.COLUMN_PROFILE_ACTIVE;
 import static com.mgjg.ProfileManager.provider.ProfileHelper.COLUMN_PROFILE_ID;
@@ -36,20 +47,9 @@ import static com.mgjg.ProfileManager.provider.ScheduleHelper.FILTER_SCHEDULE_PR
 import static com.mgjg.ProfileManager.provider.ScheduleHelper.FILTER_SCHEDULE_PROFILE_ID_START_TIME;
 import static com.mgjg.ProfileManager.provider.ScheduleHelper.TABLE_SCHEDULE;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import android.content.ContentValues;
-import android.content.UriMatcher;
-import android.database.SQLException;
-import android.database.sqlite.SQLiteDatabase;
-import android.net.Uri;
-
-import com.mgjg.ProfileManager.schedule.ScheduleEntry;
-
 /**
  * Abstracts access to profile data in SQLite db
- * 
+ *
  * @author Mike Partridge / Jay Goldman
  */
 public class ScheduleProvider extends ProfileManagerProvider<ScheduleEntry>
@@ -109,7 +109,7 @@ public class ScheduleProvider extends ProfileManagerProvider<ScheduleEntry>
     /*
      * defines the columns returned for any query
      */
-    sGoalProjectionMap = new HashMap<String, String>();
+    sGoalProjectionMap = new HashMap<>();
     sGoalProjectionMap.put(COLUMN_SCHEDULE_ID, TABLE_SCHEDULE + "." + COLUMN_SCHEDULE_ID);
     sGoalProjectionMap.put(COLUMN_SCHEDULE_ACTIVE, TABLE_SCHEDULE + "." + COLUMN_SCHEDULE_ACTIVE);
     sGoalProjectionMap.put(COLUMN_SCHEDULE_START_HOUR, COLUMN_SCHEDULE_START_HOUR);
@@ -126,7 +126,7 @@ public class ScheduleProvider extends ProfileManagerProvider<ScheduleEntry>
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see android.content.ContentProvider#getType(android.net.Uri)
    */
   @Override
@@ -134,16 +134,16 @@ public class ScheduleProvider extends ProfileManagerProvider<ScheduleEntry>
   {
     switch (matchedCode)
     {
-    case FILTER_SCHEDULE_ID:
-      return "vnd.android.cursor.item/" + AUTHORITY;
-    case FILTER_SCHEDULE_PROFILE_ID:
-      return "vnd.android.cursor.dir/" + AUTHORITY + ".profile";
-    case FILTER_SCHEDULE_PROFILE_ID_START_TIME:
-      return "vnd.android.cursor.dir/" + AUTHORITY + ".profile.startTime";
-    case FILTER_ALL_ACTIVE:
-      return "vnd.android.cursor.dir/" + AUTHORITY + ".active";
-    default:
-      throw new IllegalArgumentException("Unknown code: " + matchedCode);
+      case FILTER_SCHEDULE_ID:
+        return "vnd.android.cursor.item/" + AUTHORITY;
+      case FILTER_SCHEDULE_PROFILE_ID:
+        return "vnd.android.cursor.dir/" + AUTHORITY + ".profile";
+      case FILTER_SCHEDULE_PROFILE_ID_START_TIME:
+        return "vnd.android.cursor.dir/" + AUTHORITY + ".profile.startTime";
+      case FILTER_ALL_ACTIVE:
+        return "vnd.android.cursor.dir/" + AUTHORITY + ".active";
+      default:
+        throw new IllegalArgumentException("Unknown code: " + matchedCode);
     }
   }
 
@@ -152,12 +152,12 @@ public class ScheduleProvider extends ProfileManagerProvider<ScheduleEntry>
   {
     switch (matchedCode)
     {
-    case FILTER_ALL_ACTIVE:
-    case FILTER_SCHEDULE_PROFILE_ID_START_TIME:
-      return TABLE_SCHEDULE + " LEFT OUTER JOIN " + TABLE_PROFILE +
-          " ON (" + TABLE_SCHEDULE + "." + COLUMN_SCHEDULE_PROFILE_ID + " = " + TABLE_PROFILE + "." + COLUMN_PROFILE_ID + ")";
-    default:
-      return TABLE_SCHEDULE;
+      case FILTER_ALL_ACTIVE:
+      case FILTER_SCHEDULE_PROFILE_ID_START_TIME:
+        return TABLE_SCHEDULE + " LEFT OUTER JOIN " + TABLE_PROFILE +
+            " ON (" + TABLE_SCHEDULE + "." + COLUMN_SCHEDULE_PROFILE_ID + " = " + TABLE_PROFILE + "." + COLUMN_PROFILE_ID + ")";
+      default:
+        return TABLE_SCHEDULE;
     }
   }
 
@@ -196,7 +196,7 @@ public class ScheduleProvider extends ProfileManagerProvider<ScheduleEntry>
      */
     if (matchedCode == FILTER_SCHEDULE_ID)
     {
-      return new String[] { COLUMN_SCHEDULE_ID };
+      return new String[]{COLUMN_SCHEDULE_ID};
     }
 
     throw new IllegalArgumentException("unknown code:" + matchedCode);
@@ -207,14 +207,14 @@ public class ScheduleProvider extends ProfileManagerProvider<ScheduleEntry>
   {
     switch (matchedCode)
     {
-    case FILTER_SCHEDULE_ID: // /#
-      return new String[] { uri.getPathSegments().get(1) };
-    case FILTER_SCHEDULE_PROFILE_ID: // /profile/#
-      return new String[] { uri.getPathSegments().get(2) };
-    case FILTER_SCHEDULE_PROFILE_ID_START_TIME: // /profile/#/hour/#/minute/#
-      return new String[] { uri.getPathSegments().get(2), uri.getPathSegments().get(4), uri.getPathSegments().get(6) };
-    case FILTER_ALL_ACTIVE:
-      return new String[] { "1", "1" };
+      case FILTER_SCHEDULE_ID: // /#
+        return new String[]{uri.getPathSegments().get(1)};
+      case FILTER_SCHEDULE_PROFILE_ID: // /profile/#
+        return new String[]{uri.getPathSegments().get(2)};
+      case FILTER_SCHEDULE_PROFILE_ID_START_TIME: // /profile/#/hour/#/minute/#
+        return new String[]{uri.getPathSegments().get(2), uri.getPathSegments().get(4), uri.getPathSegments().get(6)};
+      case FILTER_ALL_ACTIVE:
+        return new String[]{"1", "1"};
     }
     throw new IllegalArgumentException("unknown code:" + matchedCode);
   }
@@ -224,11 +224,11 @@ public class ScheduleProvider extends ProfileManagerProvider<ScheduleEntry>
   {
     switch (matchedCode)
     {
-    case FILTER_SCHEDULE_ID:
-    case FILTER_SCHEDULE_PROFILE_ID:
-    case FILTER_SCHEDULE_PROFILE_ID_START_TIME:
-    case FILTER_ALL_ACTIVE:
-      return SCHEDULE_DEFAULT_ORDER;
+      case FILTER_SCHEDULE_ID:
+      case FILTER_SCHEDULE_PROFILE_ID:
+      case FILTER_SCHEDULE_PROFILE_ID_START_TIME:
+      case FILTER_ALL_ACTIVE:
+        return SCHEDULE_DEFAULT_ORDER;
     }
     throw new IllegalArgumentException("unknown code:" + matchedCode);
   }
@@ -238,17 +238,17 @@ public class ScheduleProvider extends ProfileManagerProvider<ScheduleEntry>
   {
     switch (matchedCode)
     {
-    case FILTER_SCHEDULE_ID:
-      return new String[] { COLUMN_SCHEDULE_ID };
+      case FILTER_SCHEDULE_ID:
+        return new String[]{COLUMN_SCHEDULE_ID};
 
-    case FILTER_SCHEDULE_PROFILE_ID:
-      return new String[] { COLUMN_SCHEDULE_PROFILE_ID };
+      case FILTER_SCHEDULE_PROFILE_ID:
+        return new String[]{COLUMN_SCHEDULE_PROFILE_ID};
 
-    case FILTER_SCHEDULE_PROFILE_ID_START_TIME:
-      return new String[] { COLUMN_SCHEDULE_PROFILE_ID, COLUMN_SCHEDULE_START_HOUR, COLUMN_SCHEDULE_START_MINUTE };
+      case FILTER_SCHEDULE_PROFILE_ID_START_TIME:
+        return new String[]{COLUMN_SCHEDULE_PROFILE_ID, COLUMN_SCHEDULE_START_HOUR, COLUMN_SCHEDULE_START_MINUTE};
 
-    case FILTER_ALL_ACTIVE:
-      return new String[] { TABLE_SCHEDULE + "." + COLUMN_SCHEDULE_ACTIVE, TABLE_PROFILE + "." + COLUMN_PROFILE_ACTIVE };
+      case FILTER_ALL_ACTIVE:
+        return new String[]{TABLE_SCHEDULE + "." + COLUMN_SCHEDULE_ACTIVE, TABLE_PROFILE + "." + COLUMN_PROFILE_ACTIVE};
 
     }
     throw new IllegalArgumentException("unknown code:" + matchedCode);

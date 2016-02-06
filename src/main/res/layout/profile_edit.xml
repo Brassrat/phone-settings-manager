@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/profile_edit_root"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical" >
+                android:id="@+id/profile_edit_root"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/profile_edit_buttons"
@@ -12,7 +12,7 @@
         android:layout_alignParentBottom="true"
         android:gravity="center"
         android:orientation="horizontal"
-        android:weightSum="3" >
+        android:weightSum="3">
 
         <Button
             android:id="@+id/doneButton"
@@ -20,7 +20,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="@string/done" />
+            android:text="@string/done"/>
     </LinearLayout>
 
     <LinearLayout
@@ -29,7 +29,7 @@
         android:layout_above="@id/profile_edit_buttons"
         android:layout_alignParentTop="true"
         android:layout_margin="3dp"
-        android:orientation="vertical" >
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/ProfileType"
@@ -39,14 +39,14 @@
             android:gravity="center_horizontal"
             android:text="@string/profileEdit"
             android:textColor="#ff000000"
-            android:textSize="12.0sp" />
+            android:textSize="12.0sp"/>
 
         <TableLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginEnd="10dp"
             android:orientation="vertical"
-            android:textSize="14.0sp" >
+            android:textSize="14.0sp">
 
             <TableRow>
 
@@ -54,14 +54,14 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="@string/profileNameLabel" />
+                    android:text="@string/profileNameLabel"/>
 
                 <EditText
                     android:id="@+id/nameLabel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:hint="@string/type_name" />
+                    android:hint="@string/type_name"/>
             </TableRow>
 
             <TableRow>
@@ -69,13 +69,13 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="10dip"
-                    android:text="@string/activeLabel" />
+                    android:layout_marginEnd="10dip"
+                    android:text="@string/activeLabel"/>
 
                 <CheckBox
                     android:id="@+id/activeCheckbox"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"/>
             </TableRow>
         </TableLayout>
 
@@ -85,14 +85,14 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="100dp"
-            android:orientation="horizontal" >
+            android:orientation="horizontal">
 
             <Button
                 android:id="@+id/edit_attributes"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/edit_attributes" >
+                android:text="@string/edit_attributes">
             </Button>
 
             <Button
@@ -100,7 +100,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/edit_schedules" >
+                android:text="@string/edit_schedules">
             </Button>
         </LinearLayout>
     </LinearLayout>

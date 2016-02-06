@@ -1,24 +1,20 @@
 /**
  * Copyright 2009 Mike Partridge
  * Copyright 2011 Jay Goldman
- * 
- * Licensed under the Apache License, Version 2.0 (the "License"); 
- * you may not use this file except in compliance with the License. 
- * You may obtain a copy of the License at 
- * 
- * http://www.apache.org/licenses/LICENSE-2.0 
- * 
- * Unless required by applicable law or agreed to in writing, 
- * software distributed under the License is distributed 
- * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
- * either express or implied. See the License for the specific language 
- * governing permissions and limitations under the License. 
+ * <p/>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p/>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p/>
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed
+ * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
  */
 package com.mgjg.ProfileManager.provider;
-
-import static com.mgjg.ProfileManager.provider.AttributeProvider.CONTENT_URI;
-
-import java.util.List;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -30,9 +26,13 @@ import com.mgjg.ProfileManager.attribute.ProfileAttributeFactory;
 import com.mgjg.ProfileManager.registry.UnknownAttributeException;
 import com.mgjg.ProfileManager.utils.ListAdapter;
 
+import java.util.List;
+
+import static com.mgjg.ProfileManager.provider.AttributeProvider.CONTENT_URI;
+
 /**
  * Abstracts access to profile data in SQLite db
- * 
+ *
  * @author Mike Partridge / Jay Goldman
  */
 public class AttributeHelper extends ProfileManagerProviderHelper<ProfileAttribute>
@@ -75,7 +75,7 @@ public class AttributeHelper extends ProfileManagerProviderHelper<ProfileAttribu
 
   /**
    * allow for alternative implementation
-   * 
+   *
    * @param factory
    */
   public synchronized static void setProfileAttributeFactory(ProfileAttributeFactory factory)
@@ -107,31 +107,31 @@ public class AttributeHelper extends ProfileManagerProviderHelper<ProfileAttribu
     switch (filter)
     {
 
-    case NO_FILTER:
-      return uri;
+      case NO_FILTER:
+        return uri;
 
-    case FILTER_ATTRIBUTE_ID:
-      return Uri.withAppendedPath(uri, String.valueOf(values[0]));
+      case FILTER_ATTRIBUTE_ID:
+        return Uri.withAppendedPath(uri, String.valueOf(values[0]));
 
-    case FILTER_ATTRIBUTE_PROFILE_ID:
-      return Uri.withAppendedPath(Uri.withAppendedPath(uri, "profile"), String.valueOf(values[0]));
+      case FILTER_ATTRIBUTE_PROFILE_ID:
+        return Uri.withAppendedPath(Uri.withAppendedPath(uri, "profile"), String.valueOf(values[0]));
 
-    case FILTER_ATTRIBUTE_TYPE:
-      return Uri.withAppendedPath(Uri.withAppendedPath(uri, "type"), String.valueOf(values[0]));
+      case FILTER_ATTRIBUTE_TYPE:
+        return Uri.withAppendedPath(Uri.withAppendedPath(uri, "type"), String.valueOf(values[0]));
 
-    case FILTER_ALL_ACTIVE:
-      return Uri.withAppendedPath(uri, "active");
+      case FILTER_ALL_ACTIVE:
+        return Uri.withAppendedPath(uri, "active");
 
-    case FILTER_ATTRIBUTE_PROFILE_TYPE:
-      urip = Uri.withAppendedPath(Uri.withAppendedPath(uri, "profile"), String.valueOf(values[0]));
-      return Uri.withAppendedPath(Uri.withAppendedPath(urip, "type"), String.valueOf(values[1]));
+      case FILTER_ATTRIBUTE_PROFILE_TYPE:
+        urip = Uri.withAppendedPath(Uri.withAppendedPath(uri, "profile"), String.valueOf(values[0]));
+        return Uri.withAppendedPath(Uri.withAppendedPath(urip, "type"), String.valueOf(values[1]));
 
-    case FILTER_ATTRIBUTE_PROFILE_ACTIVE:
-      urip = Uri.withAppendedPath(Uri.withAppendedPath(uri, "profile"), String.valueOf(values[0]));
-      return Uri.withAppendedPath(urip, "active");
+      case FILTER_ATTRIBUTE_PROFILE_ACTIVE:
+        urip = Uri.withAppendedPath(Uri.withAppendedPath(uri, "profile"), String.valueOf(values[0]));
+        return Uri.withAppendedPath(urip, "active");
 
-    default:
-      throw new IllegalArgumentException("Unknown filter " + filter);
+      default:
+        throw new IllegalArgumentException("Unknown filter " + filter);
     }
   }
 
@@ -166,7 +166,6 @@ public class AttributeHelper extends ProfileManagerProviderHelper<ProfileAttribu
   }
 
   /**
-   * 
    * @param aa
    * @param profileId
    */
