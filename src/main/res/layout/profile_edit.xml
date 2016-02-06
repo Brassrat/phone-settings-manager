@@ -5,45 +5,21 @@
                 android:layout_height="fill_parent"
                 android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/profile_edit_buttons"
+    <TextView
+        android:id="@+id/ProfileType"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:weightSum="3">
-
-        <Button
-            android:id="@+id/doneButton"
-            android:layout_width="0dip"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="@string/done"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/profile_edit_buttons"
+        android:background="#ff888888"
+        android:gravity="center_horizontal"
+        android:text="@string/profileEdit"
+        android:textColor="#ff000000"
         android:layout_alignParentTop="true"
-        android:layout_margin="3dp"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/ProfileType"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:background="#ff888888"
-            android:gravity="center_horizontal"
-            android:text="@string/profileEdit"
-            android:textColor="#ff000000"
-            android:textSize="12.0sp"/>
+        android:textSize="12.0sp"/>
 
         <TableLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
             android:layout_marginEnd="10dp"
             android:orientation="vertical"
             android:textSize="14.0sp">
@@ -69,7 +45,6 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="10dip"
                     android:text="@string/activeLabel"/>
 
                 <CheckBox
@@ -79,30 +54,13 @@
             </TableRow>
         </TableLayout>
 
-        <LinearLayout
-            android:id="@+id/LinearLayout1"
+        <Button
+            android:id="@id/done"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="100dp"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/edit_attributes"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/edit_attributes">
-            </Button>
-
-            <Button
-                android:id="@+id/edit_schedules"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/edit_schedules">
-            </Button>
-        </LinearLayout>
-    </LinearLayout>
+            android:gravity="center"
+            android:text="@string/done"/>
 
 </RelativeLayout>

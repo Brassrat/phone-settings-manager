@@ -42,7 +42,7 @@ public abstract class ProfileListActivity extends ListActivity
         }
       });
     }
-    Button done = (Button) findViewById(R.id.doneButton);
+    Button done = (Button) findViewById(R.id.done);
     if (null != done)
     {
       done.setOnClickListener(new View.OnClickListener()

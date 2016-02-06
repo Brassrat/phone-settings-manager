@@ -189,7 +189,12 @@ public final class ScheduleList extends ProfileListActivity
   {
     boolean result = super.onCreateOptionsMenu(menu);
     getMenuInflater().inflate(R.menu.schedulelist_options, menu);
-    return false; // do not show, access via button
+    return result;
+  }
+  @Override
+  public boolean onPrepareOptionsMenu(Menu menu)
+  {
+    return true;
   }
 
   /*

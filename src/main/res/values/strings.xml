@@ -68,7 +68,7 @@
     <string name="toast_AlarmVolume">Alarm</string>
     <string name="toast_NotificationVolume">Notify</string>
 
-    <string name="startTimeLabel">Start Time:</string>
+    <string name="startTimeLabel">Start Time</string>
     <string name="volumeLabel">Volume:</string>
     <string name="vibrateLabel">Vibrate:</string>
     <string name="activeLabel">Active:</string>
@@ -103,8 +103,8 @@
     <string name="NoProfile">Schedule For PROFILE</string>
     <string name="BLANKS"/>
     <string name="attr_for_profile">{0} for {1}</string>
-    <string name="edit_attributes">Attributes</string>
-    <string name="edit_schedules">Schedules</string>
+    <string name="edit_attributes">Edit Attributes</string>
+    <string name="edit_schedules">Edit Schedules</string>
     <string name="MAIN_SCREEN">MAIN SCREEN</string>
     <string name="ProfileList">Profile List</string>
 

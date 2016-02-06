@@ -90,61 +90,8 @@ public class ProfileEdit extends Activity
     }
 
     name = (TextView) findViewById(R.id.nameLabel);
-    // clearNoName = true;
-    // name.setOnClickListener(new OnClickListener() {
-    //
-    // @Override
-    // public void onClick(View v)
-    // {
-    //
-    // if (clearNoName && ("NO NAME".equals(name.getText().toString())))
-    // {
-    // clearNoName = false;
-    // name.setText("");
-    // }
-    //
-    // }
-    //
-    // });
-
-    // name.setOnKeyListener(new OnKeyListener() {
-    //
-    // @Override
-    // public boolean onKey(View v, int keyCode, KeyEvent event)
-    // {
-    //
-    // if (clearNoName && ("NO NAME".equals(name.getText().toString())))
-    // {
-    // clearNoName = false;
-    // name.setText("");
-    // }
-    // return false;
-    //
-    // }
-    //
-    // });
     active = (CheckBox) findViewById(R.id.activeCheckbox);
     populateFields();
-
-    Button editAttributes = (Button) findViewById(R.id.edit_attributes);
-    editAttributes.setOnClickListener(new View.OnClickListener()
-    {
-      @Override
-      public void onClick(View view)
-      {
-        editAttributes();
-      }
-    });
-
-    Button editSchedules = (Button) findViewById(R.id.edit_schedules);
-    editSchedules.setOnClickListener(new View.OnClickListener()
-    {
-      @Override
-      public void onClick(View view)
-      {
-        editSchedules();
-      }
-    });
 
     getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
     name.setFocusable(true);
@@ -152,7 +99,7 @@ public class ProfileEdit extends Activity
 
     mSaved = false;
 
-    Button done = (Button) findViewById(R.id.doneButton);
+    Button done = (Button) findViewById(R.id.done);
     if (null != done)
     {
       done.setOnClickListener(new OnClickListener()
@@ -190,6 +137,35 @@ public class ProfileEdit extends Activity
     return true;
   }
 
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item)
+  {
+
+    switch (item.getItemId())
+    {
+      case R.id.editAttributes:
+        editAttributes();
+        return true;
+
+      case R.id.editSchedules:
+        editSchedules();
+        return true;
+
+      case R.id.applySettings:
+        if (null != profileId)
+        {
+          AttributeHelper.activate(this, profileId);
+        }
+        return true;
+
+      case R.id.done:
+        finish();
+        return true;
+
+    }
+    return super.onOptionsItemSelected(item);
+  }
+
   private void editAttributes()
   {
     if (null == profileId)
@@ -213,8 +189,7 @@ public class ProfileEdit extends Activity
   {
     if (null == profileId)
     {
-      // must save before we edit
-      saveState(false);
+      saveState(false); // must save before we edit
     }
     if (null == profileId)
     {
@@ -228,25 +203,6 @@ public class ProfileEdit extends Activity
     startActivity(si);
   }
 
-  @Override
-  public boolean onOptionsItemSelected(MenuItem item)
-  {
-
-    switch (item.getItemId())
-    {
-//    case R.id.done:
-//      finish();
-//      return true;
-
-      case R.id.applySettings:
-        if (null != profileId)
-        {
-          AttributeHelper.activate(this, profileId);
-        }
-        return true;
-    }
-    return super.onOptionsItemSelected(item);
-  }
 
   /*
    * (non-Javadoc)

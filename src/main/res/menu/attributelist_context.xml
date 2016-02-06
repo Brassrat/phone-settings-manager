@@ -8,6 +8,6 @@
         android:id="@+id/delete"
         android:title="@string/deleteAttribute"/>
     <item
-        android:id="@+id/applySettings"
+        android:id="@id/applySettings"
         android:title="@string/applySettings"/>
 </menu>

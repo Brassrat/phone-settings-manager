@@ -246,6 +246,10 @@ public final class ProfileList extends ProfileListActivity
         fillData();
         return true;
 
+      case R.id.add_profile:
+        newListItem();
+        return true;
+
       case R.id.applySettings:
         new ScheduleHelper(this).registerAlarm();
         return true;

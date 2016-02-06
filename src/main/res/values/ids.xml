@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="done" type="id"/>
+    <item name="applySettings" type="id"/>
+    <item name="newProfile" type="id"/>
+    <item name="editProfile" type="id"/>
+    <item name="addAttribute" type="id"/>
+    <item name="addSchedule" type="id"/>
+</resources>

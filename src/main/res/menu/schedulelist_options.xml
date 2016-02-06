@@ -4,6 +4,7 @@
     <item
         android:id="@+id/newItemButton"
         android:title="@string/newSchedule"
+        android:titleCondensed="@string/newSchedule"
         android:icon="@android:drawable/ic_menu_add"
-        android:visible="false"/>
+        />
 </menu>

@@ -8,7 +8,7 @@
         android:id="@+id/toggle"
         android:title="@string/toggle"/>
     <item
-        android:id="@+id/applySettings"
+        android:id="@id/applySettings"
         android:title="@string/applySettings"/>
     <item
         android:id="@+id/delete"

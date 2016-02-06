@@ -94,7 +94,7 @@ public class ScheduleEdit extends Activity
     boolean mClock24hour = Util.is24HourClock(this.getContentResolver());
     startTime.setIs24HourView(mClock24hour);
 
-    Button done = (Button) findViewById(R.id.doneButton);
+    Button done = (Button) findViewById(R.id.done);
     if (null != done)
     {
       done.setOnClickListener(new OnClickListener()

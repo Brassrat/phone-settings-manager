@@ -112,7 +112,7 @@ public class AttributeEdit extends Activity
       initAttributeAndType(instanceState, profileId, attributeId);
       attribute.onCreate(this, profileName);
 
-      Button done = (Button) findViewById(R.id.doneButton);
+      Button done = (Button) findViewById(R.id.done);
       if (null != done)
       {
         done.setOnClickListener(new OnClickListener()

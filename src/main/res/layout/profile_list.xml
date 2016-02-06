@@ -5,33 +5,6 @@
                 android:layout_height="fill_parent"
                 android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/profile_buttons"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:weightSum="10">
-
-        <Button
-            android:id="@+id/newItemButton"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="4"
-            android:drawableStart="@drawable/add"
-            android:gravity="center"
-            android:text="@string/newProfile"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/profile_buttons"
-        android:layout_alignParentTop="true"
-        android:layout_margin="3dp"
-        android:orientation="vertical">
-
         <TextView
             android:id="@+id/profile_list"
             android:layout_width="fill_parent"
@@ -45,9 +18,8 @@
         <ListView
             android:id="@+id/android:list"
             android:layout_width="fill_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="fill_parent"
+            android:layout_below="@id/profile_list"
             android:fillViewport="true"/>
-    </LinearLayout>
 
 </RelativeLayout>

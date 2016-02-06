@@ -58,7 +58,7 @@
                     </TableRow>
 
                     <Button
-                        android:id="@+id/doneButton"
+                        android:id="@id/done"
                         android:text="@string/done"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
