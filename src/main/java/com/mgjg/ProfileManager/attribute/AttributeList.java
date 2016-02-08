@@ -26,7 +26,6 @@ import android.view.SubMenu;
 import android.view.View;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.mgjg.ProfileManager.R;
 import com.mgjg.ProfileManager.profile.activity.ProfileListActivity;
@@ -38,9 +37,9 @@ import java.util.List;
 import static com.mgjg.ProfileManager.provider.AttributeHelper.FILTER_ATTRIBUTE_PROFILE_ID;
 import static com.mgjg.ProfileManager.provider.AttributeHelper.FILTER_ATTRIBUTE_PROFILE_TYPE;
 import static com.mgjg.ProfileManager.provider.AttributeHelper.INTENT_ATTRIBUTE_ID;
-import static com.mgjg.ProfileManager.provider.AttributeHelper.INTENT_ATTRIBUTE_PROFILE_ID;
-import static com.mgjg.ProfileManager.provider.AttributeHelper.INTENT_ATTRIBUTE_PROFILE_NAME;
 import static com.mgjg.ProfileManager.provider.AttributeHelper.INTENT_ATTRIBUTE_TYPE;
+import static com.mgjg.ProfileManager.provider.ProfileHelper.INTENT_PROFILE_ID;
+import static com.mgjg.ProfileManager.provider.ProfileHelper.INTENT_PROFILE_NAME;
 
 /**
  * Attribute List
@@ -52,9 +51,6 @@ public class AttributeList extends ProfileListActivity
   private static final int ACTIVITY_CREATE = 0;
   private static final int ACTIVITY_EDIT = 1;
 
-  private long profileId;
-  private String profileName;
-
   /*
    * (non-Javadoc)
    *
@@ -64,35 +60,15 @@ public class AttributeList extends ProfileListActivity
   protected void onCreate(Bundle instanceState)
   {
     super.onCreate(instanceState);
-
   }
 
   protected void onCreateInstance(Bundle instanceState)
   {
-    if (instanceState == null)
-    {
-      Intent ii = getIntent();
-      profileId = ii.getLongExtra(INTENT_ATTRIBUTE_PROFILE_ID, 0);
-      profileName = ii.getCharSequenceExtra(INTENT_ATTRIBUTE_PROFILE_NAME).toString();
-    }
-    else
-    {
-      profileId = instanceState.getLong(INTENT_ATTRIBUTE_PROFILE_ID);
-      profileName = instanceState.getString(INTENT_ATTRIBUTE_PROFILE_NAME);
-    }
-
-    if (null == profileName)
-    {
-      profileName = "NO NAME";
-    }
-
-    setContentView(R.layout.attribute_list);
-
-    TextView mListHeader = (TextView) findViewById(R.id.AttributeProfile);
-    mListHeader.setText(headerText());
+    onCreateInstance(instanceState, R.layout.attribute_list, R.id.AttributeProfile);
   }
 
-  private String headerText()
+  @Override
+  protected String headerText()
   {
     return getText(R.string.AttributeListProfile) + " " + profileName;
   }
@@ -102,8 +78,7 @@ public class AttributeList extends ProfileListActivity
    */
   protected void fillData()
   {
-    AttributeHelper helper = new AttributeHelper(this);
-    setListAdapter(helper.createListAdapter(FILTER_ATTRIBUTE_PROFILE_ID, profileId));
+    fillData(new AttributeHelper(this), FILTER_ATTRIBUTE_PROFILE_ID);
   }
 
   /*
@@ -115,16 +90,6 @@ public class AttributeList extends ProfileListActivity
   protected void onListItemClick(ListView lv, View vv, int position, long id)
   {
     editAttribute((ProfileAttribute) lv.getItemAtPosition(position));
-  }
-
-  @Override
-  protected void newListItem()
-  {
-    openOptionsMenu(); // activity's onCreateOptionsMenu gets called if first time
-    if ((null != optionsMenu) && (attrsMenuId >= 0))
-    {
-      optionsMenu.performIdentifierAction(attrsMenuId, 0);
-    }
   }
 
   protected boolean itemIsActive(AdapterContextMenuInfo menuInfo)
@@ -174,92 +139,16 @@ public class AttributeList extends ProfileListActivity
     return super.onContextItemSelected(item);
   }
 
-  private Menu optionsMenu;
-  private int attrsMenuId = -1;
-
-  /*
-   * (non-Javadoc)
-   *
-   * @see android.app.Activity#onCreateOptionsMenu(android.view.Menu)
-   */
   @Override
-  public boolean onCreateOptionsMenu(Menu menu)
+  public int optionsMenu()
   {
-    boolean result = super.onCreateOptionsMenu(menu);
-    optionsMenu = menu;
-    SubMenu attrsMenu = AttributeRegistry.getInstance().onCreateOptionsMenu(this, menu);
-    attrsMenuId = attrsMenu.getItem().getItemId();
-    return result;
+    return R.menu.attributelist_options;
   }
 
   @Override
-  public boolean onPrepareOptionsMenu(Menu menu)
+  protected Class<AttributeSelectType> newActivity()
   {
-    boolean result = super.onPrepareOptionsMenu(menu);
-    MenuItem menuItem = AttributeRegistry.getInstance().onPrepareOptionsMenu(this, menu, getListView());
-    menuItem.setVisible(false);
-    return result;
-  }
-
-  /*
-   * (non-Javadoc)
-   *
-   * @see android.app.Activity#onOptionsItemSelected(android.view.MenuItem)
-   */
-  @Override
-  public boolean onOptionsItemSelected(MenuItem item)
-  {
-    int resId = item.getItemId();
-//    if (resId == R.id.done)
-//    {
-//      finish();
-//      return true;
-//    }
-
-    if (resId > 0)
-    {
-      try
-      {
-        ProfileAttribute attr = AttributeRegistry.getInstance().getAttribute(resId);
-        int type = attr.getTypeId();
-        AttributeHelper helper = new AttributeHelper(this);
-        List<ProfileAttribute> attributes = helper.getList(FILTER_ATTRIBUTE_PROFILE_TYPE, profileId, type);
-        Intent ii = new Intent(this, AttributeEdit.class)
-            .putExtra(INTENT_ATTRIBUTE_TYPE, type)
-            .putExtra(INTENT_ATTRIBUTE_PROFILE_ID, profileId)
-            .putExtra(INTENT_ATTRIBUTE_PROFILE_NAME, profileName);
-        int activity;
-        if (!attributes.isEmpty())
-        {
-          ii.putExtra(INTENT_ATTRIBUTE_ID, attributes.get(0).getId());
-          activity = ACTIVITY_EDIT;
-        }
-        else
-        {
-          activity = ACTIVITY_CREATE;
-        }
-        startActivityForResult(ii, activity);
-        return true;
-      }
-      catch (Exception e)
-      {
-        // not a type, try super
-      }
-    }
-    return super.onOptionsItemSelected(item);
-  }
-
-  /*
-   * (non-Javadoc)
-   *
-   * @see android.app.Activity#onSaveInstanceState(android.os.Bundle)
-   */
-  @Override
-  protected void onSaveInstanceState(Bundle instanceState)
-  {
-    super.onSaveInstanceState(instanceState);
-    instanceState.putLong(INTENT_ATTRIBUTE_PROFILE_ID, profileId);
-    instanceState.putString(INTENT_ATTRIBUTE_PROFILE_NAME, profileName);
+    return AttributeSelectType.class;
   }
 
   private void editAttribute(ProfileAttribute attribute)
@@ -267,8 +156,8 @@ public class AttributeList extends ProfileListActivity
     Intent ii = new Intent(this, AttributeEdit.class)
         .putExtra(INTENT_ATTRIBUTE_ID, attribute.getId())
         .putExtra(INTENT_ATTRIBUTE_TYPE, attribute.getTypeId())
-        .putExtra(INTENT_ATTRIBUTE_PROFILE_ID, profileId)
-        .putExtra(INTENT_ATTRIBUTE_PROFILE_NAME, profileName);
+        .putExtra(INTENT_PROFILE_ID, profileId)
+        .putExtra(INTENT_PROFILE_NAME, profileName);
     startActivityForResult(ii, ACTIVITY_EDIT);
   }
 

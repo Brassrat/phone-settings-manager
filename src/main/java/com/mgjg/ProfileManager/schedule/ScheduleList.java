@@ -26,7 +26,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.mgjg.ProfileManager.R;
 import com.mgjg.ProfileManager.profile.activity.ProfileListActivity;
@@ -34,12 +33,12 @@ import com.mgjg.ProfileManager.provider.ScheduleHelper;
 
 import java.util.List;
 
+import static com.mgjg.ProfileManager.provider.ProfileHelper.INTENT_PROFILE_ID;
+import static com.mgjg.ProfileManager.provider.ProfileHelper.INTENT_PROFILE_NAME;
+import static com.mgjg.ProfileManager.provider.ProfileHelper.INTENT_NEW_ITEM_ID;
 import static com.mgjg.ProfileManager.provider.ScheduleHelper.COLUMN_SCHEDULE_ACTIVE;
 import static com.mgjg.ProfileManager.provider.ScheduleHelper.FILTER_SCHEDULE_ID;
 import static com.mgjg.ProfileManager.provider.ScheduleHelper.FILTER_SCHEDULE_PROFILE_ID;
-import static com.mgjg.ProfileManager.provider.ScheduleHelper.INTENT_SCHEDULE_ID;
-import static com.mgjg.ProfileManager.provider.ScheduleHelper.INTENT_SCHEDULE_PROFILE_ID;
-import static com.mgjg.ProfileManager.provider.ScheduleHelper.INTENT_SCHEDULE_PROFILE_NAME;
 
 /**
  * Schedule List
@@ -48,9 +47,6 @@ import static com.mgjg.ProfileManager.provider.ScheduleHelper.INTENT_SCHEDULE_PR
  */
 public final class ScheduleList extends ProfileListActivity
 {
-
-  private long profileId;
-  private String profileName;
 
   /*
    * (non-Javadoc)
@@ -65,30 +61,11 @@ public final class ScheduleList extends ProfileListActivity
 
   protected void onCreateInstance(Bundle instanceState)
   {
-    if (instanceState == null)
-    {
-      Intent ii = getIntent();
-      profileId = ii.getLongExtra(INTENT_SCHEDULE_PROFILE_ID, 0);
-      profileName = ii.getCharSequenceExtra(INTENT_SCHEDULE_PROFILE_NAME).toString();
-    }
-    else
-    {
-      profileId = instanceState.getLong(INTENT_SCHEDULE_PROFILE_ID);
-      profileName = instanceState.getString(INTENT_SCHEDULE_PROFILE_NAME);
-    }
-
-    if (null == profileName)
-    {
-      profileName = "NO NAME";
-    }
-
-    setContentView(R.layout.schedule_list);
-
-    TextView header = (TextView) findViewById(R.id.ScheduleForProfile);
-    header.setText(headerText());
+    onCreateInstance(instanceState, R.layout.schedule_list, R.id.ScheduleForProfile);
   }
 
-  private String headerText()
+  @Override
+  protected String headerText()
   {
     return getText(R.string.ScheduleListProfile) + " " + profileName;
   }
@@ -99,8 +76,7 @@ public final class ScheduleList extends ProfileListActivity
   @Override
   protected void fillData()
   {
-    ScheduleHelper helper = new ScheduleHelper(this);
-    setListAdapter(helper.createListAdapter(FILTER_SCHEDULE_PROFILE_ID, profileId));
+      fillData(new ScheduleHelper(this),FILTER_SCHEDULE_PROFILE_ID);
   }
 
   /*
@@ -112,15 +88,6 @@ public final class ScheduleList extends ProfileListActivity
   protected void onListItemClick(ListView l, View v, int position, long id)
   {
     editSchedule(id);
-  }
-
-  @Override
-  protected void newListItem()
-  {
-    Intent ii = new Intent(this, ScheduleEdit.class)
-        .putExtra(INTENT_SCHEDULE_PROFILE_ID, profileId)
-        .putExtra(INTENT_SCHEDULE_PROFILE_NAME, profileName);
-    startActivityForResult(ii, ACTIVITY_CREATE);
   }
 
   protected boolean itemIsActive(AdapterContextMenuInfo menuInfo)
@@ -179,70 +146,33 @@ public final class ScheduleList extends ProfileListActivity
     return true;
   }
 
-  /*
-   * (non-Javadoc)
-   *
-   * @see android.app.Activity#onCreateOptionsMenu(android.view.Menu)
-   */
   @Override
-  public boolean onCreateOptionsMenu(Menu menu)
+  public int optionsMenu()
   {
-    boolean result = super.onCreateOptionsMenu(menu);
-    getMenuInflater().inflate(R.menu.schedulelist_options, menu);
-    return result;
-  }
-  @Override
-  public boolean onPrepareOptionsMenu(Menu menu)
-  {
-    return true;
+    return R.menu.schedulelist_options;
   }
 
-  /*
-   * (non-Javadoc)
-   *
-   * @see android.app.Activity#onOptionsItemSelected(android.view.MenuItem)
-   */
   @Override
-  public boolean onOptionsItemSelected(MenuItem item)
+  protected Class<ScheduleEdit> newActivity()
   {
+    return ScheduleEdit.class;
+  }
 
-    switch (item.getItemId())
-    {
-      case R.id.newItemButton:
-        newListItem();
-        break;
-
+  protected boolean onOptionsItemSelected(int menuId)
+  {
       // todo add setting all alarms for a profile
       // case R.id.applySettings:
       // new ScheduleHelper(this).setAlarm();
       // break;
-
-      default:
-        return super.onOptionsItemSelected(item);
-    }
-    return true;
-
-  }
-
-  /*
-   * (non-Javadoc)
-   *
-   * @see android.app.Activity#onSaveInstanceState(android.os.Bundle)
-   */
-  @Override
-  protected void onSaveInstanceState(Bundle instanceState)
-  {
-    super.onSaveInstanceState(instanceState);
-    instanceState.putLong(INTENT_SCHEDULE_PROFILE_ID, profileId);
-    instanceState.putString(INTENT_SCHEDULE_PROFILE_NAME, profileName);
+    return false;
   }
 
   private void editSchedule(long scheduleId)
   {
     Intent ii = new Intent(this, ScheduleEdit.class)
-        .putExtra(INTENT_SCHEDULE_ID, scheduleId)
-        .putExtra(INTENT_SCHEDULE_PROFILE_ID, profileId)
-        .putExtra(INTENT_SCHEDULE_PROFILE_NAME, profileName);
+        .putExtra(INTENT_NEW_ITEM_ID, scheduleId)
+        .putExtra(INTENT_PROFILE_ID, profileId)
+        .putExtra(INTENT_PROFILE_NAME, profileName);
     startActivityForResult(ii, ACTIVITY_EDIT);
   }
 

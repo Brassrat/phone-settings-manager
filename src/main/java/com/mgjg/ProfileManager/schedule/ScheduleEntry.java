@@ -60,20 +60,20 @@ public final class ScheduleEntry implements Listable
 
   public static final Integer[] DAYS_OF_WEEK = new Integer[]{SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY};
 
-  private static CharSequence[] DAY_NAMES = null;
+  private static CharSequence[] DAY_NAMES;
 
   public synchronized static void init(Context context)
   {
     if (null == DAY_NAMES)
     {
       DAY_NAMES = new CharSequence[]{
-          context.getText(R.string.day0),
-          context.getText(R.string.day1),
-          context.getText(R.string.day2),
-          context.getText(R.string.day3),
-          context.getText(R.string.day4),
-          context.getText(R.string.day5),
-          context.getText(R.string.day6)
+          context.getText(R.string.dayOn0),
+          context.getText(R.string.dayOn1),
+          context.getText(R.string.dayOn2),
+          context.getText(R.string.dayOn3),
+          context.getText(R.string.dayOn4),
+          context.getText(R.string.dayOn5),
+          context.getText(R.string.dayOn6)
       };
     }
   }

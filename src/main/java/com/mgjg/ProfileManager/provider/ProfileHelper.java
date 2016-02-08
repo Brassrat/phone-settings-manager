@@ -57,6 +57,7 @@ public class ProfileHelper extends ProfileManagerProviderHelper<Profile>
   public static final String INTENT_PROFILE_ID = "com.mgjg.ProfileManager.profile.id";
   public static final String INTENT_PROFILE_ACTIVE = "com.mgjg.ProfileManager.profile.active";
   public static final String INTENT_PROFILE_NAME = "com.mgjg.ProfileManager.profile.name";
+  public static final String INTENT_NEW_ITEM_ID = "com.mgjg.ProfileManager.new.id";
 
   public static final int FILTER_PROFILE_ID = 1;
   public static final int FILTER_PROFILE_TYPE = 2;

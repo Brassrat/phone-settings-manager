@@ -34,10 +34,11 @@ import java.util.List;
 
 import static com.mgjg.ProfileManager.provider.AttributeHelper.FILTER_ATTRIBUTE_ID;
 import static com.mgjg.ProfileManager.provider.AttributeHelper.FILTER_ATTRIBUTE_PROFILE_TYPE;
-import static com.mgjg.ProfileManager.provider.AttributeHelper.INTENT_ATTRIBUTE_ID;
-import static com.mgjg.ProfileManager.provider.AttributeHelper.INTENT_ATTRIBUTE_PROFILE_ID;
-import static com.mgjg.ProfileManager.provider.AttributeHelper.INTENT_ATTRIBUTE_PROFILE_NAME;
+import static com.mgjg.ProfileManager.provider.ProfileHelper.INTENT_NEW_ITEM_ID;
 import static com.mgjg.ProfileManager.provider.AttributeHelper.INTENT_ATTRIBUTE_TYPE;
+import static com.mgjg.ProfileManager.provider.ProfileHelper.INTENT_PROFILE_ID;
+import static com.mgjg.ProfileManager.provider.ProfileHelper.INTENT_PROFILE_NAME;
+import static com.mgjg.ProfileManager.provider.ProfileHelper.INTENT_NEW_ITEM_ID;
 
 /**
  * Attribute List Edit screen
@@ -82,22 +83,22 @@ public class AttributeEdit extends Activity
       /*
        * check the saved state for attribute id, then check the bundle passed through the Intent
        */
-      attributeId = (instanceState != null) ? instanceState.getLong(INTENT_ATTRIBUTE_ID) : 0L;
+      attributeId = (instanceState != null) ? instanceState.getLong(INTENT_NEW_ITEM_ID) : 0L;
       if (attributeId < 1)
       {
-        attributeId = getIntent().getLongExtra(INTENT_ATTRIBUTE_ID, 0);
+        attributeId = getIntent().getLongExtra(INTENT_NEW_ITEM_ID, 0);
         if (attributeId < 1)
         {
           attributeId = null;
         }
-        profileId = getIntent().getLongExtra(INTENT_ATTRIBUTE_PROFILE_ID, 0);
-        CharSequence profileCS = getIntent().getCharSequenceExtra(INTENT_ATTRIBUTE_PROFILE_NAME);
+        profileId = getIntent().getLongExtra(INTENT_PROFILE_ID, 0);
+        CharSequence profileCS = getIntent().getCharSequenceExtra(INTENT_PROFILE_NAME);
         profileName = (null == profileCS) ? null : profileCS.toString();
       }
       else if (null != instanceState)
       {
-        profileId = instanceState.getLong(INTENT_ATTRIBUTE_PROFILE_ID);
-        profileName = instanceState.getString(INTENT_ATTRIBUTE_PROFILE_NAME);
+        profileId = instanceState.getLong(INTENT_PROFILE_ID);
+        profileName = instanceState.getString(INTENT_PROFILE_NAME);
       }
 
       if (profileId < 1)
@@ -236,12 +237,12 @@ public class AttributeEdit extends Activity
     // store some things for re-display on resume
     if (attributeId != null)
     {
-      instanceState.putLong(INTENT_ATTRIBUTE_ID, attributeId);
+      instanceState.putLong(INTENT_NEW_ITEM_ID, attributeId);
     }
 
+    instanceState.putLong(INTENT_PROFILE_ID, profileId);
+    instanceState.putString(INTENT_PROFILE_NAME, profileName);
     instanceState.putInt(INTENT_ATTRIBUTE_TYPE, type);
-    instanceState.putLong(INTENT_ATTRIBUTE_PROFILE_ID, profileId);
-    instanceState.putString(AttributeHelper.INTENT_ATTRIBUTE_PROFILE_NAME, profileName);
   }
 
   /**
@@ -286,8 +287,8 @@ public class AttributeEdit extends Activity
       AttributeHelper helper = new AttributeHelper(this);
       Uri data = helper.getContentUri(FILTER_ATTRIBUTE_ID, attributeId);
       setResult(RESULT_OK,
-          new Intent().putExtra(INTENT_ATTRIBUTE_ID, attributeId)
-              .putExtra(INTENT_ATTRIBUTE_PROFILE_ID, profileId)
+          new Intent().putExtra(INTENT_NEW_ITEM_ID, attributeId)
+              .putExtra(INTENT_PROFILE_ID, profileId)
               .setData(data));
       attribute.finishCreate();
     }

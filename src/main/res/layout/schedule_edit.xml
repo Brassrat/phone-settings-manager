@@ -56,8 +56,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
                 android:text=""
-                android:textOff="@string/day0"
-                android:textOn="@string/day0"/>
+                android:textOff="@string/dayOff0"
+                android:textColor="#ff000000"
+                android:textOn="@string/dayOn0"/>
 
             <ToggleButton
                 android:id="@+id/day1toggle"
@@ -65,8 +66,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
                 android:text=""
-                android:textOff="@string/day1"
-                android:textOn="@string/day1"/>
+                android:textOff="@string/dayOff1"
+                android:textOn="@string/dayOn1"/>
 
             <ToggleButton
                 android:id="@+id/day2toggle"
@@ -74,8 +75,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
                 android:text=""
-                android:textOff="@string/day2"
-                android:textOn="@string/day2"/>
+                android:textOff="@string/dayOff2"
+                android:textOn="@string/dayOn2"/>
 
             <ToggleButton
                 android:id="@+id/day3toggle"
@@ -83,8 +84,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
                 android:text=""
-                android:textOff="@string/day3"
-                android:textOn="@string/day3"/>
+                android:textOff="@string/dayOff3"
+                android:textOn="@string/dayOn3"/>
 
             <ToggleButton
                 android:id="@+id/day4toggle"
@@ -92,8 +93,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
                 android:text=""
-                android:textOff="@string/day4"
-                android:textOn="@string/day4"/>
+                android:textOff="@string/dayOff4"
+                android:textOn="@string/dayOn4"/>
 
             <ToggleButton
                 android:id="@+id/day5toggle"
@@ -101,17 +102,16 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
                 android:text=""
-                android:textOff="@string/day5"
-                android:textOn="@string/day5"/>
+                android:textOff="@string/dayOff5"
+                android:textOn="@string/dayOn5"/>
 
             <ToggleButton
-
                 android:id="@+id/day6toggle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
-                android:textOff="@string/day6"
-                android:textOn="@string/day6"/>
+                android:textOff="@string/dayOff6"
+                android:textOn="@string/dayOn6"/>
 
         </LinearLayout>
 

@@ -15,6 +15,7 @@
         android:orientation="horizontal"
         android:weightSum="10">
 
+        <!--
         <Button
             android:id="@+id/newItemButton"
             android:layout_width="0dp"
@@ -23,6 +24,7 @@
             android:drawableStart="@drawable/add"
             android:gravity="center"
             android:text="@string/newAttribute"/>
+            -->
 
         <Button
             android:id="@id/done"

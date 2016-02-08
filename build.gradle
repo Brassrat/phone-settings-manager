@@ -12,7 +12,7 @@ repositories {
 }
 android {
     compileSdkVersion 22
-    buildToolsVersion "23.0.1"
+    buildToolsVersion '23.0.2'
 
     defaultConfig {
         applicationId "com.mgjg.ProfileManager"
@@ -33,7 +33,7 @@ android {
     }
 }
 task wrapper(type: Wrapper) {
-    gradleVersion = '2.7'
+    gradleVersion = '2.9'
 }
 dependencies {
 }

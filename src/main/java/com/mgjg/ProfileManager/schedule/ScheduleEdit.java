@@ -35,10 +35,10 @@ import com.mgjg.ProfileManager.utils.Util;
 import java.text.MessageFormat;
 import java.util.List;
 
+import static com.mgjg.ProfileManager.provider.ProfileHelper.INTENT_PROFILE_ID;
+import static com.mgjg.ProfileManager.provider.ProfileHelper.INTENT_PROFILE_NAME;
+import static com.mgjg.ProfileManager.provider.ProfileHelper.INTENT_NEW_ITEM_ID;
 import static com.mgjg.ProfileManager.provider.ScheduleHelper.FILTER_SCHEDULE_ID;
-import static com.mgjg.ProfileManager.provider.ScheduleHelper.INTENT_SCHEDULE_ID;
-import static com.mgjg.ProfileManager.provider.ScheduleHelper.INTENT_SCHEDULE_PROFILE_ID;
-import static com.mgjg.ProfileManager.provider.ScheduleHelper.INTENT_SCHEDULE_PROFILE_NAME;
 
 /**
  * Schedule Edit screen
@@ -261,11 +261,11 @@ public class ScheduleEdit extends Activity
     // store some things for re-display on resume
     if (scheduleId != null)
     {
-      instanceState.putLong(INTENT_SCHEDULE_ID, scheduleId);
+      instanceState.putLong(INTENT_NEW_ITEM_ID, scheduleId);
     }
 
-    instanceState.putLong(INTENT_SCHEDULE_PROFILE_ID, profileId);
-    instanceState.putCharSequence(INTENT_SCHEDULE_PROFILE_NAME, profileName);
+    instanceState.putLong(INTENT_PROFILE_ID, profileId);
+    instanceState.putCharSequence(INTENT_PROFILE_NAME, profileName);
   }
 
   /*
@@ -295,20 +295,20 @@ public class ScheduleEdit extends Activity
     /*
      * check the saved state for schedule id, then check the bundle passed through the Intent
      */
-    scheduleId = (instanceState != null) ? instanceState.getLong(INTENT_SCHEDULE_ID) : null;
+    scheduleId = (instanceState != null) ? instanceState.getLong(INTENT_NEW_ITEM_ID) : null;
     CharSequence profileCS;
     if (scheduleId == null)
     {
       Intent ii = getIntent();
       if (null != ii)
       {
-        scheduleId = ii.getLongExtra(INTENT_SCHEDULE_ID, 0);
+        scheduleId = ii.getLongExtra(INTENT_NEW_ITEM_ID, 0);
         if (scheduleId < 1)
         {
           scheduleId = null;
         }
-        profileId = ii.getLongExtra(INTENT_SCHEDULE_PROFILE_ID, 0);
-        profileCS = ii.getCharSequenceExtra(INTENT_SCHEDULE_PROFILE_NAME);
+        profileId = ii.getLongExtra(INTENT_PROFILE_ID, 0);
+        profileCS = ii.getCharSequenceExtra(INTENT_PROFILE_NAME);
       }
       else
       {
@@ -318,8 +318,8 @@ public class ScheduleEdit extends Activity
     }
     else
     {
-      profileId = instanceState.getLong(INTENT_SCHEDULE_PROFILE_ID);
-      profileCS = instanceState.getCharSequence(INTENT_SCHEDULE_PROFILE_NAME);
+      profileId = instanceState.getLong(INTENT_PROFILE_ID);
+      profileCS = instanceState.getCharSequence(INTENT_PROFILE_NAME);
     }
     profileName = (null == profileCS) ? null : profileCS.toString();
 
@@ -388,8 +388,7 @@ public class ScheduleEdit extends Activity
   @Override
   public void onBackPressed()
   {
-    setResult(RESULT_CANCELED);
     canceled = true;
-    super.finish();
+    finish();
   }
 }

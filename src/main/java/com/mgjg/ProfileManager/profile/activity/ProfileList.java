@@ -16,6 +16,7 @@
  */
 package com.mgjg.ProfileManager.profile.activity;
 
+import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.os.Bundle;
@@ -49,23 +50,17 @@ import static com.mgjg.ProfileManager.provider.ScheduleHelper.FILTER_SCHEDULE_PR
  */
 public final class ProfileList extends ProfileListActivity
 {
-  private static final int ACTIVITY_CREATE = 0;
-  private static final int ACTIVITY_EDIT = 1;
-
-  /*
-   * (non-Javadoc)
-   *
-   * @see android.app.Activity#onCreate(android.os.Bundle)
-   */
-  @Override
-  protected void onCreate(Bundle instanceState)
-  {
-    super.onCreate(instanceState);
-  }
-
   protected void onCreateInstance(Bundle instanceState)
   {
+    profileId = 0;
+    profileName="NO NAME";
     setContentView(R.layout.profile_list);
+  }
+
+  @Override
+  protected String headerText()
+  {
+    return "Profile List";
   }
 
   /**
@@ -121,13 +116,39 @@ public final class ProfileList extends ProfileListActivity
     }
   }
 
+  @Override
+  protected Class<ProfileEdit> newActivity()
+  {
+     return ProfileEdit.class;
+  }
+
   protected void newListItem()
   {
-    Intent ii = new Intent(this, ProfileEdit.class)
-        .putExtra(INTENT_PROFILE_ID, 0L);
-    startActivityForResult(ii, ACTIVITY_CREATE);
+    Intent ii = newListItem(newActivity());
     long profileId = ii.getLongExtra(INTENT_PROFILE_ID, 0);
     registerProfile(profileId);
+  }
+
+  /*
+   * (non-Javadoc)
+   *
+   * @see android.app.Activity#onActivityResult(int, int, android.content.Intent)
+   */
+  @Override
+  protected void onActivityResult(int requestCode, int resultCode, Intent data)
+  {
+    super.onActivityResult(requestCode, resultCode, data);
+
+    if (requestCode == ACTIVITY_EDIT || requestCode == ACTIVITY_CREATE)
+    {
+      if (null != data)
+      {
+        long profileId = data.getLongExtra(INTENT_PROFILE_ID, 0);
+        registerProfile(profileId);
+      }
+    }
+
+    fillData();
   }
 
   @Override
@@ -158,7 +179,7 @@ public final class ProfileList extends ProfileListActivity
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see android.app.Activity#onCreateContextMenu(android.view.ContextMenu, android.view.View, android.view.ContextMenu.ContextMenuInfo)
    */
 
@@ -201,17 +222,9 @@ public final class ProfileList extends ProfileListActivity
     return super.onContextItemSelected(item);
   }
 
-  /*
-   * (non-Javadoc)
-   *
-   * @see android.app.Activity#onCreateOptionsMenu(android.view.Menu)
-   */
-  @Override
-  public boolean onCreateOptionsMenu(Menu menu)
+  protected int optionsMenu()
   {
-    boolean result = super.onCreateOptionsMenu(menu);
-    getMenuInflater().inflate(R.menu.profilelist_options, menu);
-    return result;
+    return R.menu.profilelist_options;
   }
 
   @Override
@@ -225,8 +238,7 @@ public final class ProfileList extends ProfileListActivity
       item.setTitle(menuTitle);
       item.setTitleCondensed(menuTitle);
     }
-    super.onPrepareOptionsMenu(menu);
-    return true;
+    return super.onPrepareOptionsMenu(menu);
   }
 
   /*
@@ -267,28 +279,6 @@ public final class ProfileList extends ProfileListActivity
   protected void onSaveInstanceState(Bundle instanceState)
   {
     super.onSaveInstanceState(instanceState);
-  }
-
-  /*
-   * (non-Javadoc)
-   *
-   * @see android.app.Activity#onActivityResult(int, int, android.content.Intent)
-   */
-  @Override
-  protected void onActivityResult(int requestCode, int resultCode, Intent data)
-  {
-    super.onActivityResult(requestCode, resultCode, data);
-
-    if (requestCode == ACTIVITY_EDIT || requestCode == ACTIVITY_CREATE)
-    {
-      if (null != data)
-      {
-        long profileId = data.getLongExtra(INTENT_PROFILE_ID, 0);
-        registerProfile(profileId);
-      }
-    }
-
-    fillData();
   }
 
   private void toggleProfile(long profileId)

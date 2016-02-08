@@ -40,12 +40,9 @@ import com.mgjg.ProfileManager.schedule.ScheduleList;
 
 import java.util.List;
 
-import static com.mgjg.ProfileManager.provider.AttributeHelper.INTENT_ATTRIBUTE_PROFILE_ID;
-import static com.mgjg.ProfileManager.provider.AttributeHelper.INTENT_ATTRIBUTE_PROFILE_NAME;
 import static com.mgjg.ProfileManager.provider.ProfileHelper.INTENT_PROFILE_ACTIVE;
 import static com.mgjg.ProfileManager.provider.ProfileHelper.INTENT_PROFILE_ID;
-import static com.mgjg.ProfileManager.provider.ScheduleHelper.INTENT_SCHEDULE_PROFILE_ID;
-import static com.mgjg.ProfileManager.provider.ScheduleHelper.INTENT_SCHEDULE_PROFILE_NAME;
+import static com.mgjg.ProfileManager.provider.ProfileHelper.INTENT_PROFILE_NAME;
 
 /**
  * Profile Edit screen
@@ -180,8 +177,8 @@ public class ProfileEdit extends Activity
       return;
     }
     Intent ai = new Intent(this, AttributeList.class)
-        .putExtra(INTENT_ATTRIBUTE_PROFILE_ID, profileId)
-        .putExtra(INTENT_ATTRIBUTE_PROFILE_NAME, name.getText());
+        .putExtra(INTENT_PROFILE_ID, profileId)
+        .putExtra(INTENT_PROFILE_NAME, name.getText());
     startActivity(ai);
   }
 
@@ -198,8 +195,8 @@ public class ProfileEdit extends Activity
       return;
     }
     Intent si = new Intent(this, ScheduleList.class)
-        .putExtra(INTENT_SCHEDULE_PROFILE_ID, profileId)
-        .putExtra(INTENT_SCHEDULE_PROFILE_NAME, name.getText());
+        .putExtra(INTENT_PROFILE_ID, profileId)
+        .putExtra(INTENT_PROFILE_NAME, name.getText());
     startActivity(si);
   }
 
@@ -212,7 +209,7 @@ public class ProfileEdit extends Activity
   @Override
   protected void onActivityResult(int requestCode, int resultCode, Intent data)
   {
-    data.putExtra(INTENT_ATTRIBUTE_PROFILE_ID, profileId);
+    data.putExtra(INTENT_PROFILE_ID, profileId);
     super.onActivityResult(requestCode, resultCode, data);
   }
 

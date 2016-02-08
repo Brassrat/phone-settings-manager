@@ -65,10 +65,7 @@ public final class ScheduleHelper extends ProfileManagerProviderHelper<ScheduleE
   public static final String COLUMN_SCHEDULE_DAY6 = "_day6";
 
   // names of values passed via Intents
-  public static final String INTENT_SCHEDULE_ID = "com.mgjg.ProfileManager.schedule.id";
   public static final String INTENT_SCHEDULE_ACTIVE = "com.mgjg.ProfileManager.schedule.active";
-  public static final String INTENT_SCHEDULE_PROFILE_ID = "com.mgjg.ProfileManager.schedule.profile.id";
-  public static final String INTENT_SCHEDULE_PROFILE_NAME = "com.mgjg.ProfileManager.schedule.profile.name";
 
   public static final String DEFAULT_ORDER_SCHEDULE =
       COLUMN_SCHEDULE_DAY0 + " desc, "

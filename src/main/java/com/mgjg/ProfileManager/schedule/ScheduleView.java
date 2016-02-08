@@ -77,13 +77,10 @@ public final class ScheduleView extends LinearLayout
     daysLayout.setOrientation(HORIZONTAL);
     daysLayout.setGravity(Gravity.END);
 
-    daysLayout.addView(makeDayView(context, schedule, 0), paramsWrapBoth);
-    daysLayout.addView(makeDayView(context, schedule, 1), paramsWrapBoth);
-    daysLayout.addView(makeDayView(context, schedule, 2), paramsWrapBoth);
-    daysLayout.addView(makeDayView(context, schedule, 3), paramsWrapBoth);
-    daysLayout.addView(makeDayView(context, schedule, 4), paramsWrapBoth);
-    daysLayout.addView(makeDayView(context, schedule, 5), paramsWrapBoth);
-    daysLayout.addView(makeDayView(context, schedule, 6), paramsWrapBoth);
+    for (int ii = 0; ii < 7; ++ii)
+    {
+      daysLayout.addView(makeDayView(context, schedule, ii), paramsWrapBoth);
+    }
 
     /*
      * time

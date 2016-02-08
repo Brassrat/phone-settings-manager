@@ -53,13 +53,21 @@
     <string name="ScheduleListProfile">Schedules for </string>
     <string name="newSchedule">New Schedule</string>
 
-    <string name="day0">Sun</string>
-    <string name="day1">Mon</string>
-    <string name="day2">Tue</string>
-    <string name="day3">Wed</string>
-    <string name="day4">Thu</string>
-    <string name="day5">Fri</string>
-    <string name="day6">Sat</string>
+    <string name="dayOff0">sun</string>
+    <string name="dayOff1">mon</string>
+    <string name="dayOff2">tue</string>
+    <string name="dayOff3">wed</string>
+    <string name="dayOff4">thu</string>
+    <string name="dayOff5">fri</string>
+    <string name="dayOff6">sat</string>
+
+    <string name="dayOn0">SUN</string>
+    <string name="dayOn1">MON</string>
+    <string name="dayOn2">TUE</string>
+    <string name="dayOn3">WED</string>
+    <string name="dayOn4">THU</string>
+    <string name="dayOn5">FRI</string>
+    <string name="dayOn6">SAT</string>
 
     <string name="toast_SystemVolume">Sys</string>
     <string name="toast_RingerVolume">Ring</string>

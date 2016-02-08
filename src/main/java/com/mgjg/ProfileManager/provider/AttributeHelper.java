@@ -51,11 +51,6 @@ public class AttributeHelper extends ProfileManagerProviderHelper<ProfileAttribu
   // names of values passed via Intents
   public static final String INTENT_ATTRIBUTE_ID = "com.mgjg.ProfileManager.attribute.id";
   public static final String INTENT_ATTRIBUTE_TYPE = "com.mgjg.ProfileManager.attribute.type";
-  public static final String INTENT_ATTRIBUTE_INT_VALUE = "com.mgjg.ProfileManager.attribute.int_value";
-  public static final String INTENT_ATTRIBUTE_BOOL_VALUE = "com.mgjg.ProfileManager.attribute.bool_value";
-  public static final String INTENT_ATTRIBUTE_SETTING = "com.mgjg.ProfileManager.attribute.setting";
-  public static final String INTENT_ATTRIBUTE_PROFILE_ID = "com.mgjg.ProfileManager.attribute.profile.id";
-  public static final String INTENT_ATTRIBUTE_PROFILE_NAME = "com.jgjg.ProfileManager.attribute.profile.name";
 
   public static final String DEFAULT_ORDER_ATTRIBUTE =
       COLUMN_ATTRIBUTE_PROFILE_ID + " desc, "
